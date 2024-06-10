@@ -10,7 +10,7 @@ export const useAuthClient = () => {
     const [identity, setIdentity] = useState(null);
     const [principal, setPrincipal] = useState(null);
     const [actors, setActors] = useState(null);
-    const canID="ahw5u-keaaa-aaaaa-qaaha-cai"
+    const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"ahw5u-keaaa-aaaaa-qaaha-cai"
         
     const clientInfo = async (client) => {
         const isAuthenticated = await client.isAuthenticated();
