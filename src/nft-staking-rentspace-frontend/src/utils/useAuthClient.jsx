@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthClient } from "@dfinity/auth-client";
 import {createActor} from '../../../declarations/nft-staking-rentspace-backend'
+import { createActor as createEXTActor } from '../../../declarations/EXT';
+import { Principal } from '@dfinity/principal';
 
 const AuthContext = createContext();
 
@@ -10,13 +12,14 @@ export const useAuthClient = () => {
     const [identity, setIdentity] = useState(null);
     const [principal, setPrincipal] = useState(null);
     const [actors, setActors] = useState(null);
-    const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"ahw5u-keaaa-aaaaa-qaaha-cai"
-        
+    const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
+    const EXTCanID = process.env.DFX_NETWORK === "ic"?"":"be2us-64aaa-aaaaa-qaabq-cai"
+
     const clientInfo = async (client) => {
         const isAuthenticated = await client.isAuthenticated();
         const identity = client.getIdentity();
         const principal = identity.getPrincipal();
-        console.log(principal)
+        console.log(principal.toText())
 
         setAuthClient(client);
         setIsAuthenticated(isAuthenticated);
@@ -25,12 +28,13 @@ export const useAuthClient = () => {
 
         if (isAuthenticated && identity && principal && principal.isAnonymous() === false) {
             let userActor = createActor(canID, { agentOptions: { identity: identity } });
-
+            let EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity: identity } });
+            console.log(EXTActor)
             setActors({
                 userActor:userActor,
+                EXTActor:EXTActor
             })
             return userActor
-            
         }
     }
 
@@ -50,7 +54,7 @@ export const useAuthClient = () => {
                     await authClient.login({
                         identityProvider :process.env.DFX_NETWORK === "ic"
                         ? "https://identity.ic0.app/#authorize"
-                        : `http://localhost:4943?canisterId=rdmx6-jaaaa-aaaaa-aaadq-cai#authorize`,
+                        : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943/`,
                         onError: (error) => reject((error)),
                         onSuccess: () => resolve(clientInfo(authClient)),
                     });

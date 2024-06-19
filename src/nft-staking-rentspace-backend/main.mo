@@ -15,6 +15,7 @@ import Functions "utils/functions";
 import NftModel "models/nftModel";
 import EXT "EXT";
 import Utils "utils/functions";
+import TokenIdentifier "utils/tokenIdentifier";
 
 actor {
   var userRecords = TrieMap.TrieMap<Principal, UserModel.User>(Principal.equal, Principal.hash);
@@ -26,8 +27,8 @@ actor {
   var stakedNftRecords = TrieMap.TrieMap<Text, NftModel.StakedNFT>(Text.equal, Text.hash);
   stable var stableStakedNFTRecords : [(Text, NftModel.StakedNFT)] = [];
 
-  var EXTCanisterId : Text = "m2nno-7aaaa-aaaah-adzba-cai";
-  let EXTActor = actor (EXTCanisterId) : EXT.Self;
+  var EXTCanisterId = "be2us-64aaa-aaaaa-qaabq-cai";
+  let EXTActor = actor (EXTCanisterId) : EXT.erc721_token;
 
   system func preupgrade() {
     stableUserRecords := Iter.toArray(userRecords.entries());
@@ -102,12 +103,12 @@ actor {
   };
 
   // Import New NFTs
-  public shared ({ caller }) func importNewNFT() : async Result.Result<Text, Text> {
+  public shared ({ caller }) func importNewNFT(aid : Text) : async Result.Result<Text, Text> {
     try {
       var metadataExample : Text = "";
       await Functions.checkAnonymous(caller);
       // Use Account Identifier
-      let tokensResponse = await EXTActor.tokens("3565436e7e9de384f9cf00e686632bdb313eacee3307cea899044d366ed5ae80");
+      let tokensResponse = await EXTActor.tokens(aid);
       switch (tokensResponse) {
         case (#err(err)) {
           return #err("Failed to retrieve tokens ");
@@ -132,18 +133,6 @@ actor {
 
               };
             };
-
-            // // Step 4: Create and store the ImportedNFT
-            // let newImportedNFT : NftModel.ImportedNFT = {
-            //   id = Nat32.toText(tokenId);
-            //   metadata = Utils.serializeMetadata(metadata);
-            //   owner = caller;
-            //   isStaked = false;
-            //   canisterID = EXTCanisterId;
-            // };
-            // if (metadataExample == "") {
-            //   metadataExample := newImportedNFT.metadata;
-            // };
 
             // Update user records
             switch (userRecords.get(caller)) {
@@ -208,9 +197,11 @@ actor {
   };
 
   //Stake imported NFTs
-  public shared ({ caller }) func stakeNFT(_nftID : Text) : async Result.Result<Text, Text> {
+  public shared ({ caller }) func stakeNFT(nftID : EXT.TokenIdentifier) : async Result.Result<Text, Text> {
     try {
       await Functions.checkAnonymous(caller);
+      let idx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
+      let _nftID : Text = Nat.toText(idx);
       switch (importedNftRecords.get(_nftID)) {
         case (?value) {
           if (value.owner == caller) {
@@ -219,34 +210,81 @@ actor {
                 return #err("Owner of this NFT does not exist in records!");
               };
               case (?owner) {
-                let newStakedNFT : NftModel.StakedNFT = {
-                  id = _nftID;
-                  metadata = value.metadata;
-                  owner = caller;
-                  canisterID = value.canisterID;
-                  stakedAt = Time.now();
+                // Staking the NFT
+                switch (stakedNftRecords.get(_nftID)) {
+                  case (?_) {
+                    return #err("NFT already staked!");
+                  };
+                  case (null) {};
                 };
-                let newImportedNFT : NftModel.ImportedNFT = {
-                  id = _nftID;
-                  metadata = value.metadata;
-                  owner = caller;
-                  canisterID = value.canisterID;
-                  isStaked = true;
+                // // Make Transfer Request
+                let CanisterPrincipal = Principal.fromText(EXTCanisterId);
+
+                let transferRequest : EXT.TransferRequest = {
+                  to = #principal CanisterPrincipal;
+                  token = nftID;
+                  notify = false;
+                  from = #principal caller;
+                  memo = "Stake NFT";
+                  amount = 1;
+                  subaccount = null;
                 };
-                var newStakedNFTList : Buffer.Buffer<Text> = Buffer.fromArray(owner.stakedNFTs);
-                newStakedNFTList.add(_nftID);
-                let newUserData : UserModel.User = {
-                  id = owner.id;
-                  email = owner.email;
-                  importedNFTs = owner.importedNFTs;
-                  rewardPoints = owner.rewardPoints;
-                  name = owner.name;
-                  stakedNFTs = Buffer.toArray(newStakedNFTList);
+                let transferResponse = await EXTActor.transfer(transferRequest);
+                switch (transferResponse) {
+                  case (#err(err)) {
+                    // Print the specific error
+                    switch (err) {
+                      case (#Unauthorized(tokenID)) {
+                        return #err("Unauthorized to transfer NFT : " # tokenID);
+                      };
+                      case (#InsufficientBalance(balance)) {
+                        return #err("Insufficient balance to transfer NFT : ");
+                      };
+                      case (#Rejected) {
+                        return #err("Transfer request rejected : ");
+                      };
+                      case (#InvalidToken(tokenID)) {
+                        return #err("Invalid token ID : " # tokenID);
+                      };
+                      case (#CannotNotify(aid)) {
+                        return #err("Cannot notify the receiver");
+                      };
+                      case (#Other(e)) {
+                        return #err("Other error : " # e);
+                      };
+                    };
+                  };
+                  case (#ok(_)) {
+                    let newStakedNFT : NftModel.StakedNFT = {
+                      id = _nftID;
+                      metadata = value.metadata;
+                      owner = caller;
+                      canisterID = value.canisterID;
+                      stakedAt = Time.now();
+                    };
+                    let newImportedNFT : NftModel.ImportedNFT = {
+                      id = _nftID;
+                      metadata = value.metadata;
+                      owner = caller;
+                      canisterID = value.canisterID;
+                      isStaked = true;
+                    };
+                    var newStakedNFTList : Buffer.Buffer<Text> = Buffer.fromArray(owner.stakedNFTs);
+                    newStakedNFTList.add(_nftID);
+                    let newUserData : UserModel.User = {
+                      id = owner.id;
+                      email = owner.email;
+                      importedNFTs = owner.importedNFTs;
+                      rewardPoints = owner.rewardPoints;
+                      name = owner.name;
+                      stakedNFTs = Buffer.toArray(newStakedNFTList);
+                    };
+                    userRecords.put(caller, newUserData);
+                    stakedNftRecords.put(_nftID, newStakedNFT);
+                    ignore importedNftRecords.replace(_nftID, newImportedNFT);
+                    return #ok("Your NFT is staked now!");
+                  };
                 };
-                userRecords.put(caller, newUserData);
-                stakedNftRecords.put(_nftID, newStakedNFT);
-                ignore importedNftRecords.replace(_nftID, newImportedNFT);
-                return #ok("Your NFT is staked now!");
               };
             };
           } else {
@@ -261,6 +299,41 @@ actor {
       return #err(Error.message(e));
     };
   };
+
+  //   public shared ({caller}) func stakeNFT(_nftID : Text) : async Result.Result<Text, Text> {
+  //     try {
+  //       await Functions.checkAnonymous(caller);
+  //       let importedNfts = await getAllUserImportedNFTDetails(_nftID);  // Get All NFTs owned by User
+  //       switch (importedNfts) {
+  //         case(#ok(nft)) {
+  //           let nftExists = Array.filter<Text>(nft, func nft=nft==_nftID);  // Check if NFT exists in User's Imported NFTs
+  //           if(nftExists.size() == 0) {
+  //             return #err("NFT not found in User's Imported NFTs");
+  //           } else {
+  //             let stakedNfts = await getAllUserStakedNFTs();  // Get All NFTs staked by User
+  //             let stakedNftExists = Array.filter<Text>(stakedNfts, func nft=nft==_nftID);  // Check if NFT exists in User's Staked NFTs
+  //             if(stakedNftExists.size() > 0) {
+  //               return #err("NFT already staked by User");
+  //             } else {
+  //               // let stakeTransferRequest : EXT.TransferRequest = {
+  //               //   to = EXTCanisterId;
+  //               //   tokenId = Nat32.fromText(_nftID);
+  //               //   notify = false;
+  //               //   from = "3565436e7e9de384f9cf00e686632bdb313eacee3307cea899044d366ed5ae80";
+  //               //   memo = "Stake NFT";
+  //               //   amount =
+  //               // }
+  //             }
+  //           }
+  //         };
+  //         case(#err(err)) {
+  //           return #err(err);
+  //         };
+  //       }
+  //     } catch e {
+  //       return #err(Error.message(e));
+  //     };
+  // };
   // get all the staked NFTs by a user
   public shared ({ caller }) func getAllUserStakedNFTs() : async Result.Result<[Text], Text> {
     switch (userRecords.get(caller)) {
@@ -333,8 +406,10 @@ actor {
     };
   };
   // Un-staking an NFT
-  public shared ({ caller }) func unstakeNFT(_nftID : Text) : async Result.Result<Text, Text> {
+  public shared ({ caller }) func unstakeNFT(nftID : EXT.TokenIdentifier) : async Result.Result<Text, Text> {
     try {
+      await Functions.checkAnonymous(caller);
+      let _nftID = Nat.toText(Nat32.toNat(TokenIdentifier.getIndex(nftID)));
       switch (userRecords.get(caller)) {
         case (null) {
           return #err("You are not a valid user!");
@@ -342,40 +417,101 @@ actor {
         case (?user) {
           switch (stakedNftRecords.get(_nftID)) {
             case (null) {
-              return #err("No staked NFT found for this ID");
+              return #err("No staked NFT found for this ID " # _nftID);
             };
             case (?nft) {
               if (nft.owner != caller) {
                 return #err("You are not the owner of the staked NFT !");
               };
-              let updatedStakedNFTs : Buffer.Buffer<Text> = Buffer.fromArray(user.stakedNFTs);
-              var removeIndex = 0;
-              switch (Buffer.indexOf(_nftID, updatedStakedNFTs, Text.equal)) {
-                case (null) {
-                  return #err("No staked NFT with this ID owner by you");
+
+              let CanisterPrincipal = Principal.fromText("bkyz2-fmaaa-aaaaa-qaaaq-cai");
+
+              // Transfer NFT back to the owner
+              let transferRequest : EXT.TransferRequest = {
+                to = #principal caller;
+                token = nftID;
+                notify = false;
+                from = #principal CanisterPrincipal;
+                memo = "UnStake NFT";
+                amount = 1;
+                subaccount = null;
+              };
+              let transferResponse = await EXTActor.transfer(transferRequest);
+
+              switch (transferResponse) {
+                case (#err(err)) {
+                  // Print the specific error
+                  switch (err) {
+                    case (#Unauthorized(tokenID)) {
+                      return #err("Unauthorized to transfer NFT : " # tokenID);
+                    };
+                    case (#InsufficientBalance(balance)) {
+                      return #err("Insufficient balance to transfer NFT : ");
+                    };
+                    case (#Rejected) {
+                      return #err("Transfer request rejected : ");
+                    };
+                    case (#InvalidToken(tokenID)) {
+                      return #err("Invalid token ID : " # tokenID);
+                    };
+                    case (#CannotNotify(aid)) {
+                      return #err("Cannot notify the receiver");
+                    };
+                    case (#Other(e)) {
+                      return #err("Other error : " # e);
+                    };
+                  };
                 };
-                case (?value) {
-                  removeIndex := value;
+                case (#ok(_)) {
+                  let updatedStakedNFTs : Buffer.Buffer<Text> = Buffer.fromArray(user.stakedNFTs);
+                  var removeIndex = 0;
+                  switch (Buffer.indexOf(_nftID, updatedStakedNFTs, Text.equal)) {
+                    case (null) {
+                      return #err("No staked NFT with this ID owner by you");
+                    };
+                    case (?value) {
+                      removeIndex := value;
+                    };
+                  };
+                  ignore updatedStakedNFTs.remove(removeIndex);
+                  let updatedUser : UserModel.User = {
+                    id = caller;
+                    name = user.name;
+                    email = user.email;
+                    importedNFTs = user.importedNFTs;
+                    stakedNFTs = Buffer.toArray(updatedStakedNFTs);
+                    rewardPoints = user.rewardPoints +(await Functions.calculateReward(nft.stakedAt));
+                  };
+                  ignore userRecords.replace(caller, updatedUser);
+                  stakedNftRecords.delete(_nftID);
+                  return #ok("NFT successfully unstaked !");
                 };
               };
-              ignore updatedStakedNFTs.remove(removeIndex);
-              let updatedUser : UserModel.User = {
-                id = caller;
-                name = user.name;
-                email = user.email;
-                importedNFTs = user.importedNFTs;
-                stakedNFTs = Buffer.toArray(updatedStakedNFTs);
-                rewardPoints = user.rewardPoints +(await Functions.calculateReward(nft.stakedAt));
-              };
-              ignore userRecords.replace(caller, updatedUser);
-              stakedNftRecords.delete(_nftID);
-              return #ok("NFT successfully unstaked !");
+
             };
           };
         };
       };
     } catch e {
       return #err(Error.message(e));
+    };
+  };
+
+  private func updateNFTs(_nftID : Text) : () {
+    switch (importedNftRecords.get(_nftID)) {
+      case (?value) {
+        let newImportedNFT : NftModel.ImportedNFT = {
+          id = value.id;
+          metadata = value.metadata;
+          owner = value.owner;
+          isStaked = true;
+          canisterID = value.canisterID;
+        };
+        ignore importedNftRecords.replace(_nftID, newImportedNFT);
+      };
+      case (null) {
+        Debug.print(debug_show ("No NFT found with this ID"));
+      };
     };
   };
 };

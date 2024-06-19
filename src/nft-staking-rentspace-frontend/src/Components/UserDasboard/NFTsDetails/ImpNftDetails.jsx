@@ -1,13 +1,20 @@
 import React from 'react';
 import './NFTsDetails.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../utils/useAuthClient';
 import { NFTsData } from '../../../Constants/useNFTsData';
+import { tokenIndexToTokenIdentifier } from '../../../utils/utils';
+import { Principal } from '@dfinity/principal';
+import { useImportNFTData } from '../../../Context/NFTContext';
 
 const ImpNftDetails = () => {
-const Navigate = useNavigate();
 
+const Navigate = useNavigate();
+console.log("Navigate : ",Navigate)
+const {actors,principal} = useAuth();
   // Destructure NFTs and setNFTs from NFTsData hook
-  const { NFTs, setNFTs } = NFTsData();
+  const { NFTs, setNFTs } = useImportNFTData();
+  console.log(actors)
 
   // Get the location object using useLocation hook
   const location = useLocation();
@@ -16,26 +23,41 @@ const Navigate = useNavigate();
   const nftData = location.state;
 
   // Function to handle staking
-  const handleStake = (id) => {
-    // Find the index of the NFT with the given id
-    const index = NFTs.findIndex(nft => nft.id === id);
-    
-    // If the index is found, update the staked property of that NFT
-    if (index !== -1) {
-      // Create a copy of NFTs array to avoid mutating state directly
-      const updatedNFTs = [...NFTs];
-      updatedNFTs[index] = { ...updatedNFTs[index], staked: true };
-      
+  const handleStake = async(id) => {
+    // Convert the token index to token identifier
+    const tokenIdentifier = tokenIndexToTokenIdentifier(id)
+    console.log("TokenID : ",tokenIdentifier)
+
+    // Approve Token Transfer
+    const approveTransferReq = await actors.EXTActor.approve({
+      token : tokenIdentifier,
+      spender : Principal.fromText("bkyz2-fmaaa-aaaaa-qaaaq-cai"),
+      allowance : 1,
+      subaccount : []
+    })
+    console.log(approveTransferReq)
+
+    //Transfer NFT from owner to platform
+    const stakeNFTReq = await actors.userActor.stakeNFT(tokenIdentifier);
+    if(stakeNFTReq.ok) {
       // Update the NFTs state with the new array
-      setNFTs(updatedNFTs);
-      
+      setNFTs(NFTs.map(nft => {
+        if(nft.id === id) {
+          return {...nft, staked: true}
+        }
+        return nft;
+      }));
+      alert('NFT staked successfully');
+    }
+    else {
+      alert('Error staking NFT'+ stakeNFTReq.err);
     }
   };
 
   return (
     <div className='nftDetails-Cont'>
       <div className='nft-img'>
-        <img src={nftData.img} alt={nftData.name} />
+        <img src={nftData.img} alt={nftData.name} onError={'rentspace-nft.png'} />
       </div>
       <div className='nftDetails-cont'>
         <div className='nftDetails'>

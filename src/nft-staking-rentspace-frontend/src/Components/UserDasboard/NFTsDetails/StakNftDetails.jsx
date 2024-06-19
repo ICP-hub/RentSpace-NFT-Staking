@@ -2,30 +2,39 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { NFTsData } from '../../../Constants/useNFTsData';
 import './NFTsDetails.css';
+import { tokenIndexToTokenIdentifier } from '../../../utils/utils';
+import { useAuth } from '../../../utils/useAuthClient';
 
 const StakNftDetails = () => {
     // Hooks
     const { NFTs, setNFTs } = NFTsData();
+    const {actors} = useAuth();
     const location = useLocation();
 
     // Data
     const nftData = location.state && location.state;
 
     // Event Handlers
-    const handleUnstake = (id) => {
-        // Find the index of the NFT with the given id
-        const index = NFTs.findIndex(nft => nft.id === id);
-
-        // If the index is found, update the staked property of that NFT
-        if (index !== -1) {
-            // Create a copy of NFTs array to avoid mutating state directly
-            const updatedNFTs = [...NFTs];
-            updatedNFTs[index] = { ...updatedNFTs[index], staked: false };
-
-            // Update the NFTs state with the new array
-            setNFTs(updatedNFTs);
+    const handleUnstake = async(id) => {
+        // Convert the token index to token identifier
+        const tokenIdentifier = tokenIndexToTokenIdentifier(id)
+        console.log("TokenID : ",tokenIdentifier)
+        //Transfer NFT from owner to platform
+        const stakeNFTReq = await actors.userActor.unstakeNFT(tokenIdentifier);
+        if(stakeNFTReq.ok) {
+          // Update the NFTs state with the new array
+          setNFTs(NFTs.map(nft => {
+            if(nft.id === id) {
+              return {...nft, staked: false}
+            }
+            return nft;
+          }));
+          alert('NFT unstaked successfully');
         }
-    };
+        else {
+          alert('Error unstaking NFT : '+ stakeNFTReq.err);
+        }
+      };
 
     // Rendering
     return (

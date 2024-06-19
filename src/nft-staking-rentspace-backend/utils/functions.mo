@@ -19,4 +19,14 @@ module{
         let diff=Float.fromInt(currTime - _stakeTime) / 10000000000;
         return Int.abs(Float.toInt(diff));
     };
+    public func serializeMetadata(_metadata : {#fungible : {decimals : Nat8; metadata : Text; name : Text; symbol : Text}; #nonfungible : {metadata : Text}}): Text{
+        switch(_metadata){
+            case (#fungible(data)){
+                return "Fungible Token: Name: ";
+            };
+            case (#nonfungible(data)){
+                return data.metadata;
+            };
+        };
+    };
 }

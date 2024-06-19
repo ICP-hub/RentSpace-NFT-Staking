@@ -18,23 +18,33 @@ const ConnectWallet = ({ setIsConnect }) => {
   const handleNavigate = () => {
     navigate('/registerUser');
   };
-  const userLogin=async()=>{
-    await login().then(async(r)=>{
-      let newActor=(actors?.userActor==undefined)?r:actors?.userActor
-      await newActor.getUserData().then((res)=>{
-          console.log("res",res)
-          if("No user data found for this principal"==res.err){
-              navigate('registerUser')
-          }else if(res.err){
-              alert("something went wrong, please try again!")
-          }else{
-              navigate('/userDashboard')
-          }
-      }).catch((err)=>{
-          console.log("err",err)
-      })
-    })
-  }
+  const userLogin = async () => {
+    try {
+        const r = await login();
+        console.log("r ",r)
+        let newActor = (actors?.userActor == undefined) ? r : actors?.userActor;
+
+        try {
+            const res = await newActor.getUserData();
+            console.log("res", res);
+
+            if (res.err) {
+                if (res.err === "No user data found for this principal") {
+                    navigate('registerUser');
+                } else {
+                    alert("Something went wrong, please try again!");
+                }
+            } else {
+                setConnectedWallet(true)
+                navigate('/userDashboard');
+            }
+        } catch (err) {
+            console.error("Error getting user data:", err);
+        }
+    } catch (err) {
+        console.error("Login error:", err);
+    }
+};
 
   const [userData, setUserData] = useState();
 
