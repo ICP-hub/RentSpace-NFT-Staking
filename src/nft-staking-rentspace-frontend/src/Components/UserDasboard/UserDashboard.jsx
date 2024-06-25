@@ -8,10 +8,130 @@ import ImportedNFTs from './NFTsComp/ImportedNFTs';
 import StakedNFTs from './NFTsComp/StakedNFTs';
 import { NFTsData } from '../../Constants/useNFTsData';
 import { useAuth } from '../../utils/useAuthClient';
-import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../utils/utils';
+import { convertPrincipalToAccountIdentifier, formatMetadata, convertPointstoICP } from '../../utils/utils';
 import NFTProvider, { useImportNFTData } from '../../Context/NFTContext';
 
 
+const ConversionTable =()=>{
+  return(
+    <div className='w-full'>
+      <table className='w-full text-white'>
+        <thead>
+          <tr>
+            <th>Rarity</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Common</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Uncommon</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Rare</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>Epic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>Legendary</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+const Form = (props)=>{
+  const [points, setPoints] = useState(0)
+  const {actors} = useAuth()
+  
+  const handleChange = (e) =>{
+    setPoints(e.target.value)
+  }
+
+  const MIN_REQ_POINTS = 10
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    if(points < MIN_REQ_POINTS){
+      alert('Minimum 10 points required for redemption.')
+      return
+    }
+    try{
+      const transfer = await actors.userActor.claimPoints(parseInt(points))
+      if(transfer?.ok) {
+        alert("Transfered Success!")
+      }
+      else {
+        throw new Error(transfer?.err)
+      }
+    }
+    catch(e) {
+      alert(e);
+    }
+  }
+
+  return(
+    <div class="control flex flex-col justify-between items-center gap-4">
+      <label for="track">Amount to Redeem</label>
+      <input className="accent-[#180a55]"
+      id="track" type="range" min="0" max={props.points} value={points} onChange={handleChange} />
+      <input type = "number" value={points} disabled='true' aria-disabled='true'
+      className='bg-slate-300 border-2 border-[#180a55] text-center '
+      />
+      <input type="submit"
+      onClick={handleSubmit}
+      value = "Redeem" className='bg-[#180a55] w-[80%] py-4 text-white rounded-md cursor-pointer'/>
+    </div>
+  )
+}
+
+const Modal =({points})=>{
+  return(
+    <div
+      popover="auto" id="disclose"
+      className='disclosure absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+    >
+      <header className='flex flex-row justify-between items-center w-full  px-4 border-b-[1px]'>
+        <h1 className='text-white font-bold'>Redeem Rewards</h1>
+        <button  popovertarget="disclose" popovertargetaction="close"
+        className='bg-transparent border-none w-fit focus:outline-none focus:border-none focus:ring-0 text-2xl cursor-pointer'
+        >
+          <span aria-hidden="true" className='text-white'>x</span>
+        </button>
+      </header>
+      <div className = 'w-full flex flex-row justify-between items-center px-4'>
+        <div className=' bg-[#180a55] rounded-md p-2 w-44 text-white'>
+          <p className='text-center'>Total Rewards Points</p>
+          <p className='text-center'>{points.toString()}</p>
+        </div>
+        <div className=' bg-[#180a55] rounded-md p-2 w-44 text-white'>
+          <p className='text-center'>Points Worth</p>
+          <p className='text-center'>{convertPointstoICP(points).toString()} ICP</p>
+        </div>
+      </div>
+      <div className='flex flex-row justify-between items-start w-full px-4 h-full py-3'>
+        <div className='w-1/2'>
+          <Form points={points}/>
+        </div>
+        <div className='w-1/2 flex flex-col gap-6'>
+          <ConversionTable/>
+          <div className='p-4 w-full border-red-600 border-2 bg-slate-300 rounded-md'>
+            <p className='text-red-500'>Note : Minimum 10 points required for redemption.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const UserDashboard = () => {
   const location = useLocation();
@@ -60,7 +180,7 @@ const UserDashboard = () => {
   useEffect(() => {
     getUserInfo()
     // console.log(formatMetadata())
-  }, [])
+  }, [userData])
 
   return (
     <div className='dashboard-cont'>
@@ -87,13 +207,25 @@ const UserDashboard = () => {
               </div>
               <h1 className='email-text'>{userData?.email}</h1>
               <p className='extra-info'>Total points earned : {parseInt(userData?.rewardPoints)}</p>
+              <div className='flex flex-row justify-between gap-4'>
               <button
-                className='button'
+                className='flex items-center bg-violet-500 hover:bg-violet-600
+                 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300
+                 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out'
                 onClick={importNFTs}>
-                <p>Import NFTs</p>
-                </button>
+                <p className='text-center w-full'>Import NFTs</p>
+              </button>
+              <button
+              popovertarget="disclose"
+              popovertargetaction="toggle"
+              className = 'flex items-center bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 text-white rounded-full cursor-pointer transition-all duration-300 ease-in-out'>
+                <p className='text-center w-full'>Redeem Rewards</p>
+              </button>
+              </div>
             </div>
           </div>
+
+          <Modal points = {userData?.rewardPoints}/>
 
           <div className='userData-col2'>
             {
@@ -107,9 +239,9 @@ const UserDashboard = () => {
 
           </div>
 
-          <div className='NFTSection-btn'>
-            <h1 onClick={() => setSwitchSection(false)} className={!switchSection && 'bg-gray-500 rounded-lg'} >Imported_NFTs</h1>
-            <h1 onClick={() => setSwitchSection(true)} className={switchSection && 'bg-gray-500 rounded-lg'}>Staked_NFTs</h1>
+          <div className='flex justify-start items-center gap-8 w-screen py-4'>
+            <h1 onClick={() => setSwitchSection(false)} className={!switchSection && 'border-white rounded-full border-[1px] p-2 cursor-pointer'} >Imported NFTs</h1>
+            <h1 onClick={() => setSwitchSection(true)} className={switchSection && 'border-white rounded-full border-[1px] p-2 cursor-pointer'}>Staked NFTs</h1>
 
           </div>
 

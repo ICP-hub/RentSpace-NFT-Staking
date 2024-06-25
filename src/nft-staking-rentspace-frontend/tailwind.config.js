@@ -1,5 +1,6 @@
-/** @type {import(tailwindcss').Config */
-export const content = ["./src/nft-staking-rentspace-frontend/src/**/*.{html,js,jsx,tsx}"];
+/** @type {import(tailwindcss').Config }*/
+export const content = ["./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",];
 export const theme = {
 extend: {},
 };

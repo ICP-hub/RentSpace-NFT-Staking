@@ -21,6 +21,7 @@ const {actors,principal} = useAuth();
 
   // Access nftData from location.state if it exists
   const nftData = location.state;
+  console.log("NFTS : ",NFTs)
 
   // Function to handle staking
   const handleStake = async(id) => {
@@ -40,13 +41,6 @@ const {actors,principal} = useAuth();
     //Transfer NFT from owner to platform
     const stakeNFTReq = await actors.userActor.stakeNFT(tokenIdentifier);
     if(stakeNFTReq.ok) {
-      // Update the NFTs state with the new array
-      setNFTs(NFTs.map(nft => {
-        if(nft.id === id) {
-          return {...nft, staked: true}
-        }
-        return nft;
-      }));
       alert('NFT staked successfully');
     }
     else {
@@ -63,7 +57,7 @@ const {actors,principal} = useAuth();
         <div className='nftDetails'>
           <h1>{nftData.name}</h1>
           <p>Other Details</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quia?</p>
+          <p>{nftData.desc}</p>
           {/* Use a button element for better accessibility */}
           <button onClick={() => handleStake(nftData.id)} className='stake-btn'>Stake</button>
         </div>

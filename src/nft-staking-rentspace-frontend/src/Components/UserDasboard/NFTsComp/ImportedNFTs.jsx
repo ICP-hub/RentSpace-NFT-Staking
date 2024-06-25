@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { NFTsData } from '../../../Constants/useNFTsData';
 import { useAuth } from '../../../utils/useAuthClient';
 import {formatMetadata} from '../../../utils/utils'
-import Loader from '../../Loader'
+import { HashLoader } from 'react-spinners';
 
 const ImportedNFTs = () => {
   // State variables
@@ -68,8 +68,8 @@ const ImportedNFTs = () => {
   console.log("Imported NFTs", importedNFTs);
 
   // Event handler for viewing NFT details
-  function nftDetailsHandle(id, name, img) {
-    navigate('/ImpNftDetails', { state: { id, name, img } });
+  function nftDetailsHandle(id, name, img, desc) {
+    navigate('/ImpNftDetails', { state: { id, name, img, desc } });
   }
 
   // const getAllImportedNFTs = async () => {
@@ -97,11 +97,11 @@ const ImportedNFTs = () => {
   // Render Method
   return (
     <div className='nft-Maincont'>
-      {isLoading && <Loader num={2}/>}
+      {isLoading && <HashLoader color="#fff"/>}
         {(!isLoading && importedNFTs.length>0) && importedNFTs.map((nft, ind) => (
-          <div className='nftCont' key={ind} onClick={() => nftDetailsHandle(nft.id, nft.metadata.name, nft.metadata.thumb)}>
+          <div className='nftCont' key={ind} onClick={() => nftDetailsHandle(nft.id, nft.metadata.name, nft.metadata.thumb,nft.metadata.description)}>
             <div className='nftImg-cont'>
-              <img src={'rentspace-nft.png'} alt='nft-image' />
+              <img src={nft.metadata.thumb} alt='nft-image' />
             </div>
             <h1>{nft.metadata.name}</h1>
           </div>

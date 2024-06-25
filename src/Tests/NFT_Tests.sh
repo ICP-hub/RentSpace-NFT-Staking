@@ -1,5 +1,6 @@
 Canister="nft-staking-rentspace-backend"
 nftID="sampleNFTID"
+aid = ""    // Generate for Principal
 metadata="sampleMetadata"
 canisterID="sampleCanisterID"
 pageNumber=1

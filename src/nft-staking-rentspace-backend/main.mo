@@ -11,11 +11,13 @@ import Array "mo:base/Array";
 import Nat "mo:base/Nat";
 import Debug "mo:base/Debug";
 import Nat32 "mo:base/Nat32";
+import Blob "mo:base/Blob";
 import Functions "utils/functions";
 import NftModel "models/nftModel";
 import EXT "EXT";
 import Utils "utils/functions";
 import TokenIdentifier "utils/tokenIdentifier";
+import ICRC "ICP";
 
 actor {
   var userRecords = TrieMap.TrieMap<Principal, UserModel.User>(Principal.equal, Principal.hash);
@@ -29,6 +31,8 @@ actor {
 
   var EXTCanisterId = "be2us-64aaa-aaaaa-qaabq-cai";
   let EXTActor = actor (EXTCanisterId) : EXT.erc721_token;
+  let ICRCCanisterId = "ryjl3-tyaaa-aaaaa-aaaba-cai";
+  let ICRCACTOR = actor (ICRCCanisterId) : ICRC.Token;
 
   system func preupgrade() {
     stableUserRecords := Iter.toArray(userRecords.entries());
@@ -158,6 +162,7 @@ actor {
                   owner = caller;
                   isStaked = false;
                   canisterID = EXTCanisterId;
+                  rarity = Utils.extractRarity(Utils.serializeMetadata(metadata));
                 };
 
                 if (metadataExample == "") {
@@ -218,7 +223,7 @@ actor {
                   case (null) {};
                 };
                 // // Make Transfer Request
-                let CanisterPrincipal = Principal.fromText(EXTCanisterId);
+                let CanisterPrincipal = Principal.fromText("bkyz2-fmaaa-aaaaa-qaaaq-cai");
 
                 let transferRequest : EXT.TransferRequest = {
                   to = #principal CanisterPrincipal;
@@ -261,6 +266,7 @@ actor {
                       owner = caller;
                       canisterID = value.canisterID;
                       stakedAt = Time.now();
+                      rarity = Utils.extractRarity(value.metadata);
                     };
                     let newImportedNFT : NftModel.ImportedNFT = {
                       id = _nftID;
@@ -268,6 +274,7 @@ actor {
                       owner = caller;
                       canisterID = value.canisterID;
                       isStaked = true;
+                      rarity = Utils.extractRarity(value.metadata);
                     };
                     var newStakedNFTList : Buffer.Buffer<Text> = Buffer.fromArray(owner.stakedNFTs);
                     newStakedNFTList.add(_nftID);
@@ -474,13 +481,22 @@ actor {
                     };
                   };
                   ignore updatedStakedNFTs.remove(removeIndex);
+                  let newImportedNFT : NftModel.ImportedNFT ={
+                    id = _nftID;
+                    metadata = nft.metadata;
+                    owner = caller;
+                    isStaked = false;
+                    canisterID = nft.canisterID;
+                    rarity = Utils.extractRarity(nft.metadata);
+                  };
+                  ignore importedNftRecords.replace(_nftID, newImportedNFT);
                   let updatedUser : UserModel.User = {
                     id = caller;
                     name = user.name;
                     email = user.email;
                     importedNFTs = user.importedNFTs;
                     stakedNFTs = Buffer.toArray(updatedStakedNFTs);
-                    rewardPoints = user.rewardPoints +(await Functions.calculateReward(nft.stakedAt));
+                    rewardPoints = user.rewardPoints +(await Functions.calculateReward(nft.stakedAt,newImportedNFT.rarity));
                   };
                   ignore userRecords.replace(caller, updatedUser);
                   stakedNftRecords.delete(_nftID);
@@ -497,6 +513,70 @@ actor {
     };
   };
 
+  public shared ({caller}) func claimPoints(points : Nat) : async Result.Result<Text, Text> {
+    let user = userRecords.get(caller);
+    switch(user) {
+      case(null) {
+        return #err("User does not exist");
+      };
+      case(?value) {
+        let transferRequest : ICRC.TransferArg = {
+          amount = Utils.convertPointsToICP(points);
+          memo = null;
+          fee = null;
+          from_subaccount = null;
+          to = {owner = caller; subaccount = null};
+          created_at_time = null;
+        };
+
+        let transferResponse : ICRC.Icrc1TransferResult = await ICRCACTOR.icrc1_transfer(transferRequest);
+
+        switch(transferResponse) {
+          case(#Ok(_)) {
+            let updatedUser : UserModel.User = {
+              id = caller;
+              name = value.name;
+              email = value.email;
+              importedNFTs = value.importedNFTs;
+              stakedNFTs = value.stakedNFTs;
+              rewardPoints = value.rewardPoints - points;
+            };
+            ignore userRecords.replace(caller, updatedUser);
+            return #ok("Points claimed successfully");
+            };
+          case(#Err(err)) {
+            switch(err) {
+              case(#GenericError(e)) {
+                return #err("Error in claimin points : " # e.message);
+              };
+              case(#TemporarilyUnavailable) {
+                return #err("Temporarily unavailable");
+              };
+              case(#BadBurn(e)) {
+                return #err("Bad burn : ");
+              };
+              case(#Duplicate(e)) {
+                return #err("Duplicate : " );
+              };
+              case(#BadFee(e)) {
+                return #err("Bad fee : ");
+              };
+              case(#CreatedInFuture(e)) {
+                return #err("Created in future : ");
+              };
+              case(#TooOld) {
+                return #err("Too old");
+              };
+              case(#InsufficientFunds(e)) {
+                return #err("Insufficient funds : ");
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+
   private func updateNFTs(_nftID : Text) : () {
     switch (importedNftRecords.get(_nftID)) {
       case (?value) {
@@ -506,6 +586,7 @@ actor {
           owner = value.owner;
           isStaked = true;
           canisterID = value.canisterID;
+          rarity = Utils.extractRarity(value.metadata);
         };
         ignore importedNftRecords.replace(_nftID, newImportedNFT);
       };

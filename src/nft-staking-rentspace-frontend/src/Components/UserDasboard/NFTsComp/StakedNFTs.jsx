@@ -5,6 +5,7 @@ import { formatMetadata } from '../../../utils/utils';
 import { useAuth } from '../../../utils/useAuthClient';
 import Loader from '../../Loader'
 import { Principal } from '@dfinity/principal';
+import { HashLoader } from 'react-spinners';
 
 const StakedNFTs = () => {
   // State variables
@@ -62,8 +63,8 @@ const StakedNFTs = () => {
   }, [NFTs]);
 
   // Event handler for viewing NFT details
-  function nftDetailsHandle(id, name, img, metadata) {
-    navigate('/StakNftDetails', { state: { id, name, img, metadata } });
+  function nftDetailsHandle(id, name, img, desc) {
+    navigate('/StakNftDetails', { state: { id, name, img, desc } });
   }
 
   // const getAllStakedNFTs=async()=>{
@@ -88,11 +89,11 @@ const StakedNFTs = () => {
   // Render Method
   return (
     <div className='nft-Maincont'>
-      {isLoading && <Loader num={3}/>}
+      {isLoading && <HashLoader color='#fff'/>}
         {(!isLoading && stakedNFTs.length>0) && stakedNFTs.map(((nft, ind) => (
-          <div className='nftCont' key={ind} onClick={() => nftDetailsHandle(nft.id, nft.metadata.name, nft.metadata.thumb, nft.metadata)}>
+          <div className='nftCont' key={ind} onClick={() => nftDetailsHandle(nft.id, nft.metadata.name, nft.metadata.thumb, nft.metadata.description)}>
             <div className='nftImg-cont'>
-              <img src={'rentspace-nft.png'} alt='nft-image' />
+              <img src={nft.metadata.thumb} alt='nft-image' />
             </div>
             <h1>{nft.metadata.name}</h1>
           </div>

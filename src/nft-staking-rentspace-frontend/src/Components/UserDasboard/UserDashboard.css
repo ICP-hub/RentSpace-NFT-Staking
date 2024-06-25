@@ -1,3 +1,83 @@
+:root {
+    --duration: 0.35s;
+    --padding: 0.675rem;
+    --radius: 8px;
+    --ease: linear(
+      0 0%,
+      0.0036 9.62%,
+      0.0185 16.66%,
+      0.0489 23.03%,
+      0.0962 28.86%,
+      0.1705 34.93%,
+      0.269 40.66%,
+      0.3867 45.89%,
+      0.5833 52.95%,
+      0.683 57.05%,
+      0.7829 62.14%,
+      0.8621 67.46%,
+      0.8991 70.68%,
+      0.9299 74.03%,
+      0.9545 77.52%,
+      0.9735 81.21%,
+      0.9865 85%,
+      0.9949 89.15%,
+      1 100%
+    );
+    --ease-out: linear(
+      0 0%,
+      0.4322 6.7%,
+      0.5876 9.63%,
+      0.7165 12.53%,
+      0.8238 15.53%,
+      0.9087 18.63%,
+      0.9731 21.89%,
+      1.0188 25.4%,
+      1.0377 27.67%,
+      1.0507 30.11%,
+      1.058 32.77%,
+      1.0598 35.74%,
+      1.0528 41.1%,
+      1.0164 56.54%,
+      1.004 65.49%,
+      0.998 78.52%,
+      1 100%
+    );
+    --sw: 160px;
+    --sh: 48px;
+    --ew: 520px;
+    --eh: 500px;
+  
+    /* Shadow */
+    --base: hsl(
+      var(--tint, 214) var(--saturated, 0%) 27% / calc(var(--alpha, 4) * 1%)
+    );
+    --shade: hsl(from var(--base) calc(h + 8) 25 calc(l - 5));
+    --spread: 4;
+    --s1: calc((var(--spread) * 1px) * pow(2, 0));
+    --s2: calc((var(--spread) * 1px) * pow(2, 1));
+    --s3: calc((var(--spread) * 1px) * pow(2, 2));
+    --s4: calc((var(--spread) * 1px) * pow(2, 3));
+    --s5: calc((var(--spread) * 1px) * pow(2, 4));
+    /* this becomes the angle of spread, -1 through to 1 */
+    --x: 0;
+    --perfect-shadow: 0 0 0 1px var(--base), 0 1px 1px -0.5px var(--shade),
+      calc(var(--s1) * var(--x)) var(--s1) var(--s1) calc(var(--s1) * -0.5)
+        var(--shade),
+      calc(var(--s2) * var(--x)) var(--s2) var(--s2) calc(var(--s2) * -0.5)
+        var(--shade),
+      calc(var(--s3) * var(--x)) var(--s3) var(--s3) calc(var(--s3) * -0.5)
+        var(--base),
+      calc(var(--s4) * var(--x)) var(--s4) var(--s4) calc(var(--s4) * -0.5)
+        var(--base),
+      calc(var(--s5) * var(--x)) var(--s5) var(--s5) calc(var(--s5) * -0.5)
+        var(--base);
+    --border: color-mix(in lch, canvasText, transparent 90%);
+    --hr: color-mix(in lch, canvas, canvasText 10%);
+    --speed: 0.35s;
+    --starting: color-mix(in lch, canvas, canvasText 20%);
+    --text: canvasText;
+  }
+
 .dashboard-cont{
     @apply text-white
 }
@@ -60,3 +140,69 @@
 .NFTSection-btn h1{
     @apply p-3 px-6 mr-16 my-10 text-lg font-bold
 }
+
+.button-container{
+    @apply flex flex-row justify-between items-center gap-4
+}
+
+[popovertargetaction='close'] {
+    outline-offset: -0.875rem;
+  }
+
+  .disclosure {
+    transition-property: width, height, border-radius;
+    transition-duration: var(--duration);
+    transition-timing-function: var(--ease);
+  }
+
+  #disclose {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    position-anchor: --control;
+    inset-area: var(--inset, center);
+    width: anchor-size(width);
+    height: anchor-size(height);
+    border-radius: calc(var(--sh) * 0.5);
+    background-color: var(--starting);
+    color: var(--text);
+    background-image: url("/coinBG.png");
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+  
+    overflow: hidden;
+  
+    transition-property: display, overlay, height, width, border-radius,
+      box-shadow, background-color, border-color, color;
+    transition-behavior: allow-discrete;
+    transition-duration: var(--speed);
+    transition-timing-function: var(--ease);
+  
+    &:popover-open {
+      height: var(--eh);
+      width: var(--ew);
+      border-radius: var(--radius);
+      box-shadow: 0 0 0 2px var(--border), var(--perfect-shadow);
+      transition-duration: calc(2 * var(--speed));
+      transition-timing-function: var(--ease-out);
+      @apply bg-violet-600;
+    }
+  
+    @starting-style {
+      &:popover-open {
+        @apply bg-violet-600;
+        color: var(--text);
+        width: anchor-size(--control width);
+        height: anchor-size(--control height);
+        border-radius: calc(var(--sh) * 0.5);
+        box-shadow: 0 0 0 0 #0000;
+      }
+    }
+  }
+  
+  #disclose:popover-open {
+    display: grid;
+    align-items: start;
+    /* grid-template-rows: 10% 90%; */
+  }

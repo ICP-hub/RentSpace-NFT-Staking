@@ -40,3 +40,9 @@ export function tokenIndexToTokenIdentifier(tokenIdx) {
   const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"be2us-64aaa-aaaaa-qaabq-cai"
   return encodeTokenIdentifier(canID, tokenIdx);
 }
+
+export function convertPointstoICP(points) {
+  // convert points from bigint to int
+  let pointsInt = Number(points)
+  return pointsInt * 0.01;
+}

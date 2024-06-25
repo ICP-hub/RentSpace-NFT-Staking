@@ -16,7 +16,7 @@ export default function NFTProvider({children}) {
                     return []
                 }
             });
-            console.log(nfts)
+            console.log("imported : ",nfts)
             setNFTData(nfts)
         }
         fetchData()

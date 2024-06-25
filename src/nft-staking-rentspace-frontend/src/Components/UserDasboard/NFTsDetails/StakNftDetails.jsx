@@ -23,12 +23,12 @@ const StakNftDetails = () => {
         const stakeNFTReq = await actors.userActor.unstakeNFT(tokenIdentifier);
         if(stakeNFTReq.ok) {
           // Update the NFTs state with the new array
-          setNFTs(NFTs.map(nft => {
-            if(nft.id === id) {
-              return {...nft, staked: false}
-            }
-            return nft;
-          }));
+          // setNFTs(NFTs.map(nft => {
+          //   if(nft.id === id) {
+          //     return {...nft, staked: false}
+          //   }
+          //   return nft;
+          // }));
           alert('NFT unstaked successfully');
         }
         else {
@@ -46,7 +46,7 @@ const StakNftDetails = () => {
                 <div className='nftDetails'>
                     <h1>{nftData ? nftData.name : 'Loading...'}</h1>
                     <p>Other Details</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, quia?</p>
+                    <p>{nftData ? nftData.desc : 'Lorem Ipsum'}</p>
                     <div className='btn-cont'>
                         <h2 className='Claim-btn'>Claim reward</h2>
                         <h2 onClick={() => handleUnstake(nftData.id)} className='unstake-btn'>Unstake</h2>
