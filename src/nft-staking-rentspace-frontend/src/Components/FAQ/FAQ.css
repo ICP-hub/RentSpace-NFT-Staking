@@ -1,0 +1,30 @@
+/* FAQ component styling */
+
+.FAQ-mainCont{
+ @apply  mt-28 bg-gradient-to-b from-[#FFFFFF] to-[#E0E0E0] h-screen overflow-y-auto
+}
+
+.FAQ-heading{
+    @apply text-center text-4xl font-medium
+}
+
+.FAQs-cont{
+    @apply mx-[24%] mt-8
+}
+
+/* FAQ_Question component styling */
+.line{
+@apply border border-[#373737]
+}
+
+.Question-cont{
+    @apply flex justify-between mx-8 text-xl font-medium py-4
+}
+
+.Question-cont img{
+    @apply w-5
+}
+
+.FAQ-answer{
+    @apply mx-[10%] pb-4
+}

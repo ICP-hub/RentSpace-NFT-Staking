@@ -23,3 +23,7 @@ dist/
 
 # environment variables
 .env
+
+
+
+src/nft-staking-rentspace-backend/*

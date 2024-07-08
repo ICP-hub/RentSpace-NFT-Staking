@@ -1,0 +1,136 @@
+
+/* HeroPage component styling */
+
+.Hero-MainCont {
+    background-image: url('Rectangle 39920.png');
+    @apply h-screen w-screen bg-cover bg-no-repeat object-cover bg-center;
+  }
+  
+  .Hero-innerCont {
+    @apply flex justify-center items-center pt-[14%] text-white;
+  }
+  
+  .Hero-cont {
+  }
+  
+  .heading1 {
+    position: relative;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    @apply px-32 pb-8 pt-2
+  }
+  
+  .heading1::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65  my-2 rounded-3xl -z-10  ;
+    
+  }
+  
+  .heading1 h1 {
+    @apply text-center font-bold text-8xl ;
+  }
+  
+  .heading2::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10 ;
+  }
+
+  .heading2 {
+    position: relative;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    @apply px-32 py-5  
+  }
+  
+  .heading2 h1 {
+    @apply text-center font-bold text-3xl ;
+  }
+
+  .goStake-btn{
+    @apply flex justify-center mt-24
+  }
+
+  .goStake-btn button{
+
+    @apply p-4 px-16 text-2xl rounded-2xl font-medium  shadow-lg bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] 
+  }
+
+
+
+
+
+  
+
+
+/*  RentspaceWorlds Component Styling*/
+
+
+.tagline-cont{
+    @apply flex flex flex-wrap my-48
+}
+
+.tagline-cont p{
+    @apply mx-[28%] text-[29px] font-medium text-center
+}
+
+.Heading{
+  @apply text-center text-5xl font-medium
+}
+
+.RentSpaceWorlds{
+  @apply my-16 mx-10 bg-[#F0F0F0] px-12 py-8 rounded-3xl  shadow-lg
+}
+.worldsImg{
+  @apply flex justify-between 
+}
+
+.worldsImg img{
+  @apply h-[286px] w-[280px]
+}
+
+.villasImg{
+  @apply flex  justify-between mx-8
+}
+.villasImg img{
+  @apply h-[150px] w-[180px]
+}
+
+/* Custom styles for the timeline */
+
+.timeline-cont {
+  @apply flex items-center justify-between mx-28 my-4;
+}
+
+.timeline-item {
+  @apply text-center  ;
+}
+
+.timeline-item p{
+  @apply text-xl font-semibold mb-2
+}
+.timeline-circle {
+  @apply w-8 h-8 rounded-full border-8 border-blue-500 mx-auto;
+}
+
+.timeline-line {
+  @apply flex-grow border-t-2 border-dotted border-blue-500 mt-8;
+}
+
+
+
+
+
+
+
+
+/*  JourneyStart component styling */
+
+ .JourneyStart-cont{
+  @apply flex flex-col items-center bg-[#f2f2f2] h-screen
+ }
+
+ .JourneyStart-cont p{
+  @apply mx-[28%] text-[29px] font-medium text-center mt-28
+ }
+
+ .JourneyStart-cont button{
+  @apply  p-4 px-16 bg-[#0285E3] text-2xl rounded-2xl font-medium text-white my-16 shadow-lg
+ }

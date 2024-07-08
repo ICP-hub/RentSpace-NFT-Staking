@@ -1,28 +1,39 @@
-.Nav-cont{
-    @apply grid grid-cols-12 text-white shadow-sm text-lg font-medium items-center font-serif 
-    
-}
-
-.img-cont{
-    @apply col-span-3 ml-[10%] my-1
-}
-
-.img{
-    @apply w-28 rounded-2xl
-}
-
-.menu-items-cont{
-    @apply flex col-span-6 justify-between mx-[8vw] items-center 
-}
-
-.menu-items-cont li{
-    @apply mx-2 text-xl font-bold hover:text-[#c86df6] cursor-pointer
-}
-
-.connect-cont{
-    @apply col-span-3 flex items-center bg-[#c86df6] text-white w-[70%]  rounded-full cursor-pointer
-}
-
-.connect-cont h1{
-    @apply mx-auto p-4
-}
+.navbar-mainCont{
+    @apply w-full absolute top-4
+  }
+  
+  .navbar-cont{
+      @apply grid grid-cols-12 bg-[#000000] bg-opacity-50   mx-[2%] rounded-full items-center text-white
+  }
+  
+  .Logo-cont{
+      @apply col-span-4
+  }
+  
+  .logo{
+      @apply w-20 ml-5
+  }
+  
+  .navItems-cont{
+      @apply col-span-4 flex justify-evenly text-lg font-semibold
+  }
+  
+  .connectBtn-mainCont{
+      @apply col-span-4 flex justify-end mr-10  py-4
+  }
+  
+  .connectBtn-cont{
+     @apply outline outline-blue-600 flex rounded-full 
+  }
+  
+  .btn1{
+      @apply mx-4 p-2
+  }
+  
+  .btn2{
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2 
+  }
+  
+  .btn2 span{
+      @apply mx-4
+  }

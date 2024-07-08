@@ -1,61 +1,35 @@
-
 import './App.css';
-import LandingPage from './Components/LandingPage/LandingPage';
-import RegisterUser from './Components/RegisterUser/RegisterUser';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainContainer from './MainContainer';
-import UserDashboard from './Components/UserDasboard/UserDashboard';
-import ImportedNFTs from './Components/UserDasboard/NFTsComp/ImportedNFTs';
-import StakedNFTs from './Components/UserDasboard/NFTsComp/StakedNFTs';
-import StakNftDetails from './Components/UserDasboard/NFTsDetails/StakNftDetails';
-import ImpNftDetails from './Components/UserDasboard/NFTsDetails/ImpNftDetails';
-
+import HomePage from './Components/Home/HomePage';
+import MySpaces from './Components/My Spaces/MySpaces';
+import FAQ from './Components/FAQ/FAQ';
 
 function App() {
- 
-  const browserRouter=createBrowserRouter([
+
+  const browserRouter = createBrowserRouter([
     {
-      path:'/',
-      element:<MainContainer/>,
-     children:[
-      {
-        path:'/',
-        element:<LandingPage/>
-      },
-      {
-        path:'registerUser',
-        element:<RegisterUser/>
-      },
-      {
-        path:'/userDashboard',
-        element:<UserDashboard/>,
-   
-      },
-      {
-        path:'/ImpNftDetails',
-        element:<ImpNftDetails/>,
-   
-      },
-      {
-        path:'/StakNftDetails',
-        element:<StakNftDetails/>,
-   
-      }
-
-     ]
-    },
- 
-  
-  ])
-
-  
+      path: '/',
+      element: <MainContainer />,
+      children: [
+        {
+          path: '/',
+          element: <HomePage />
+        },
+        {
+          path: '/mySpaces',
+          element: <MySpaces />
+        },
+        {
+          path: '/FAQ',
+          element: <FAQ/>
+        }
+      ]
+    }
+  ]);
 
   return (
-    <div className="app">
-    <RouterProvider router={browserRouter}>
-
-    </RouterProvider>
-    </div>
+    <RouterProvider router={browserRouter} />
   );
 }
 

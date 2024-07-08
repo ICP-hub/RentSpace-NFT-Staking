@@ -1,59 +1,29 @@
-import React, { useContext, useEffect } from 'react';
-import './Navbar.css';
-import { myContext } from '../../MainContainer';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../utils/useAuthClient';
+import React, { useState } from 'react'
+import './Navbar.css'
 
 const Navbar = () => {
-  // Context usage
-  const { setIsConnect, connectedWallet, setConnectedWallet } = useContext(myContext);
-  const {isAuthenticated,logout}=useAuth()
-  
-  // Navigation hook
-  const navigate = useNavigate();
-
-  // Menu items array
-  const menuItems = ['Stake', 'Buy', 'Contact', 'Dashboard'];
-
-  // Logout handler
-  async function handleLogout() {
-    // Logic of logout
-    await logout()
-    navigate('/');
-  }
-
-  useEffect(()=>{
-    if(!isAuthenticated){
-      navigate('/')
-    }
-  },[])
-
+  const [navItems, setItems]=useState(['Leaderboard', 'FAQ', 'My Worlds']);
   return (
-    <div className='Nav-cont'>
-      <div className='img-cont'>
-        <img src="rentspaceLogo.png" className='img' alt="Logo" />
+    <div className='navbar-mainCont'>
+    <div className='navbar-cont'>
+
+      <div className='Logo-cont'>
+      <img className='logo' src='RentSpace_logo_black(transp) 6.png'/>
       </div>
-      <ul className='menu-items-cont'>
-        {menuItems.map((item, index) => (
-          <li key={index} onClick={()=>{
-            if(isAuthenticated){
-              navigate('/userDashboard')
-            }
-          }}>{item}</li>
-        ))}
+      <ul className='navItems-cont' >
+         {navItems.map((item, ind)=>  <li> {item} </li>   )}
       </ul>
 
-      {isAuthenticated ? (
-        <div className='connect-cont' onClick={handleLogout}>
-          <h1>Logout</h1>
-        </div>
-      ) : (
-        <div className='connect-cont' onClick={() => setIsConnect(true)}>
-          <h1>Join us</h1>
-        </div>
-      )}
+      <section className='connectBtn-mainCont'>
+         <div className='connectBtn-cont'>
+         <div className='btn1'> Connected </div>
+         <div className='btn2'> <span>Connect Wallet </span></div>
+         </div>
+          
+      </section>
     </div>
-  );
-};
+    </div>
+  )
+}
 
-export default Navbar;
+export default Navbar
