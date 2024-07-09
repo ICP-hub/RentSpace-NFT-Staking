@@ -1,0 +1,44 @@
+.nftDetails-Cont{
+    background-image: url('image 808.png');
+    @apply flex mx-[10%] lg:mx-[20%] my-[5%] mt-[10%]
+}
+
+.nft-img{
+    @apply w-[80%]
+}
+
+.nft-img img{
+    @apply w-full h-full rounded-lg
+}
+
+.nftDetails-cont{
+    @apply  w-full flex justify-center p-5 px-20
+ }
+
+ .nftDetails{
+    @apply text-xl text-white
+ }
+
+ .nftDetails h1{
+    @apply text-4xl font-medium  my-6
+ }
+
+.stake-btn{
+    @apply p-2 px-6 bg-[#c86df6] rounded-full text-center font-bold text-lg  my-16 cursor-pointer hover:bg-blue-500 transition-all duration-500
+}
+
+
+/* stakedNftdetails */
+
+.btn-cont{
+    @apply flex
+
+}
+
+.Claim-btn{
+    @apply  bg-[#c86df6] rounded-full text-center font-bold text-lg p-2 px-6  my-16 mr-[5%] cursor-pointer hover:bg-blue-500 transition-all duration-500
+}
+
+.unstake-btn{
+    @apply  bg-[#c86df6] rounded-full text-center font-bold text-lg p-2 px-6 my-16 ml-[5%] cursor-pointer hover:bg-blue-500 transition-all duration-500
+}

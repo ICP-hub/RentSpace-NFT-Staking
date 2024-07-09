@@ -1,0 +1,14 @@
+.Footer-mainCont{
+    @apply bg-[#2A2A2A] text-white flex items-center p-10
+}
+
+.Footer-mainCont h1{
+    @apply absolute ml-10 font-medium text-lg
+}
+.logos{
+    @apply flex w-full justify-center
+}
+
+.logos img {
+    @apply  w-10
+}
