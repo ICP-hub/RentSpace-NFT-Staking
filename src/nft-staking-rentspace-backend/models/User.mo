@@ -1,7 +1,6 @@
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Nat "mo:base/Nat";
-import NFTTypes "NFT";
 module {
     public type User = {
         id : Principal;
@@ -9,8 +8,8 @@ module {
         email : Text;
         rewardPoints : Nat;
         rank : Nat;
-        importedNFTs : [NFTTypes.NFT];
-        stakedNFTs : [NFTTypes.NFT];
+        importedNFTs : [Text];
+        stakedNFTs : [Text];
     };
 
     public type UserInput = {
