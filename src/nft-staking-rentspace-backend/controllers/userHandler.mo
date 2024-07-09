@@ -104,7 +104,7 @@ module {
 
         private func checkUserExists(id : Principal) : Bool {
             switch(userRecords.get(id)) {
-                case(user) {
+                case(?user) {
                     return true;
                 };
                 case(null) {
