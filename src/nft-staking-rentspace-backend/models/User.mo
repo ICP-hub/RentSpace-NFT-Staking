@@ -1,0 +1,19 @@
+import Principal "mo:base/Principal";
+import Text "mo:base/Text";
+import Nat "mo:base/Nat";
+module {
+    public type User = {
+        id : Principal;
+        name : Text;
+        email : Text;
+        rewardPoints : Nat;
+        rank : Nat;
+        importedNFTs : [];
+        stakedNFTs : [];
+    };
+
+    public type UserInput = {
+        name : Text;
+        email : Text;
+    };
+}
