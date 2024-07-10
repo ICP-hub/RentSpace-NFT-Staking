@@ -1,3 +1,5 @@
+
+
 .navbar-mainCont{
     @apply w-full absolute top-4
   }
@@ -23,17 +25,17 @@
   }
   
   .connectBtn-cont{
-     @apply outline outline-blue-600 flex rounded-full 
+     @apply outline outline-blue-600 flex rounded-full w-[275px]  relative h-10 transition-all duration-500 font-medium
   }
   
   .btn1{
-      @apply mx-4 p-2
+     @apply m-2 ml-4
   }
   
   .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2 
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute
   }
   
   .btn2 span{
-      @apply mx-4
+      @apply mx-4 cursor-pointer
   }
