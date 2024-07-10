@@ -1,34 +1,6 @@
-Canister="nft-staking-rentspace-backend"
-nftID="sampleNFTID"
-metadata="sampleMetadata"
-canisterID="sampleCanisterID"
-pageNumber=1
-pageSize=10
+canister="nft-staking-rentspace-backend"
+account_id=$(dfx ledger account-id | grep -oP '(?<=\")(.*?)(?=\")')
 
+echo "'${account_id}'"
 
-
-
-echo "---------Importing new NFT----------"
-dfx canister call $Canister importNewNFT '(record {
- id="'${nftID}'";
- metadata="'${metadata}'";
- canisterID="'${canisterID}'"; 
-})'
-
-
-echo "---------Staking imported NFT----------"
-dfx canister call $Canister stakeNFT '("'${nftID}'")'
-
-echo "---------Getting details of imported NFT----------"
-dfx canister call $Canister getImportedNFTDetails '("'${nftID}'")'
-
-
-echo "---------Getting details of staked NFT----------"
-dfx canister call $Canister getStakedNFTDetails '("'${nftID}'")'
-
-echo "---------Listing all staked NFTs with pagination----------"
-dfx canister call $Canister getAllStakedNFTs '(nat'${pageNumber}', nat'${pageSize}')'
-
-
-echo "---------Unstaking NFT----------"
-dfx canister call $Canister unstakeNFT '("'${nftID}'")'
+dfx canister call $canister importNFTs '("c5822914fbb69c6c0fd4e5d0f3d8f0ad8ef78bc27384965009a3f97f39436294")'
