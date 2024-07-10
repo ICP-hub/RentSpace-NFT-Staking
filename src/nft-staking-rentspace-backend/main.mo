@@ -4,19 +4,28 @@ import Functions "Utils";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 import Types "Types";
+import NftHandler "controllers/nftHandler";
+
 actor {
     stable var stableUserRecords : UserHandler.StableData = {
         users = [];
     };
 
+    stable var stableNftRecords : NftHandler.StableData = {
+        nfts = [];
+    };
+
     var userHandler = UserHandler.UserHandler(stableUserRecords);
+    var nftHandler = NftHandler.NftHandler(stableNftRecords, userHandler);
 
     system func preupgrade() {
         stableUserRecords := userHandler.toStableData();
+        stableNftRecords := nftHandler.toStableData();
     };
 
     system func postupgrade() {
         userHandler := UserHandler.UserHandler(stableUserRecords);
+        nftHandler := NftHandler.NftHandler(stableNftRecords, userHandler);
     };
 
     public shared ({ caller }) func createUser(user : User.UserInput) : async Result.Result<Text, UserHandler.InvalidError> {
@@ -58,4 +67,16 @@ actor {
         };
     };
 
+    public shared ({caller}) func importNFTs(aid : Text) : async Result.Result<Text, Text> {
+        await Functions.checkAnonymous(caller);
+        let importedNFTs = await nftHandler.importNFTs(aid, caller);
+        switch (importedNFTs) {
+            case (#ok(nfts)) {
+                return #ok("NFTs imported successfully : " # nfts);
+            };
+            case (#err(error)) {
+                return #err(error);
+            };
+        };
+    };
 };
