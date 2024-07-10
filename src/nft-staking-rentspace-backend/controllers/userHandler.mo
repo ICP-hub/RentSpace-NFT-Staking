@@ -102,6 +102,26 @@ module {
             #ok("User Created Successfully");
         };
 
+        public func updateUserProfile (id : Principal, updatedUserData : {name : ?Text; email : ?Text}) : Result.Result<Text, {#UserNotFound;#MissingData;#NotAuthorized}> {
+            let ?user = userRecords.get(id) else return #err(#UserNotFound);
+            switch(updatedUserData.name) {
+                case(?name) {
+                    user.name := name;
+                };
+                case(null) {
+                    switch(updatedUserData.email) {
+                        case(?email) {
+                            user.email := email;
+                        };
+                        case(null) {
+                            return #err(#MissingData);
+                        };
+                    };
+                };
+            };
+            return #ok("User Updated Successfully");
+        };
+
         private func checkUserExists(id : Principal) : Bool {
             switch(userRecords.get(id)) {
                 case(?user) {
