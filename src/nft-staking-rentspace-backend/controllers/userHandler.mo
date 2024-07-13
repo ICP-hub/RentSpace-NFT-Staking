@@ -83,8 +83,8 @@ module {
             |> Iter.toArray(_);
         };
 
-        public func awardPoints(userId : Principal, points : Nat) : Result.Result<(), { #UserNotFound }> {
-            let ?user = userRecords.get(userId) else return #err(#UserNotFound);
+        public func awardPoints(userId : Principal, points : Nat) : Result.Result<(), { #Unauthorized }> {
+            let ?user = userRecords.get(userId) else return #err(#Unauthorized);
             user.rewardPoints += points;
             #ok;
         };
