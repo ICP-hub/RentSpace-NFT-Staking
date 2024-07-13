@@ -91,7 +91,6 @@ module {
 
         public func addNFT(userId : Principal, nftId : Text, metadata : EXT.Metadata, canID : Text) : Result.Result<NFTTypes.NFT, { #UserNotFound }> {
             let ?user = userRecords.get(userId) else return #err(#UserNotFound);
-            let nftBuffer = Buffer.fromArray<Text>(user.importedNFTs);
 
             let newImportedNFT : NFTTypes.NFT = {
                 id = nftId;
