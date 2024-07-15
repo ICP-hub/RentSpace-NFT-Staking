@@ -90,6 +90,12 @@ module {
             #ok;
         };
 
+        public func updatePoints(userId : Principal, points : Nat) : Result.Result<(), {#Unauthorized}> {
+             let ?user = userRecords.get(userId) else return #err(#Unauthorized);
+            user.rewardPoints := points;
+            #ok;
+        };
+
         public func addNFT(userId : Principal, nftId : Text, metadata : EXT.Metadata, canID : Text) : Result.Result<NFTTypes.NFT, { #UserNotFound }> {
             let ?user = userRecords.get(userId) else return #err(#UserNotFound);
 
