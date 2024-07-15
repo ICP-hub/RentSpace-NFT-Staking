@@ -5,6 +5,7 @@ import Principal "mo:base/Principal";
 import Iter "mo:base/Iter";
 import Result "mo:base/Result";
 import Buffer "mo:base/Buffer";
+import Text "mo:base/Text";
 import Utils "../Utils";
 import EXT "../actors/EXT";
 import User "../models/User";
@@ -24,7 +25,7 @@ module {
 
     type User = UserTypes.User;
 
-    type MutableUser = {
+    public type MutableUser = {
         id : Principal;
         var email : Text;
         var name : Text;
@@ -155,6 +156,47 @@ module {
                 };
             };
             return #ok("User Updated Successfully");
+        };
+
+        public func updateUserRecord(id : Principal, newUser : MutableUser) : Bool {
+            let ?existingUser = userRecords.get(id) else return false;
+            let _newUser = userRecords.replace(id, newUser);
+            return true;
+        };
+
+        public func appendStakedNFT(nftID : Text, userId : Principal) : () {
+            let ?user = userRecords.get(userId);
+
+            let stakedNFT : Buffer.Buffer<Text> = Buffer.fromArray<Text>(user.stakedNFTs);
+            stakedNFT.add(nftID);
+
+            user.stakedNFTs := Buffer.toArray(stakedNFT);
+        };
+
+        public func appendImportedNFT(nftID : Text, userId : Principal) : () {
+            let ?user = userRecords.get(userId);
+
+            let importedNFT : Buffer.Buffer<Text> = Buffer.fromArray<Text>(user.importedNFTs);
+            importedNFT.add(nftID);
+
+            user.importedNFTs := Buffer.toArray(importedNFT);
+        };
+
+        public func removeStakedNFT(nftId : Text, userId : Principal) : Bool {
+            let ?user = userRecords.get(userId);
+
+            let updatedStakedNFTs : Buffer.Buffer<Text> = Buffer.fromArray(user.stakedNFTs);
+            var removeIndex = 0;
+            switch (Buffer.indexOf(nftId, updatedStakedNFTs, Text.equal)) {
+                case (null) {
+                    return false;
+                };
+                case (?value) {
+                    removeIndex := value;
+                };
+            };
+            ignore updatedStakedNFTs.remove(removeIndex);
+            return true;
         };
 
         private func checkUserExists(id : Principal) : Bool {

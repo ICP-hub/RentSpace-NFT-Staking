@@ -7,6 +7,8 @@ import Text "mo:base/Text";
 import Buffer "mo:base/Buffer";
 import Iter "mo:base/Iter";
 import Error "mo:base/Error";
+import Array "mo:base/Array";
+import Option "mo:base/Option";
 import Types "Types";
 import NftHandler "controllers/nftHandler";
 import EXT "./actors/EXT";
@@ -17,7 +19,8 @@ actor {
     };
 
     stable var stableNftRecords : NftHandler.StableData = {
-        nfts = [];
+        unstakedNFT = [];
+        stakedNFT = [];
     };
 
     var userHandler = UserHandler.UserHandler(stableUserRecords);
@@ -96,12 +99,41 @@ actor {
             importedNFTId.append(stakedNFTId);
             let allUserNFTsArray = Buffer.toArray(importedNFTId);
             let allUserNFTsDetails : [?NFT.NFT] = Iter.fromArray(allUserNFTsArray)
-            |> Iter.map(_, nftHandler.get)
+            |> Iter.map(_, nftHandler.getUnstaked)
             |> Iter.toArray(_);
             return #ok(allUserNFTsDetails);
         } catch (err) {
             return #err(Error.message(err));
         };
+    };
+
+    public shared query ({caller}) func getUserImportedNFTs() : async Result.Result<[?NFT.NFT], Text> {
+        try {
+            // Check anonymous user
+            let userImportedNfts = nftHandler.getAllUserImportedNfts(caller);
+
+            let nftDetails  : [?NFT.NFT]= Iter.fromArray(userImportedNfts)
+            |> Iter.map(_, nftHandler.getUnstaked)
+            |> Iter.toArray(_);
+
+            return #ok(nftDetails);
+
+        } catch (err) {
+            return #err(Error.message(err));
+        }
+    };
+
+    public shared query ({caller}) func getUserStakedNFTs() : async Result.Result<[?NFT.NFT], Text> {
+        try {
+            let userStakedNfts = nftHandler.getAllUserStakedNfts(caller);
+            let nftDetails = Iter.fromArray(userStakedNfts)
+            |> Iter.map(_, nftHandler.getStaked)
+            |> Iter.toArray(_);
+
+            return #ok(nftDetails);
+        } catch(err) {
+            return #err(Error.message(err));
+        }
     };
 
     public shared ({caller}) func stakeNFT(nftId : EXT.TokenIdentifier) : async Result.Result<Text, Text> {

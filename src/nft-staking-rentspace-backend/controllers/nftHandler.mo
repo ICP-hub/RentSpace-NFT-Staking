@@ -32,7 +32,8 @@ module {
     };
 
     public type StableData = {
-        nfts : [Nft];
+        unstakedNFT : [Nft];
+        stakedNFT : [Nft];
     };
 
     type TransferError = {
@@ -74,23 +75,30 @@ module {
             |> TrieMap.fromEntries(_, Text.equal, Text.hash);
         };
 
-        let nftRecords : TrieMap.TrieMap<Text, MutableNFT> = buildNftMap(nftData.nfts);
+        let nftRecords : TrieMap.TrieMap<Text, MutableNFT> = buildNftMap(nftData.unstakedNFT);
+        let stakedNftRecords : TrieMap.TrieMap<Text, MutableNFT> = buildNftMap(nftData.stakedNFT);
 
         public func toStableData() : StableData {
             {
-                nfts = nftRecords.vals() |> Iter.map(_, fromMutableNFT) |> Iter.toArray(_);
+                unstakedNFT = nftRecords.vals() |> Iter.map(_, fromMutableNFT) |> Iter.toArray(_);
+                stakedNFT = stakedNftRecords.vals() |> Iter.map(_, fromMutableNFT) |> Iter.toArray(_);
             };
         };
 
-        public func get(id : Text) : ?Nft {
+        public func getUnstaked(id : Text) : ?Nft {
             let ?nft = nftRecords.get(id) else return null;
+            ?fromMutableNFT(nft);
+        };
+
+        public func getStaked(id : Text) : ?Nft {
+            let ?nft = stakedNftRecords.get(id) else return null;
             ?fromMutableNFT(nft);
         };
 
         public func getAllUserImportedNfts(userId : Principal) : [Text] {
             switch (userHandler.get(userId)) {
                 case (?user) {
-                    let userImportedNfts = user.importedNFTs;
+                    let userImportedNfts : [Text] = user.importedNFTs;
                     return userImportedNfts;
                 };
                 case (null) {
@@ -163,6 +171,7 @@ module {
             let _nftID : Text = Nat.toText(nftIdx);
 
             let ?nft = nftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
+            let ?user = userHandler.get(userId) else return #err(#Unauthorized("User does not exist"));
 
             switch (nft) {
                 case (nft) {
@@ -170,7 +179,7 @@ module {
                         return #err(#Other("NFT Already Staked"));
                     };
 
-                    if(nft.owner != userId) {
+                    if (nft.owner != userId) {
                         return #err(#Unauthorized(Principal.toText(userId)));
                     };
 
@@ -181,6 +190,9 @@ module {
                         case (#ok(msg)) {
                             nft.isStaked := true;
                             nft.stakedAt := ?Time.now();
+                            stakedNftRecords.put(nft.id, nft);
+                            userHandler.appendStakedNFT(nft.id, userId);
+
                             return #ok("Staked Successfully");
                         };
                         case (#err(err)) {
@@ -195,7 +207,7 @@ module {
             let nftIdx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
             let _nftID : Text = Nat.toText(nftIdx);
 
-            let ?nft = nftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
+            let ?nft = stakedNftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
 
             switch (nft) {
                 case (nft) {
@@ -226,6 +238,12 @@ module {
                             nft.isStaked := false;
                             nft.stakedAt := null;
                             let _awardUser = userHandler.awardPoints(userId, pointsAccumulated);
+                            stakedNftRecords.delete(_nftID);
+                            let removeNFT = userHandler.removeStakedNFT(_nftID, userId);
+                            if(removeNFT == false) {
+                                return #err(#Other("Can't remove staked NFT"));
+                            };
+
                             return #ok("Unstaked Successfully");
                         };
                         case (#err(err)) {
