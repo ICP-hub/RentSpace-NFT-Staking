@@ -125,6 +125,26 @@ module {
             |> Iter.toArray(_);
         };
 
+        public func getAllUserNFTs(aid : Text, id : Principal) : async Result.Result<[EXT.TokenIndex], Text> {
+            await Functions.checkAnonymous(id);
+            let tokenResponse = await getNFTFromEXT(aid);
+            switch tokenResponse {
+                case (#ok(tokens)) {
+                    return #ok(tokens);
+                };
+                case (#err(err)) {
+                    switch (err) {
+                        case (#InvalidToken(tokenId)) {
+                            return #err("Invalid Token" # tokenId);
+                        };
+                        case (#Other(msg)) {
+                            return #err("Other " #msg);
+                        };
+                    };
+                };
+            };
+        };
+
         public func importNFTs(aid : Text, id : Principal) : async Result.Result<Text, Text> {
             try {
                 await Functions.checkAnonymous(id);
@@ -240,7 +260,7 @@ module {
                             let _awardUser = userHandler.awardPoints(userId, pointsAccumulated);
                             stakedNftRecords.delete(_nftID);
                             let removeNFT = userHandler.removeStakedNFT(_nftID, userId);
-                            if(removeNFT == false) {
+                            if (removeNFT == false) {
                                 return #err(#Other("Can't remove staked NFT"));
                             };
 
