@@ -90,6 +90,20 @@ actor {
         };
     };
 
+    public shared ({ caller }) func getAllUserTokens(aid : Text) : async Result.Result<[{tid : Text; metadata : Text}], Text> {
+        let allTokens = await nftHandler.getAllUserNFTs(aid, caller);
+
+        switch allTokens {
+            case (#ok(tokens)) {
+                let allTokensDetails = await nftHandler.getTokensById(tokens);
+                return #ok(allTokensDetails);
+            };
+            case(#err(err)) {
+                return #err(err);
+            };
+        };
+    };
+
     public shared query ({ caller }) func getUserNFTs() : async Result.Result<[?NFT.NFT], Text> {
         try {
             // await Functions.checkAnonymous(caller);
