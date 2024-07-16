@@ -14,5 +14,8 @@
   "type": "module",
   "workspaces": [
     "src/nft-staking-rentspace-frontend"
-  ]
+  ],
+  "dependencies": {
+    "@dfinity/ledger-icp": "^2.3.1"
+  }
 }

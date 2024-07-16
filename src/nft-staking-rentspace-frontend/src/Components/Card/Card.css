@@ -1,0 +1,23 @@
+.card {
+  @apply border border-gray-200 rounded-2xl shadow-lg overflow-hidden w-52 justify-center items-center
+}
+
+.card-image {
+  @apply object-contain
+}
+
+.card-body {
+  @apply p-4;
+}
+
+.card-title {
+  @apply text-xl font-semibold mb-2 font-[Poppins] text-sm;
+}
+
+.card-content {
+  @apply text-gray-700 font-[Manrope] mb-6 text-xs;
+}
+
+.card-btn {
+  @apply bg-[#01ABFE] w-full text-white py-1 rounded-3xl hover:bg-black transition-colors duration-300 
+}
