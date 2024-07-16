@@ -8,6 +8,7 @@ import MyWorlds from './Components/My Worlds/MyWorlds';
 import UserDashboard from './Components/User Dashboard/UserDashboard';
 import ImpNftDetails from './Components/User Dashboard/NFTsDetails/ImpNftDetails';
 import StakNftDetails from './Components/User Dashboard/NFTsDetails/StakNftDetails';
+import MinimalisticWorld from './Components/MinimalisticWorld/MinimalisticWorld';
 
 function App() {
 
@@ -43,7 +44,12 @@ function App() {
         {
           path:'/StakNftDetails',
           element:<StakNftDetails/>
-      }
+        },
+        //Temporary route for Minimalistic World
+        {
+          path: '/minimalisticWorld',
+          element: <MinimalisticWorld/>
+        }
        
       ]
     },
