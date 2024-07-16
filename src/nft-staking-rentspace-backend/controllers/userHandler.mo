@@ -96,16 +96,16 @@ module {
             #ok;
         };
 
-        public func addNFT(userId : Principal, nftId : Text, metadata : EXT.Metadata, canID : Text) : Result.Result<NFTTypes.NFT, { #UserNotFound }> {
+        public func addNFT(userId : Principal, nftId : Text, metadata : Text, canID : Text) : Result.Result<NFTTypes.NFT, { #UserNotFound }> {
             let ?user = userRecords.get(userId) else return #err(#UserNotFound);
 
             let newImportedNFT : NFTTypes.NFT = {
                 id = nftId;
-                metadata = Utils.serializeMetadata(metadata);
+                metadata = metadata;
                 owner = userId;
                 isStaked = false;
                 canisterID = canID;
-                rarity = Utils.extractRarity(Utils.serializeMetadata(metadata));
+                rarity = Utils.extractRarity(metadata);
                 stakedAt = null;
             };
 

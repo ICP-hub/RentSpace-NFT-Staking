@@ -161,42 +161,26 @@ module {
 
     };
 
-    public func importNFTs(aid : Text, id : Principal) : async Result.Result<Text, Text> {
+    public func importNFTs(tokenData :[{tid : Text; metadata: Text}], userId: Principal) : async Result.Result<Text, Text> {
         try {
-            await Functions.checkAnonymous(id);
-            let tokenResponse = await getNFTFromEXT(aid);
-            switch (tokenResponse) {
-                case (#ok(tokens)) {
-                    let nftList = await EXTActor.getTokensByIds(tokens);
-                    for ((tokenid, metadata) in Iter.fromArray(nftList)) {
-                        let tokenId = Nat32.toText(tokenid);
+            await Functions.checkAnonymous(userId);
+            var isImported = false;
 
-                        if (checkIfNFTExist(tokenId) == false) {
-                            let newImportedNFT = userHandler.addNFT(id, tokenId, metadata, EXTCanisterId);
-                            switch (newImportedNFT) {
-                                case (#ok(nft)) {
-                                    nftRecords.put(tokenId, toMutableNFT(nft));
-                                };
-                                case (#err(err)) {
-                                    return #err("User Not Found");
-                                };
-                            };
-                        };
+            for (token in tokenData.vals()) {
+                let result = userHandler.addNFT(userId, token.tid, token.metadata, EXTCanisterId);
+                
+                switch result {
+                    case (#ok(nft)) {
+                        isImported:=true;
                     };
-                    return #ok("Successfully Imported NFTs");
-                };
-                case (#err(err)) {
-                    switch (err) {
-                        case (#InvalidToken(tokenId)) {
-                            return #err("Invalid Token" # tokenId);
-                        };
-                        case (#Other(msg)) {
-                            return #err("Other " #msg);
-                        };
+                    case (#err(err)) {
+                        isImported:=false;
+                        return #err("User Not Authorized");
                     };
                 };
             };
-
+            return #ok("Imported");
+            
         } catch (err) {
             return #err(Error.message(err));
         };

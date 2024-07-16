@@ -77,9 +77,9 @@ actor {
         };
     };
 
-    public shared ({ caller }) func importNFTs(aid : Text) : async Result.Result<Text, Text> {
+    public shared ({ caller }) func importNFTs(tokenData :[{tid : Text; metadata: Text}]) : async Result.Result<Text, Text> {
         await Functions.checkAnonymous(caller);
-        let importedNFTs = await nftHandler.importNFTs(aid, caller);
+        let importedNFTs = await nftHandler.importNFTs(tokenData, caller);
         switch (importedNFTs) {
             case (#ok(nfts)) {
                 return #ok("NFTs imported successfully : " # nfts);
