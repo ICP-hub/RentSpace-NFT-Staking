@@ -1,0 +1,40 @@
+.min-world-MainCont {
+  background-image: url('image 808.png');
+  @apply w-screen bg-cover bg-no-repeat object-cover bg-center flex
+}
+
+.min-world-InnerCont {
+  @apply flex justify-center items-center py-[14%] p-24
+}
+
+.worlds-navCont {
+  @apply flex flex-col w-1/3 gap-8 bg-[#f0f0f0] h-full py-8 pl-8 border-r-2 rounded-l-3xl
+}
+
+.worlds-nav {
+  @apply text-xs w-full
+}
+
+.world-name {
+  @apply text-3xl font-semibold px-2 capitalize
+}
+
+.cards-container {
+  @apply flex flex-wrap justify-center gap-10 bg-[#f0f0f0] px-2 py-8 
+}
+
+.cards-box {
+  @apply bg-[#f0f0f0] h-full rounded-r-3xl
+}
+
+.active {
+  @apply text-[#01ABFE]
+}
+
+.staking {
+  @apply flex items-center gap-1
+}
+
+.staking-header {
+  @apply font-semibold text-2xl
+}
