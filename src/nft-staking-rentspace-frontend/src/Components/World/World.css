@@ -7,6 +7,10 @@
   @apply flex justify-center items-center py-[14%] p-24
 }
 
+.back-btn {
+  @apply cursor-pointer
+}
+
 .worlds-navCont {
   @apply flex flex-col w-1/3 gap-8 bg-[#f0f0f0] h-full py-8 pl-8 border-r-2 rounded-l-3xl
 }
