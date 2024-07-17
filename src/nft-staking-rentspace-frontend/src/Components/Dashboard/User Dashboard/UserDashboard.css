@@ -1,0 +1,58 @@
+/* userDashboard component styling */
+.userDashboard-cont {
+    @apply bg-[#F0F0F0] mx-5 mt-6 rounded-3xl grid grid-cols-4;
+}
+
+
+.left-cont {
+    @apply bg-white m-3 col-span-1 border rounded-2xl flex flex-col items-center;
+}
+.userInfo-cont{
+    @apply mx-10
+}
+.profile-cont{
+    @apply flex justify-center mt-16
+   }
+   
+   .profile-cont img {
+       @apply rounded-full h-32 w-32 
+   }
+   
+.userInfo {
+    @apply my-6 text-center;
+}
+
+.userInfo h1 {
+    @apply text-2xl font-medium;
+}
+.points-cont{
+    @apply flex justify-between shadow-md bg-[#B7E0E3] text-[#014678] px-6 p-2 rounded-full mt-8
+}
+
+.social-cont{
+   @apply flex  justify-between my-5
+}
+.social-cont img{
+    @apply bg-[#0284E2] p-[10px] rounded-full w-10 shadow-md
+ }
+ 
+.NFTsCount-cont{
+    @apply my-10
+}
+.NFTsCount-cont div{
+    @apply  flex justify-between font-medium my-5 
+}
+.NFTsCount-cont div h1{
+    @apply  text-xl text-center
+}
+.NFT_Reward-cont{
+   @apply mt-28 mb-10
+}
+.NFT_Reward-cont .btn{
+    @apply p-2 px-8 bg-black text-white text-center my-6 rounded-full shadow-md
+ }
+
+
+.right-cont {
+    @apply m-3 ml-0 col-span-3
+}

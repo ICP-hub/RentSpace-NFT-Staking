@@ -1,0 +1,45 @@
+/* StakedNFTs component*/
+
+.nft-Maincont{
+    @apply flex   bg-white rounded-2xl w-full
+}
+
+.nftOuter-Cont{
+    @apply flex flex-wrap justify-center
+}
+.nftCont{
+   @apply w-72 mx-10 border shadow-sm border-[#2F60DC] bg-white my-10 rounded-lg cursor-pointer
+}
+
+.nftLogo-cont{
+    @apply flex w-full  justify-between
+}
+.nftLogo-cont > img{
+   @apply w-10 h-10 mt-2 mx-2
+}
+ .nftImg-cont{
+    @apply flex  justify-center -mt-7
+ }
+
+.nftImg-cont > img{
+@apply w-[220px] h-[220px] bg-cover rounded-lg
+}
+
+.VillasData-cont{
+    @apply mx-4
+}
+
+.VillasData-cont h1{
+    @apply mt-5 text-2xl text-black font-medium
+ }
+ .VillasData-cont h2{
+    @apply  text-sm text-black my-1
+
+ }
+ .btnCont{
+    @apply flex justify-between my-4
+ }
+ .btnCont  button{
+  @apply bg-[#0285E3] p-2 text-white px-6 rounded-full
+ }
+
