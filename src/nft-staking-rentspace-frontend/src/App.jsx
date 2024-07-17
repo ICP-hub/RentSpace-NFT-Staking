@@ -10,6 +10,7 @@ import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
 import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
 import World from './Components/World/World';
+import RegisterUser from './Components/RegisterUser/RegisterUser';
 
 function App() {
 
@@ -53,6 +54,10 @@ function App() {
           ]
           
         },
+        {
+          path:'/register-user',
+          element: <RegisterUser/>
+        }
        
       ]
     },
