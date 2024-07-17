@@ -1,5 +1,5 @@
 .card {
-  @apply border border-gray-200 rounded-2xl shadow-lg overflow-hidden w-52 justify-center items-center
+  @apply border bg-white border-gray-200 rounded-2xl shadow-lg overflow-hidden w-52 justify-center items-center
 }
 
 .card-image {

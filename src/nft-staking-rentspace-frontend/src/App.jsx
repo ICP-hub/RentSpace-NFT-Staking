@@ -9,6 +9,7 @@ import MyWorlds from './Components/Dashboard/MyWorlds';
 import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
 import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
+import World from './Components/World/World';
 
 function App() {
 
@@ -28,6 +29,10 @@ function App() {
         {
           path: '/FAQ',
           element: <FAQ/>
+        },
+        {
+            path: '/world/:world',
+            element: <World/>
         },
         {
           path: '/Dashboard',
