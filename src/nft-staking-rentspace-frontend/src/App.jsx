@@ -4,10 +4,11 @@ import MainContainer from './MainContainer';
 import HomePage from './Components/Home/HomePage';
 import MySpaces from './Components/My Spaces/MySpaces';
 import FAQ from './Components/FAQ/FAQ';
-import MyWorlds from './Components/My Worlds/MyWorlds';
-import UserDashboard from './Components/User Dashboard/UserDashboard';
-import ImpNftDetails from './Components/User Dashboard/NFTsDetails/ImpNftDetails';
-import StakNftDetails from './Components/User Dashboard/NFTsDetails/StakNftDetails';
+import Dashboard from './Components/Dashboard/Dashboard';
+import MyWorlds from './Components/Dashboard/MyWorlds';
+import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
+import { Provider } from 'react-redux';
+import { myStore } from './utils/Redux-Config/ReduxStore';
 import World from './Components/World/World';
 
 function App() {
@@ -30,25 +31,27 @@ function App() {
           element: <FAQ/>
         },
         {
-          path: '/myWorlds',
-          element: <MyWorlds/>
+            path: '/world/:world',
+            element: <World/>
         },
         {
-          path: '/userDashboard',
-          element: <UserDashboard/>
-        },
-        {
-            path:'/ImpNftDetails',
-            element:<ImpNftDetails/>
-        },
-        {
-          path:'/StakNftDetails',
-          element:<StakNftDetails/>
-        },
-        //Temporary Minimalistic World Route
-        {
-          path: '/world/:world',
-          element: <World/>
+          path: '/Dashboard',
+          element: <Dashboard/>,
+          children:[
+            {
+              path:'/Dashboard',
+              element:<MyWorlds/>
+            },
+            {
+              path:'/Dashboard/userDashboard',
+              element:<UserDashboard/>
+            },
+            // {
+            //   path:'/Dashboard/Leaderboard',
+            //   element:<Leaderboard/>
+            // },
+          ]
+          
         },
        
       ]
@@ -56,7 +59,9 @@ function App() {
   ]);
 
   return (
+    <Provider store={myStore}>
     <RouterProvider router={browserRouter} />
+    </Provider>
   );
 }
 
