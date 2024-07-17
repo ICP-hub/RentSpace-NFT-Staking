@@ -17,7 +17,7 @@ const World = () => {
       <div className='min-world-InnerCont'>
         <div className='worlds-navCont'>
           <div className='staking'>
-          <FaAngleLeft size={15}/>
+          <FaAngleLeft size={15} onClick={navigate(-1)/>
           <span className='staking-header'>Staking</span>
           </div>
           
