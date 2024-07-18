@@ -21,13 +21,8 @@ export const Info = ({message})=> {
   )
 }
 
-const RedeemModal = ({ userID, rewardPoints, isOpen, closeModal }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  if (!isOpen) return;
-
-  function closeModal(isOpen) {
-    setIsOpen(!isOpen)
-  }
+const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
+  if (!isModalOpen) return;
 
   const rarity = [
     {
@@ -41,14 +36,14 @@ const RedeemModal = ({ userID, rewardPoints, isOpen, closeModal }) => {
 
   const rarityData = rarity[0];
   const entries = Object.entries(rarityData);
-  const [redeemAmount, setRedeemAmount] = useState(rewardPoints);
+  const [redeemAmount, setRedeemAmount] = useState(0);
 
   const handleChange = (event) => {
     setRedeemAmount(event.target.value);
   };
   return (
     <div className="rewards-modal">
-    <div>X</div>
+    <div className="redeem-closeBtn" onClick={()=> setIsModalOpen(!isModalOpen)}>X</div>
       <h3 className="redeem-header">Redeem Rewards!</h3>
       <div className="reward-points-Cont">
         <div className="reward-points">

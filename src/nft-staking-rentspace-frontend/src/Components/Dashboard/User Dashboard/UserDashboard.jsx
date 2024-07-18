@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './UserDashboard.css';
 import { Outlet } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
+import RedeemModal from '../../Modals/RedeemModal';
 
 
 const UserDashboard = () => {
- 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule]= useState(false);
   const [userInfo] = useState({
     name: 'Firstname Lastname',
@@ -23,7 +24,7 @@ const UserDashboard = () => {
 
   return (
     <>
-   <div  className='userDashboard-cont'  style={isImportModule ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
+   <div  className='userDashboard-cont'  style={isImportModule || isModalOpen ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
       <div className='left-cont'>
         <div className='userInfo-cont'>
           <div className='profile-cont'>
@@ -56,7 +57,7 @@ const UserDashboard = () => {
         </div>
         <div className='NFT_Reward-cont'>
            <div className='btn' onClick={handle_ImportModule}> Import NFT </div>
-           <div className='btn'> Redeem Rewards </div>
+           <div className='btn' onClick={()=> setIsModalOpen(true)}> Redeem Rewards </div>
         </div>
       </div>
       <div className='right-cont'>
@@ -74,6 +75,7 @@ const UserDashboard = () => {
       <ImportingNFTs setImportModule={setImportModule} />
     
     }
+    {isModalOpen && <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen}/>}
     </>
   );
 }
