@@ -48,9 +48,9 @@
   @apply flex justify-center mt-24
 }
 
-.goStake-btn button{
+.goStake-btn > button{
 
-  @apply p-4 px-16 text-2xl rounded-2xl font-medium  shadow-lg bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] 
+  @apply p-3 w-56 px-[50px] text-2xl  rounded-xl font-medium  shadow-lg 
 }
 
 
@@ -131,6 +131,6 @@
 @apply mx-[28%] text-[29px] font-medium text-center mt-28
 }
 
-.JourneyStart-cont button{
-@apply  p-4 px-16 bg-[#0285E3] text-2xl rounded-2xl font-medium text-white my-16 shadow-lg
+.JourneyStart-cont > button{
+@apply  p-4 w-[32%] px-16  text-2xl rounded-2xl font-medium text-white my-16 shadow-lg
 }

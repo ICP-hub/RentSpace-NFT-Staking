@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 import './UserDashboard.css';
-import StakedNFTs from './NFTsComp/StakedNFTs';
-import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import ImportingNFTs from './ImportingNFTs';
+
 
 const UserDashboard = () => {
-  // const [userInfo] = useState({
-  //   name: 'Firstname Lastname',
-  //   imgUrl: 'profileImg.jpg',
-  //   email: 'xyz123@gmail.com',
-  //   points: 25,
-  //   importedNFT: 35,
-  //   stakedNFT: 22,
-  // });
-
-  const user = useSelector((state) => state.user);
-  console.log("User Red : ",user)
-
+ 
+  const [isImportModule, setImportModule]= useState(false);
+  const [userInfo] = useState({
+    name: 'Firstname Lastname',
+    imgUrl: 'profileImg.jpg',
+    email: 'xyz123@gmail.com',
+    points: 25,
+    importedNFT: 35,
+    stakedNFT: 22,
+  });
   const socialHandle=['X.svg','Vector.svg','discord.svg','web.svg']
 
+  function handle_ImportModule(){
+     setImportModule(true)
+  }
+
   return (
-    <div className='userDashboard-cont'>
+    <>
+   <div  className='userDashboard-cont'  style={isImportModule ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
       <div className='left-cont'>
         <div className='userInfo-cont'>
           <div className='profile-cont'>
@@ -51,15 +55,26 @@ const UserDashboard = () => {
           </div>
         </div>
         <div className='NFT_Reward-cont'>
-           <div className='btn'> Import NFT </div>
+           <div className='btn' onClick={handle_ImportModule}> Import NFT </div>
            <div className='btn'> Redeem Rewards </div>
         </div>
       </div>
-
       <div className='right-cont'>
-        <StakedNFTs/>
+        <Outlet/>
       </div>
+
+     
     </div>
+
+
+    { /* ImportNfts Module */ }
+
+    {
+      isImportModule &&
+      <ImportingNFTs setImportModule={setImportModule} />
+    
+    }
+    </>
   );
 }
 

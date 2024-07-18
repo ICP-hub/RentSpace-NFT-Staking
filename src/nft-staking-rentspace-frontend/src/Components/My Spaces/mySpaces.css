@@ -55,9 +55,9 @@
     @apply bg-[#FFFFFF] text-4xl text-center font-medium rounded-b-xl pb-6 pl-10 border-b-2 border-x-2
 }
 
-.stakeInfo-mainCont button{
+.stakeInfo-mainCont > button{
     
-    @apply p-4 px-14 bg-[#0285E3] text-2xl rounded-full font-medium  shadow-lg text-white bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2]
+    @apply p-4 px-14 w-52  text-2xl rounded-full font-medium  shadow-lg text-white
 }
  
 
@@ -133,7 +133,7 @@
     @apply flex items-center text-lg text-white
  }
 
- .header-right button{
+ .header-right  button{
     @apply p-2 px-6 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2]  rounded-full
  }
  
