@@ -1,0 +1,18 @@
+.fallbackUI-cont{
+    @apply bg-white h-full rounded-2xl
+}
+.fallbackUI-cont > .heading{
+    @apply text-2xl font-semibold ml-20 pt-6
+}
+
+.fallbackUI-innerCont{
+    @apply flex justify-center items-center
+}
+
+.fallbackUI-innerCont > div{
+    @apply flex flex-col justify-center items-center 
+}
+
+.fallbackUI-innerCont h2{
+    @apply font-medium text-lg -mt-10
+}

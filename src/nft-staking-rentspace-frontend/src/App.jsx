@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
 import World from './Components/World/World';
 import RegisterUser from './Components/RegisterUser/RegisterUser';
+import StakedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/StakedNFTs';
 
 function App() {
 
@@ -45,7 +46,13 @@ function App() {
             },
             {
               path:'/Dashboard/userDashboard',
-              element:<UserDashboard/>
+              element:<UserDashboard/>,
+              children:[
+                {
+                  path:'/Dashboard/userDashboard',
+                  element:<StakedNFTs/>
+                }
+              ]
             },
             // {
             //   path:'/Dashboard/Leaderboard',
