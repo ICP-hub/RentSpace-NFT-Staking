@@ -1,5 +1,5 @@
 .card {
-  @apply border bg-white border-gray-200 rounded-2xl shadow-lg overflow-hidden w-52 justify-center items-center
+  @apply relative border bg-white border-gray-200 rounded-2xl shadow-lg overflow-hidden w-60 justify-center items-center
 }
 
 .card-image {
@@ -11,13 +11,17 @@
 }
 
 .card-title {
-  @apply text-xl font-semibold mb-2 font-[Poppins] text-sm;
+  @apply text-xl font-semibold font-[Poppins] mb-1 
 }
 
 .card-content {
-  @apply text-gray-700 font-[Manrope] mb-6 text-xs;
+  @apply text-gray-700 font-[Manrope] mb-4 text-xs;
 }
 
 .card-btn {
-  @apply bg-[#01ABFE] w-full text-white py-1 rounded-3xl hover:bg-black transition-colors duration-300 
+  @apply from-[#01ABFE] via-[#0285E3] to-[#3E9EE2]  w-full text-white py-1 rounded-3xl hover:bg-black transition-colors duration-300 
+}
+
+.card > .checkbox{
+  @apply absolute ml-3 mt-4 w-[18px] h-[18px]
 }

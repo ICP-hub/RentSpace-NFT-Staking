@@ -7,12 +7,13 @@ const MyWorlds = () => {
     const [currentWorld, setCurrent] = useState(0);
     const navigate = useNavigate();
   
-    const worldNames = ['Minimalistic world', 'Modernistic world', 'Futuristic world', 'Moon World'];
+    const worldNames = ['Minimalistic world', 'Modernistic world', 'Futuristic world', 'Moon World', 'Mars World'];
     const worldsIMG = [
       ['image 803.png', 'image 803.png', 'image 803.png', 'image 1726.png', 'image 1726.png', 'image 1726.png', 'image 1726.png'],
       ['image 1726.png', 'image 1726.png', 'image 803.png', 'image 1726.png'],
       ['image 803.png', 'image 1726.png', 'image 1726.png'],
-      ['image 1717.png', 'image 1726.png']
+      ['image 1717.png', 'image 1726.png'],
+      ['image 803.png', 'image 1726.png', 'image 1726.png'],
     ];
   
     const prevWorld = () => {
@@ -40,7 +41,7 @@ const MyWorlds = () => {
       </div>
     </div>
     <div className='explore-btn'>
-      <button onClick={() => navigate('')}>Explore Now</button>
+      <button onClick={() => navigate(`/world/ ${worldNames[currentWorld]} `)}>Explore Now</button>
     </div>
   </div>
   )
