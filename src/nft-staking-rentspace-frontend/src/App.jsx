@@ -12,6 +12,7 @@ import { myStore } from './utils/Redux-Config/ReduxStore';
 import World from './Components/World/World';
 import RegisterUser from './Components/RegisterUser/RegisterUser';
 import StakedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/StakedNFTs';
+import ImportedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/ImportedNFTs';
 
 function App() {
 
@@ -51,6 +52,10 @@ function App() {
                 {
                   path:'/Dashboard/userDashboard',
                   element:<StakedNFTs/>
+                },
+                {
+                  path:'/Dashboard/userDashboard/importedNFTs',
+                  element:<ImportedNFTs/>
                 }
               ]
             },

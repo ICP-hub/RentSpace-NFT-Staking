@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './UserDashboard.css';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
 import RedeemModal from '../../Modals/RedeemModal';
 
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule]= useState(false);
   const [userInfo] = useState({
@@ -46,11 +47,11 @@ const UserDashboard = () => {
           </div>
           <div className='NFTsCount-cont'>
             <div>
-              <h2>Imported NFTs</h2>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard/importedNFTs') } >Imported NFTs</h2>
               <h1>{userInfo.importedNFT}</h1>
             </div>
             <div>
-              <h2>Staked NFTs</h2>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard') } >Staked NFTs</h2>
               <h1>{userInfo.stakedNFT}</h1>
             </div>
           </div>
