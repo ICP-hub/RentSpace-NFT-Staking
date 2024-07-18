@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import './UserDashboard.css';
 import { Outlet } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
+import { useSelector } from 'react-redux';
 
 
 const UserDashboard = () => {
  
   const [isImportModule, setImportModule]= useState(false);
-  const [userInfo] = useState({
-    name: 'Firstname Lastname',
-    imgUrl: 'profileImg.jpg',
-    email: 'xyz123@gmail.com',
-    points: 25,
-    importedNFT: 35,
-    stakedNFT: 22,
-  });
+  const user= useSelector((state) => state.user);
+  // const [userInfo] = useState({
+  //   name: 'Firstname Lastname',
+  //   imgUrl: 'profileImg.jpg',
+  //   email: 'xyz123@gmail.com',
+  //   points: 25,
+  //   importedNFT: 35,
+  //   stakedNFT: 22,
+  // });
   const socialHandle=['X.svg','Vector.svg','discord.svg','web.svg']
 
   function handle_ImportModule(){
