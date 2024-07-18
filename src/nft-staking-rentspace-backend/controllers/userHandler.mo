@@ -127,7 +127,7 @@ module {
             return #ok(newImportedNFT);
         };
 
-        public func createUser(input : UserTypes.UserInput, userId : Principal) : Result.Result<Text, InvalidError> {
+        public func createUser(input : UserTypes.UserInput, userId : Principal) : Result.Result<UserTypes.User, InvalidError> {
             if (input.email == "") {
                 return #err(#InvalidEmail);
             };
@@ -136,12 +136,12 @@ module {
             };
             // Add validation for E-mail
 
-            if (checkUserExists(userId)) {
-                return #err(#UserAlreadyExists);
-            };
+            // if (checkUserExists(userId)) {
+            //     return #err(#UserAlreadyExists);
+            // };
             let newUser = createNewUser(input, userId);
             userRecords.put(userId, newUser);
-            #ok("User Created Successfully");
+            #ok(fromMutableUser(newUser));
         };
 
         public func updateUserProfile(id : Principal, updatedUserData : { name : ?Text; email : ?Text }) : Result.Result<Text, { #UserNotFound; #MissingData; #NotAuthorized }> {
@@ -206,11 +206,11 @@ module {
         };
 
         private func checkUserExists(id : Principal) : Bool {
-            switch (userRecords.get(id)) {
-                case (?user) {
+            switch (getUser(id)) {
+                case (#ok(_)) {
                     return true;
                 };
-                case (null) {
+                case (#err(_)) {
                     return false;
                 };
             };

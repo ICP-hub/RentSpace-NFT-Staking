@@ -13,5 +13,5 @@ module {
         #NotAuthorized;
     };
 
-    public type GetUserResult = Result.Result<User.User, GetUserError>;
+    public type GetUserResult = Result.Result<User.User, Text>;
 }

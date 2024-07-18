@@ -1,16 +1,43 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useAuth} from '../../utils/useAuthClient'
+import {addUserData} from '../../utils/Redux-Config/UserSlice'
+import {useDispatch} from 'react-redux'
 import "./RegisterUser.css"
 
 const RegisterUser = () => {
-  function handleChange() {
-    console.log("qb")
+  const [formValue, setFormValue] = useState({username : '', email : ''})
+  const navigate = useNavigate()
+  const {actors} = useAuth()
+  const dispatch = useDispatch()
+
+  function handleChange(e) {
+    const value = e.target
+    setFormValue({
+      ...formValue,
+      [value.name]: value.value
+    })
   }
-  function registerNewUser() {
-    console.log("qbregister")
+
+  async function registerNewUser() {
+    const backendActor = (actors?.userActor == undefined) ? r : actors?.userActor;
+    const data = {name: formValue.username, email: formValue.email}
+    console.log(data)
+    const createUser = await backendActor.createUser(data)
+    console.log("Response : ", createUser)
+    if(createUser.err) {
+      console.log("Error in creating user")
+    }
+    else {
+      dispatch(addUserData(createUser.ok))
+      navigate('/Dashboard/userDashboard')
+    }
   }
-  function navigateToDashboard() {
-    console.log("navigate")
+  async function navigateToDashboard(e) {
+    e.preventDefault()
+    await registerNewUser()
   }
+
   return (
     <div className='RegisterPage-container'>
             <div className='form-content'>
@@ -20,11 +47,11 @@ const RegisterUser = () => {
                 <form className='form-container' onSubmit={navigateToDashboard}>
                     <div className='form-field'>
                         <label htmlFor='username'>Username</label>
-                        <input type='text' onChange={handleChange} name='username' id='username' placeholder='Enter your username' />
+                        <input type='text' onChange={handleChange} value={formValue.username} name='username' id='username' placeholder='Enter your username' />
                     </div>
                     <div className='form-field'>
                         <label htmlFor='email'>Email</label>
-                        <input type='email' onChange={handleChange} id='email' name='email' placeholder='Enter your email' />
+                        <input type='email' onChange={handleChange} id='email' name='email' value={formValue.email} placeholder='Enter your email' />
                     </div>
                     <div className='form-field'>
                         <button type='submit' onClick={registerNewUser}>Signup</button>

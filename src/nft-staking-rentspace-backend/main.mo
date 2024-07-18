@@ -39,12 +39,12 @@ actor {
         nftHandler := NftHandler.NftHandler(stableNftRecords, userHandler);
     };
 
-    public shared ({ caller }) func createUser(user : User.UserInput) : async Result.Result<Text, UserHandler.InvalidError> {
+    public shared ({ caller }) func createUser(user : User.UserInput) : async Result.Result<User.User, UserHandler.InvalidError> {
         await Functions.checkAnonymous(caller);
         let newUser = userHandler.createUser(user, caller);
         switch (newUser) {
             case (#ok(user)) {
-                return #ok("User created successfully");
+                return #ok(user);
             };
             case (#err(error)) {
                 return #err(error);
@@ -59,7 +59,7 @@ actor {
                 return #ok(user);
             };
             case (null) {
-                return #err(#notFound);
+                return #err("User Not Found");
             };
         };
     };
@@ -178,7 +178,7 @@ actor {
 
                 switch transferResponse {
                     case (#Ok(_)) {
-                        let updatedPoints = user.rewardPoints - points;
+                        let updatedPoints = user.rewardPoints - points; // Fix trap
                         let updateUserPointsRequest = userHandler.updatePoints(caller, updatedPoints);
 
                         switch updateUserPointsRequest {

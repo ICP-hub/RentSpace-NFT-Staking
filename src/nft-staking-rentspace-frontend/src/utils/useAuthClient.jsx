@@ -13,7 +13,7 @@ export const useAuthClient = () => {
     const [principal, setPrincipal] = useState(null);
     const [actors, setActors] = useState(null);
     const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"bd3sg-teaaa-aaaaa-qaaba-cai"
-    const EXTCanID = process.env.DFX_NETWORK === "ic"?"":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
+    const EXTCanID = process.env.DFX_NETWORK === "ic"?"m2nno-7aaaa-aaaah-adzba-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
 
     const clientInfo = async (client) => {
         const isAuthenticated = await client.isAuthenticated();
@@ -29,7 +29,7 @@ export const useAuthClient = () => {
         if (isAuthenticated && identity && principal && principal.isAnonymous() === false) {
             let userActor = createActor(canID, { agentOptions: { identity: identity } });
             let EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity: identity } });
-            console.log(EXTActor)
+            console.log(userActor)
             setActors({
                 userActor:userActor,
                 EXTActor:EXTActor
