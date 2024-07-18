@@ -1,64 +1,81 @@
 import React, { useEffect, useState } from 'react';
-import './NFTsComp.css';
 import { useNavigate } from 'react-router-dom';
-import { NFTsData } from '../../../Constants/useNFTsData';
+import { NFTsData } from '../../../../Constants/useNFTsData';
+import './NFTsComp.css';
+import Card from '../../../Card/Card';
+import FallbackUI from '../../../FallbackUI/FallbackUI';
 // import { useAuth } from '../../../utils/useAuthClient';
 
 const ImportedNFTs = () => {
-  // State variables
+ 
   const { NFTs } = NFTsData();
   const [importedNFTs, setImportedNFTs] = useState([]);
-  // const {actors}=useAuth()
+  // const { actors } = useAuth();
 
-  // Hooks
   const navigate = useNavigate();
 
-  // Effect hook to filter imported NFTs
-  useEffect(() => {
-    const importedNFTs = NFTs.filter((data) => !data.staked);
+  // Function to filter staked NFTs
+  const filterStakedNFTs = () => {
+    const importedNFTs = NFTs.filter((data) => data.isImported);
     setImportedNFTs(importedNFTs);
+  };
+
+  // Effect hook to filter staked NFTs and delay used for testing FallbackUI
+  useEffect(() => {
+    const timeoutId = setTimeout(filterStakedNFTs, 2000);
+    return () => clearTimeout(timeoutId);
   }, [NFTs]);
 
   // Event handler for viewing NFT details
   function nftDetailsHandle(id, name, img) {
-    navigate('/ImpNftDetails', { state: { id, name, img } });
+    navigate('/StakNftDetails', { state: { id, name, img } });
   }
 
-  // const getAllImportedNFTs=async()=>{
-  //   await actors.userActor.getAllUserStakedNFTs().then(async(res)=>{
-  //     const arr=[]
-  //     console.log(res)
-  //     if(res.ok?.length>0){
-  //       for(let i=0;i<res.length;i++){
-  //         let resp=await actors.userActor.getImportedNFTDetails(res[i][0])
-  //         if(resp.err!=undefined){
-  //           console.log(err)
-  //           continue
-  //         }
-  //         arr.push(resp.ok)
-  //       }
-  //       setImportedNFTs(arr)
-  //     }  
-  //   })
-  // }
 
-  // useEffect(()=>{
-  //   getAllImportedNFTs()
-  // },[])
+  // write this backend logic for importedNfts
+  const getAllStakedNFTs = async () => {
+    await actors.userActor.getAllUserStakedNFTs().then(async (res) => {
+      const arr = [];
+      console.log(res);
+      if (res.ok?.length > 0) {
+        for (let i = 0; i < res.length; i++) {
+          let resp = await actors.userActor.getStakedNFTDetails(res[i][0]);
+          if (resp.err != undefined) continue;
+          arr.push(resp.ok);
+        }
+        setImportedNFTs(arr);
+      }
+    });
+  };
 
-  // Render Method
+  useEffect(() => {
+    getAllStakedNFTs();
+  }, []);
+
+ 
   return (
-    <div className='nft-Maincont'>
-      {importedNFTs.map((nft, ind) => (
-        <div className='nftCont' key={ind} onClick={() => nftDetailsHandle(nft.id, nft.name, nft.img)}>
-          <div className='nftImg-cont'>
-          <img src={`DemoNfts/${nft.img}`} alt='nft-img' />
-
+    <>
+      {importedNFTs.length > 0 ? (
+        <div className='nft-Maincont'>
+          <h1>Imported NFT</h1>
+          <div className='nftOuter-Cont'>
+            {importedNFTs?.map((NFT, ind) => (
+              <div key={ind}>
+                <Card
+                  name={NFT.metadata.name}
+                  imgURL={NFT.metadata.url}
+                  desc={NFT.metadata.description}
+                  isStaked={NFT.isStaked}
+                  isImported={NFT.isImported}
+                />
+              </div>
+            ))}
           </div>
-          <h1>{nft.name}</h1>
         </div>
-      ))}
-    </div>
+      ) : (
+        <FallbackUI purpose='Imported' />
+      )}
+    </>
   );
 };
 

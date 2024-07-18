@@ -19,6 +19,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -46,6 +47,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -73,6 +75,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -100,6 +103,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -127,6 +131,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -154,6 +159,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -180,6 +186,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -207,6 +214,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -234,6 +242,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -261,6 +270,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -288,6 +298,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -315,6 +326,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -341,6 +353,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -368,6 +381,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -395,6 +409,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -422,6 +437,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -449,6 +465,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: true,
+        isImported: true,
         rarity: {
             Common: "Number",
             Uncommon: "Number",
@@ -476,6 +493,7 @@ const [NFTs,setNFTs] =useState( [
           ]
       },
         isStaked: false,
+        isImported: false,
         rarity: {
             Common: "Number",
             Uncommon: "Number",

@@ -20,7 +20,7 @@ const StakedNFTs = () => {
     setStakedNFTs(stakedNFTs);
   };
 
-  // Effect hook to filter staked NFTs with a delay for testing FallbackUI
+   // Effect hook to filter staked NFTs and delay used for testing FallbackUI
   useEffect(() => {
     const timeoutId = setTimeout(filterStakedNFTs, 2000);
     return () => clearTimeout(timeoutId);
@@ -57,12 +57,13 @@ const StakedNFTs = () => {
         <div className='nft-Maincont'>
           <h1>Stacked NFT</h1>
           <div className='nftOuter-Cont'>
-            {stakedNFTs.map((NFT, ind) => (
+            {stakedNFTs?.map((NFT, ind) => (
               <div key={ind}>
                 <Card
                   name={NFT.metadata.name}
                   imgURL={NFT.metadata.url}
                   desc={NFT.metadata.description}
+                  isStaked={NFT.isStaked}
                 />
               </div>
             ))}
