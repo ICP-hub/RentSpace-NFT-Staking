@@ -4,6 +4,7 @@ import {NavLink, useParams, useNavigate} from 'react-router-dom'
 import { NFTsData } from '../../Constants/useNFTsData'
 import Card from '../Card/Card'
 import { FaAngleLeft } from "react-icons/fa6";
+import RedeemModal from '../Modals/RedeemModal'
 
 
 const World = () => {
@@ -34,6 +35,7 @@ const World = () => {
           {filteredWorlds.length > 0 ? filteredWorlds.map(NFT => (
             <Card name = {NFT.metadata.name} imgURL = {NFT.metadata.thumb} desc = {NFT.metadata.description}/>
           )) : <p>Sorry, No data found</p>}
+          <RedeemModal userID={"123ABC"} rewardPoints={15}/>
           </div>
         </div>
       </div>
