@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import "./Modal.css"
-import { useNavigate } from 'react-router-dom';
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
-const Modal = ({status, message}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Modal = ({status, message, openModal=false}) => {
+  const [isModalOpen, setIsModalOpen] = useState(openModal);
   const error = status.toLowerCase() === 'error' ? true : false
   if(!isModalOpen) return
   setTimeout(()=> {

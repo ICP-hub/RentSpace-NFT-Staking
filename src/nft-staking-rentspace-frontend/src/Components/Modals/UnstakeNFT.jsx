@@ -5,6 +5,7 @@ const UnstackNFT = ({redeemPoints}) => {
   return (
     <div className='unstake-cont'>
       <h1 className='unstake-heading'>Unstake NFT!</h1>
+      
       <div className='points-awarded'>
         <div>Total Points Awarded!</div>
         <div>{redeemPoints}</div>
