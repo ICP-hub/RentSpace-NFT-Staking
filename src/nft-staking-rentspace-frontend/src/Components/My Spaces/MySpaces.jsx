@@ -1,15 +1,13 @@
 import React from 'react'
 import './mySpaces.css'
 import StakeInfo from './StakeInfo'
-import StakeDasboard from './StakeDasboard'
-import MyWorlds from './MyWorlds'
+import StakeDashboard from './StakeDashboard'
 
 const MySpaces = () => {
   return (
     <div className='mySpaces-cont'>
       <StakeInfo/>
-      <StakeDasboard/>
-      <MyWorlds/>
+      <StakeDashboard/>
     </div>
   )
 }

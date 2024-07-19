@@ -34,13 +34,13 @@
   }
   
   .btn1{
-     @apply m-2 ml-4
+     @apply m-2 ml-4 
   }
   
   .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute cursor-pointer
   }
   
   .btn2 span{
-      @apply mx-4 cursor-pointer
+      @apply mx-4 
   }

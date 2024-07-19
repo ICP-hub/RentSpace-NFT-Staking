@@ -33,7 +33,7 @@ const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
         <p className="card-content">{desc}</p>
-      { purpose === 'import' ? ''
+      { purpose === 'import'  ?   ''
       :
        <button className='card-btn' onClick={handleStaking} > { isStaked ? 'Unstake' : 'Stake' }</button> 
        }

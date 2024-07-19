@@ -1,5 +1,5 @@
 import React from "react";
-import "./World.css";
+import "./Worlds.css";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { NFTsData } from "../../Constants/useNFTsData";
 import Card from "../Card/Card";

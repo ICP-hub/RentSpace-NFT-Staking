@@ -3,7 +3,7 @@ import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  const [navItems, setItems]=useState(['Leaderboard', 'FAQ', 'My Worlds']);
+
   const [isConnected, setConnected]= useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +23,9 @@ const Navbar = () => {
       <img className='logo' src='RentSpace_logo_black(transp) 6.png'/>
       </div>
       <ul className='navItems-cont' >
-         {navItems.map((item, ind)=>  <li> {item} </li>   )}
+         <li onClick={()=> navigate('') } >Leaderboard</li>
+         <li onClick={()=> navigate('/faq') } > FAQ </li>
+         <li onClick={()=> navigate('/mySpaces') } > My Spaces </li>
       </ul>
 
       <section className='connectBtn-mainCont'>

@@ -13,7 +13,7 @@
    @apply text-2xl font-medium mb-5
 }
 .nftOuter-Cont{
-   @apply w-full flex flex-wrap gap-10
+   @apply w-full flex flex-wrap  gap-10
 }
 
 .nftOuter-Cont > div{

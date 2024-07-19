@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import "./Worlds.css";
 
 const MyWorlds = () => {
   const [currentWorld, setCurrent] = useState(0);
