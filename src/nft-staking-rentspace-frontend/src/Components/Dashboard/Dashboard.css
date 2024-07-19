@@ -4,51 +4,66 @@
   @apply  w-screen bg-cover bg-no-repeat  bg-center
 }
 .Heading-staking{
-@apply text-[38px] flex justify-center pt-[8%] text-white font-medium
+@apply text-[38px] flex justify-center pt-[7%] text-white font-medium
 }
 
 
 
-
-/*  myWorlds component styling */
-.myWorlds-Cont{
-  @apply  pt-8 overflow-hidden w-full pb-16
+/* myWorlds component styling */
+.myWorlds-Cont {
+  @apply pt-8 overflow-hidden w-full pb-16;
 }
 
-.myWorlds{
-@apply flex overflow-x-scroll 
+.myWorlds-wrapper {
+  @apply relative flex w-full overflow-hidden;
 }
 
-.flexWorlds{
-@apply flex  ml-[30%] lg:ml-[40%]  
-}
-.worlds{
-  @apply transition-all ease-out duration-100 w-72 mx-2
+.myWorlds {
+  @apply flex overflow-x-scroll flex-grow;
 }
 
-
-
-.worlds img{
-  @apply w-[380px]
+.flexWorlds {
+  @apply flex ml-[30%] lg:ml-[40%];
 }
 
-.carousel-btn{
-  @apply flex justify-center items-center mb-8 text-white text-lg font-medium 
+.worlds {
+  @apply transition-all ease-out duration-100 w-72 mx-2;
 }
 
-.favIcon{
-@apply cursor-pointer
-}
-.carousel-btn h1{
-  @apply rounded-full border-[3px] p-2 px-10 mx-4
+.worlds img {
+  @apply w-[380px];
 }
 
-.explore-btn{
-  @apply flex justify-center transition-all duration-100 ease-in-out
+.carousel-btn {
+  @apply flex justify-center items-center mb-8 text-white text-lg font-medium;
 }
 
-.explore-btn > button{
-  @apply p-[10px] w-[170px] mt-8 px-7 text-lg rounded-full text-white border font-medium  shadow-lg 
+.favIcon {
+  @apply cursor-pointer;
+}
 
+.carousel-btn h1 {
+  @apply rounded-full border-[3px] p-2 px-10 mx-4;
+}
+
+.explore-btn {
+  @apply flex mb-16 justify-center transition-all duration-100 ease-in-out;
+}
+
+.explore-btn > button {
+  @apply p-[10px] w-[170px] mt-8 px-7 text-lg rounded-full text-white border font-medium shadow-lg;
+}
+
+.blurred {
+  @apply absolute top-0 bottom-0 w-[35%] pointer-events-none outline-none;
+  backdrop-filter: blur(3px);
+}
+
+.left-blur {
+  @apply left-0;
+}
+
+.right-blur {
+  @apply right-0;
 }
 

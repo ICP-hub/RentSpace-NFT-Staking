@@ -62,7 +62,7 @@ const [NFTs,setNFTs] =useState( [
     {
         id: "3",
         metadata: {
-          name: 'Minimalistic Villas#110',
+          name: 'Modernistic Villas#110',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -146,7 +146,7 @@ const [NFTs,setNFTs] =useState( [
     {
         id: "6",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Futuristic Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -171,9 +171,9 @@ const [NFTs,setNFTs] =useState( [
         owner: "String",
         stakedAt: null
     },
-    {     id: "1",
+    {     id: "7",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Futuristic Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -199,7 +199,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "2",
+        id: "8",
         metadata: {
           name: 'Minimalistic Villas#140',
           mimeType: 'image',
@@ -227,9 +227,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "3",
+        id: "9",
         metadata: {
-          name: 'Minimalistic Villas#110',
+          name: 'Moon Villas#110',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -255,9 +255,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "4",
+        id: "10",
         metadata: {
-          name: 'Minimalistic Villas#165',
+          name: 'Mars Villas#165',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -283,9 +283,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "5",
+        id: "11",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Modernistic Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -311,9 +311,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "6",
+        id: "12",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Moon Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -338,9 +338,9 @@ const [NFTs,setNFTs] =useState( [
         owner: "String",
         stakedAt: null
     },
-    {     id: "1",
+    {     id: "13",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Mars Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -366,7 +366,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "2",
+        id: "14",
         metadata: {
           name: 'Minimalistic Villas#140',
           mimeType: 'image',
@@ -394,7 +394,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "3",
+        id: "15",
         metadata: {
           name: 'Minimalistic Villas#110',
           mimeType: 'image',
@@ -422,9 +422,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "4",
+        id: "16",
         metadata: {
-          name: 'Minimalistic Villas#165',
+          name: 'Modernistic Villas#165',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -450,9 +450,9 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "5",
+        id: "17",
         metadata: {
-          name: 'Minimalistic Villas#150',
+          name: 'Moon Villas#150',
           mimeType: 'image',
           url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
           thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
@@ -478,7 +478,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "6",
+        id: "18",
         metadata: {
           name: 'Minimalistic Villas#150',
           mimeType: 'image',
