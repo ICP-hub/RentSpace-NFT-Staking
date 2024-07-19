@@ -25,6 +25,7 @@ const MyWorlds = () => {
 
   return (
     <div className='myWorlds-Cont'>
+      <h1 className='heading-staking'> Staking </h1>
       <div className='carousel-btn'>
         <FaChevronLeft className='favIcon' size={25} onClick={prevWorld} />
         <h1>{worldNames[currentWorld]}</h1>

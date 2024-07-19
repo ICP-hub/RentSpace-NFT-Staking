@@ -9,8 +9,8 @@ const HeroPage = () => {
      <div className=' Hero-cont'>
         <div className='heading1'> <h1 className=''> RentSpace </h1>  </div>
         <div className='heading2'> <h1 > Where Your NFTs Work For You. </h1> </div>
-       <div className='goStake-btn'>
-       <button >Go stake</button>
+       <div className='Explore-btn'>
+       <button > Explore Worlds </button>
         </div> 
      </div>
      </div>

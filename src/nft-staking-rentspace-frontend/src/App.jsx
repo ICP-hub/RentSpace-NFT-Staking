@@ -5,7 +5,6 @@ import HomePage from './Components/Home/HomePage';
 import MySpaces from './Components/My Spaces/MySpaces';
 import FAQ from './Components/FAQ/FAQ';
 import Dashboard from './Components/Dashboard/Dashboard';
-import MyWorlds from './Components/Dashboard/MyWorlds';
 import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
 import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
@@ -43,18 +42,14 @@ function App() {
           children:[
             {
               path:'/Dashboard',
-              element:<MyWorlds/>
-            },
-            {
-              path:'/Dashboard/userDashboard',
               element:<UserDashboard/>,
               children:[
                 {
-                  path:'/Dashboard/userDashboard',
+                  path:'/Dashboard/',
                   element:<StakedNFTs/>
                 },
                 {
-                  path:'/Dashboard/userDashboard/importedNFTs',
+                  path:'/Dashboard/importedNFTs',
                   element:<ImportedNFTs/>
                 }
               ]
