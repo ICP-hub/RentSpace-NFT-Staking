@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './Navbar.css'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [navItems, setItems]=useState(['Leaderboard', 'FAQ', 'My Worlds']);
   const [isConnected, setConnected]= useState(false);
+  const navigate = useNavigate();
 
 
   function ConnectWallet(){
@@ -17,7 +19,7 @@ const Navbar = () => {
     <div className='navbar-mainCont'>
     <div className='navbar-cont'>
 
-      <div className='Logo-cont'>
+      <div className='Logo-cont' onClick={()=> navigate('/')}>
       <img className='logo' src='RentSpace_logo_black(transp) 6.png'/>
       </div>
       <ul className='navItems-cont' >

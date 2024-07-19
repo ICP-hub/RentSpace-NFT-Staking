@@ -3,6 +3,7 @@ import './UserDashboard.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
 import RedeemModal from '../../Modals/RedeemModal';
+import Modal from '../../Modals/Modal';
 
 
 const UserDashboard = () => {
@@ -25,6 +26,7 @@ const UserDashboard = () => {
 
   return (
     <>
+    <Modal status={'success'} message={'Your NFTs have been staked successfully'}/>
    <div  className='userDashboard-cont'  style={isImportModule || isModalOpen ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
       <div className='left-cont'>
         <div className='userInfo-cont'>
@@ -77,6 +79,7 @@ const UserDashboard = () => {
     
     }
     {isModalOpen && <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen}/>}
+    
     </>
   );
 }

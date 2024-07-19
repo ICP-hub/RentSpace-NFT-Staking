@@ -55,7 +55,7 @@ const StakedNFTs = () => {
     <>
       {stakedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
-          <h1>Stacked NFT</h1>
+          <h1>Staked NFTs</h1>
           <div className='nftOuter-Cont'>
             {stakedNFTs?.map((NFT, ind) => (
               <div key={ind}>
