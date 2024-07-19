@@ -11,14 +11,6 @@ const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule]= useState(false);
   const user= useSelector((state) => state.user);
-  // const [userInfo] = useState({
-  //   name: 'Firstname Lastname',
-  //   imgUrl: 'profileImg.jpg',
-  //   email: 'xyz123@gmail.com',
-  //   points: 25,
-  //   importedNFT: 35,
-  //   stakedNFT: 22,
-  // });
   const socialHandle=['X.svg','Vector.svg','discord.svg','web.svg']
 
   function handle_ImportModule(){
@@ -54,7 +46,7 @@ const UserDashboard = () => {
             </div>
             <div>
               <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard') } >Staked NFTs</h2>
-              <h1>{user.stakedNFT.length}</h1>
+              <h1>{user.stakedNFTs.length}</h1>
             </div>
           </div>
         </div>
