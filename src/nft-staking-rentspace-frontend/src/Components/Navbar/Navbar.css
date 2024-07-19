@@ -10,7 +10,7 @@
   }
   
   .Logo-cont{
-      @apply col-span-4
+      @apply col-span-4 cursor-pointer
   }
   
   .logo{
@@ -20,6 +20,10 @@
   .navItems-cont{
       @apply col-span-4 flex justify-evenly text-lg font-semibold
   }
+
+  .navItems-cont > li {
+    @apply cursor-pointer
+  } 
   
   .connectBtn-mainCont{
       @apply col-span-4 flex justify-end mr-10  py-4

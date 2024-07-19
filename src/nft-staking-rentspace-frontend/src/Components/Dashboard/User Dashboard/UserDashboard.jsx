@@ -77,6 +77,7 @@ const UserDashboard = () => {
     
     }
     {isModalOpen && <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen}/>}
+    
     </>
   );
 }

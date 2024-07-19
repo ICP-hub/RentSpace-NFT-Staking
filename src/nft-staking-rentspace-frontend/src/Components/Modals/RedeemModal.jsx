@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RedeemModal.css";
-import coinAnimation from "../../../public/coins.gif";
+import coinAnimation from "/coins.gif?url";
 import { convertPointstoICP } from "../../utils/utils";
 import { IoInformationCircleOutline } from "react-icons/io5";
 

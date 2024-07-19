@@ -1,10 +1,10 @@
 .min-world-MainCont {
   background-image: url('image 808.png');
-  @apply w-screen bg-cover bg-no-repeat object-cover bg-center flex
+  @apply w-screen bg-no-repeat bg-cover bg-center min-h-screen py-[10%]
 }
 
 .min-world-InnerCont {
-  @apply flex justify-center items-center py-[14%] p-24
+  @apply bg-[#F0F0F0] mx-5 rounded-3xl grid grid-cols-4 min-h-dvh
 }
 
 .back-btn {
@@ -12,23 +12,36 @@
 }
 
 .worlds-navCont {
-  @apply flex flex-col w-1/3 gap-8 bg-[#f0f0f0] h-full py-8 pl-8 border-r-2 rounded-l-3xl
+  @apply bg-[#f0f0f0] col-span-1 border-r-[1px] border-gray-400 rounded-l-2xl
+}
+
+.world-innerCont {
+  @apply flex flex-col items-start gap-4 px-4 py-8
+}
+
+.world-links {
+  @apply flex flex-col gap-4
 }
 
 .worlds-nav {
-  @apply text-xs w-full
+  @apply  w-full px-4
 }
 
 .world-name {
-  @apply text-3xl font-semibold px-2 capitalize
+  @apply text-3xl font-semibold capitalize mb-10
 }
 
-.cards-container {
-  @apply flex flex-wrap justify-center gap-10 bg-[#f0f0f0] px-2 py-8 
+.cards-cont {
+  @apply m-3 ml-0 col-span-3
+}
+
+.cards-grid {
+  @apply flex flex-wrap w-full gap-10
+  
 }
 
 .cards-box {
-  @apply bg-[#f0f0f0] h-full rounded-r-3xl
+  @apply w-full rounded-2xl px-14 py-6
 }
 
 .active {
@@ -36,7 +49,7 @@
 }
 
 .staking {
-  @apply flex items-center gap-1
+  @apply flex items-center gap-2 p-2
 }
 
 .staking-header {
