@@ -40,8 +40,11 @@
 .NFTsCount-cont div{
     @apply  flex justify-between font-medium my-5 
 }
+.Nav-Nfts{
+    @apply hover:bg-black hover:text-white transition-all ease-in-out duration-200 p-2 px-4 cursor-pointer
+}
 .NFTsCount-cont div h1{
-    @apply  text-xl text-center
+    @apply  text-xl text-center  p-1
 }
 .NFT_Reward-cont{
    @apply mt-28 mb-10

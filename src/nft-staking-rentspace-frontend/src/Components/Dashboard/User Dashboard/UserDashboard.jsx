@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import './UserDashboard.css';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
 import { useSelector } from 'react-redux';
+import RedeemModal from '../../Modals/RedeemModal';
 
 
 const UserDashboard = () => {
- 
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule]= useState(false);
   const user= useSelector((state) => state.user);
   // const [userInfo] = useState({
@@ -25,7 +27,7 @@ const UserDashboard = () => {
 
   return (
     <>
-   <div  className='userDashboard-cont'  style={isImportModule ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
+   <div  className='userDashboard-cont'  style={isImportModule || isModalOpen ? { filter: 'blur(3px)',  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)' } : {}}>
       <div className='left-cont'>
         <div className='userInfo-cont'>
           <div className='profile-cont'>
@@ -47,18 +49,18 @@ const UserDashboard = () => {
           </div>
           <div className='NFTsCount-cont'>
             <div>
-              <h2>Imported NFTs</h2>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard/importedNFTs') } >Imported NFTs</h2>
               <h1>{user.importedNFTs.length}</h1>
             </div>
             <div>
-              <h2>Staked NFTs</h2>
-              <h1>{user.stakedNFTs.length}</h1>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard') } >Staked NFTs</h2>
+              <h1>{user.stakedNFT.length}</h1>
             </div>
           </div>
         </div>
         <div className='NFT_Reward-cont'>
            <div className='btn' onClick={handle_ImportModule}> Import NFT </div>
-           <div className='btn'> Redeem Rewards </div>
+           <div className='btn' onClick={()=> setIsModalOpen(true)}> Redeem Rewards </div>
         </div>
       </div>
       <div className='right-cont'>
@@ -76,6 +78,7 @@ const UserDashboard = () => {
       <ImportingNFTs setImportModule={setImportModule} />
     
     }
+    {isModalOpen && <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen}/>}
     </>
   );
 }

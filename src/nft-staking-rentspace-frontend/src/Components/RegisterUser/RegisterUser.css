@@ -3,7 +3,6 @@
   @apply flex justify-center items-center text-lg h-screen bg-cover bg-no-repeat ;
 }
 
-
 .form-content {
   @apply col-span-7 relative  bg-white rounded-lg p-6 shadow-md w-[420px] py-8  mx-auto;
 }

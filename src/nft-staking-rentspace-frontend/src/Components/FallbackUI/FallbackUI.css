@@ -6,11 +6,11 @@
 }
 
 .fallbackUI-innerCont{
-    @apply flex justify-center items-center
+    @apply flex h-screen justify-center items-center
 }
 
 .fallbackUI-innerCont > div{
-    @apply flex flex-col justify-center items-center 
+    @apply flex -mt-[20%] flex-col justify-center items-center 
 }
 
 .fallbackUI-innerCont h2{
