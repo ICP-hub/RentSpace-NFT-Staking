@@ -1,10 +1,10 @@
 .rewards-modal {
   /* @apply w-3/4 bg-[#162e5d] px-16 py-8 flex flex-col gap-4 text-white justify-center items-start border-2 border-white rounded-2xl relative */
-  @apply absolute w-[40%]  bg-[#162e5d] top-[8%] left-1/2 transform -translate-x-1/2  rounded-xl text-white px-16 py-8 flex flex-col gap-4
+  @apply absolute w-[40%]  bg-[#162e5d] top-[25%] left-1/2 transform -translate-x-1/2  rounded-xl text-white px-16 py-8 flex flex-col gap-4
 }
 
 .redeem-closeBtn {
-  @apply cursor-pointer
+  @apply cursor-pointer text-right
 }
 
 .secondary-color {
