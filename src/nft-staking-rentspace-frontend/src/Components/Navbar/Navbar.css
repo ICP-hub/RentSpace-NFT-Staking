@@ -1,11 +1,12 @@
 
 
 .navbar-mainCont{
-    @apply w-full absolute top-4
+    @apply w-full top-4 fixed z-50
   }
   
   .navbar-cont{
-      @apply grid grid-cols-12 bg-[#000000] bg-opacity-50   mx-[2%] rounded-full items-center text-white
+      @apply grid grid-cols-12 bg-[#000000] bg-opacity-35   mx-[2%] rounded-full items-center text-white;
+      backdrop-filter:blur(8px)
   }
   
   .Logo-cont{

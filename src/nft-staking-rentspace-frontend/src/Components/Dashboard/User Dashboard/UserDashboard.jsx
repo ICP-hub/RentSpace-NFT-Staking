@@ -46,11 +46,11 @@ const UserDashboard = () => {
           </div>
           <div className='NFTsCount-cont'>
             <div>
-              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard/importedNFTs') } >Imported NFTs</h2>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/importedNFTs') } >Imported NFTs</h2>
               <h1>{userInfo.importedNFT}</h1>
             </div>
             <div>
-              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard/userDashboard') } >Staked NFTs</h2>
+              <h2 className='Nav-Nfts' onClick={()=> navigate('/Dashboard') } >Staked NFTs</h2>
               <h1>{userInfo.stakedNFT}</h1>
             </div>
           </div>

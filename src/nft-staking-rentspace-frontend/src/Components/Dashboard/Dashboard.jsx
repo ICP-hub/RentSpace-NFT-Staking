@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
   import './Dashboard.css';
-import MyWorlds from './MyWorlds';
 import { Outlet } from 'react-router-dom';
 
   const Dashboard = () => {

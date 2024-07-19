@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { NFTsData } from '../../Constants/useNFTsData';
+
 
 const YourVillas = () => {
-    const [selectOption, setSelectOption] = useState('');
+  const { NFTs } = NFTsData();
+  const [selectOption, setSelectOption] = useState('');
   const [selectedVilla, setSelectedVilla] = useState('');
 
   const handleStake = () => {
@@ -14,6 +17,8 @@ const YourVillas = () => {
     alert(`Unstaking ${selectedVilla}`);
   };
 
+
+  
   return (
     <div className='yourVillas-cont'>
       <header className='header'>
@@ -33,6 +38,14 @@ const YourVillas = () => {
           <button onClick={handleUnstake} disabled={!selectedVilla}>Unstake</button>
         </div>
       </header>
+       <section>
+           {NFTs?.map((data, ind)=>{
+            return <div>
+                <img src={data.url}/>
+            </div>
+           } )}
+       </section>
+
       <div>
        
 
