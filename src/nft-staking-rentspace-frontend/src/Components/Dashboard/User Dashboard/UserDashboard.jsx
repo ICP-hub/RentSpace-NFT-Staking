@@ -4,7 +4,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import ImportingNFTs from './ImportingNFTs';
 import RedeemModal from '../../Modals/RedeemModal';
 
-
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
