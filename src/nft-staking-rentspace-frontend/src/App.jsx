@@ -8,10 +8,11 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
 import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
-import World from './Components/World/World';
+import World from './Components/Worlds/World';
 import RegisterUser from './Components/RegisterUser/RegisterUser';
 import StakedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/StakedNFTs';
 import ImportedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/ImportedNFTs';
+import MyWorlds from './Components/Worlds/MyWorlds';
 
 function App() {
 
@@ -29,9 +30,13 @@ function App() {
           element: <MySpaces />
         },
         {
-          path: '/FAQ',
+          path: '/faq',
           element: <FAQ/>
         },
+        {
+          path: '/myWorlds',
+          element: <MyWorlds/>
+      },
         {
             path: '/world/:world',
             element: <World/>

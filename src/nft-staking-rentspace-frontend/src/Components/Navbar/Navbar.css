@@ -38,9 +38,9 @@
   }
   
   .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute min-w-[50%]
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute cursor-pointer min-w-[50%]
   }
   
   .btn2 span{
-      @apply mx-4 cursor-pointer
+      @apply mx-4 
   }

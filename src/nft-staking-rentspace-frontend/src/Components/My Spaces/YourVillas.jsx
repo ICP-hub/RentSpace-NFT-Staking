@@ -20,7 +20,7 @@ const YourVillas = () => {
 
   
   return (
-    <div className='yourVillas-cont'>
+    <div className='Villas-cont' >
       <header className='header'>
         <div className='header-left'>
           <h1>Your Villas</h1>
@@ -38,10 +38,10 @@ const YourVillas = () => {
           <button onClick={handleUnstake} disabled={!selectedVilla}>Unstake</button>
         </div>
       </header>
-       <section>
+       <section className='villas'>
            {NFTs?.map((data, ind)=>{
-            return <div>
-                <img src={data.url}/>
+            return <div className='villas-card'>
+                <img src={data.metadata.url}/>
             </div>
            } )}
        </section>
