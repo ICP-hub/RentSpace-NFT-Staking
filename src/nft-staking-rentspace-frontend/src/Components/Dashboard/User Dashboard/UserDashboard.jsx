@@ -18,7 +18,7 @@ const UserDashboard = () => {
 
   return (
     <>
-      {!userInfo ? (
+      {!user.name ? (
         <FallbackUI_404 />
       ) : (
         <div
