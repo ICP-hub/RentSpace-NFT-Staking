@@ -30,7 +30,7 @@ const RegisterUser = () => {
     }
     else {
       dispatch(addUserData(createUser.ok))
-      navigate('/Dashboard/userDashboard')
+      navigate('/Dashboard')
     }
   }
   async function navigateToDashboard(e) {
