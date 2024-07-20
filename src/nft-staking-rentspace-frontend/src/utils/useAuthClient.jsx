@@ -12,7 +12,7 @@ export const useAuthClient = () => {
     const [identity, setIdentity] = useState(null);
     const [principal, setPrincipal] = useState(null);
     const [actors, setActors] = useState(null);
-    const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"bd3sg-teaaa-aaaaa-qaaba-cai"
+    const canID=process.env.DFX_NETWORK === "ic"?"yr432-oqaaa-aaaao-a3phq-cai":"bd3sg-teaaa-aaaaa-qaaba-cai"
     const EXTCanID = process.env.DFX_NETWORK === "ic"?"m2nno-7aaaa-aaaah-adzba-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
 
     const clientInfo = async (client) => {

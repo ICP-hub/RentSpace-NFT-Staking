@@ -26,7 +26,7 @@ const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
       const tokenIdentifier = tokenIndexToTokenIdentifier(id)
       console.log("Token Identifier : ", tokenIdentifier)
 
-      const backendCanister = Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai")
+      const backendCanister = Principal.fromText("yr432-oqaaa-aaaao-a3phq-cai")
 
       const _approveTransferReq = await actors.EXTActor.approve({
         token : tokenIdentifier,
