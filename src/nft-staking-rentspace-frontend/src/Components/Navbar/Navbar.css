@@ -34,11 +34,19 @@
   }
   
   .btn1{
-     @apply m-2 ml-4 
+<<<<<<< HEAD
+     @apply m-2 ml-6 w-[43%]
   }
   
   .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute cursor-pointer
+      @apply  h-full bg-gradient-to-r  from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full   text-center  absolute cursor-pointer
+=======
+     @apply p-2 w-1/2 text-center
+  }
+  
+  .btn2{
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute cursor-pointer min-w-[50%]
+>>>>>>> df1d209c6dc42e8070448a4639b043e2dc7762a3
   }
   
   .btn2 button{
