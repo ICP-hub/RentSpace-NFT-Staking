@@ -10,17 +10,24 @@ const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-   // Fetch user data and store into state
+
+  // Fetch user data and store into state
   useEffect(() => {
-      setUserInfo({
-        name: 'Firstname Lastname',
-        imgUrl: 'profileImg.jpg',
-        email: 'xyz123@gmail.com',
-        points: 25,
-        importedNFT: 35,
-        stakedNFT: 22,
-      });
+    // fetch get user data
+    
+    setUserInfo({
+      name: 'Firstname Lastname',
+      imgUrl: 'profileImg.jpg',
+      email: 'xyz123@gmail.com',
+      points: 25,
+      importedNFT: 35,
+      stakedNFT: 22,
+    });
+
+    setIsLoading(false);
+
   }, []);
 
   const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
@@ -29,9 +36,9 @@ const UserDashboard = () => {
 
   return (
     <>
-      {!userInfo ? (
-        <FallbackUI_404 />
-      ) : (
+      {isLoading ? (
+        ''
+      ) : userInfo ? (
         <div
           className='userDashboard-cont'
           style={
@@ -88,10 +95,13 @@ const UserDashboard = () => {
               </div>
             </div>
           </div>
+
           <div className='right-cont'>
             <Outlet />
           </div>
         </div>
+      ) : (
+        <FallbackUI_404 />
       )}
 
       {/* Importing NFTs Module */}

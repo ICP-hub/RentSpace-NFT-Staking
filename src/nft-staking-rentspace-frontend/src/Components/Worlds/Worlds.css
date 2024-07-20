@@ -84,15 +84,15 @@
 }
 
 .worlds-navCont {
-  @apply bg-[#f0f0f0] col-span-1 border-r-[1px] border-gray-400 rounded-l-2xl
+  @apply bg-[#f0f0f0] col-span-1 border-r-[2px] border-opacity-30 border-gray-400 rounded-l-2xl
 }
 
 .world-innerCont {
-  @apply flex flex-col items-start gap-4 px-4 py-8
+  @apply flex flex-col items-start gap-4 mx-16 my-6
 }
 
 .world-links {
-  @apply flex flex-col gap-4
+  @apply flex flex-col gap-8 text-lg mt-6
 }
 
 .worlds-nav {
@@ -121,13 +121,15 @@
 }
 
 .staking {
-  @apply flex items-center gap-2 p-2
+  @apply flex items-center gap-2 p-2 mt-2
 }
 
 .staking-header {
-  @apply font-semibold text-2xl
+  @apply font-semibold text-4xl
 }
-
+.backIcon{
+  @apply cursor-pointer
+}
 
 
 

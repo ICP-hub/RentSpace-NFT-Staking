@@ -7,13 +7,20 @@ const Navbar = () => {
   const [isConnected, setConnected]= useState(false);
   const navigate = useNavigate();
 
-
+  // logic for wallet connection and get response from backend
   function ConnectWallet(){
-    // logic for wallet connection and get response
-     const response = !isConnected     // demo value
+     const response = !isConnected     // demo value for testing
 
     setConnected(response)
   }
+
+    // logic for logout and get response from backend
+   function handleLogout(){
+     const response = !isConnected     // demo value for testing
+
+    setConnected(response)
+   }
+
 
   return (
     <div className='navbar-mainCont'>
@@ -31,7 +38,9 @@ const Navbar = () => {
       <section className='connectBtn-mainCont'>
          <div className='connectBtn-cont'>
          <div className='btn1'>{ isConnected ? 'Connected' : '' }</div>
-         <div onClick={ConnectWallet} className='btn2 ' style={isConnected ? { right:0 } : { }}> <span>Connect Wallet </span></div>
+         <div  className='btn2 ' style={isConnected ? { right:0 } : { }}>
+          { isConnected ? <button onClick={handleLogout}> Logout </button> : <button onClick={ ConnectWallet } >Connect Wallet </button> }
+           </div>
          </div>
           
       </section>
