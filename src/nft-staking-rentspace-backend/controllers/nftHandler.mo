@@ -90,6 +90,12 @@ module {
             ?fromMutableNFT(nft);
         };
 
+        public func getAllStaked() : [Nft] {
+           stakedNftRecords.vals()
+            |> Iter.map(_, fromMutableNFT)
+            |> Iter.toArray(_);
+        };
+
         public func getStaked(id : Text) : ?Nft {
             let ?nft = stakedNftRecords.get(id) else return null;
             ?fromMutableNFT(nft);
