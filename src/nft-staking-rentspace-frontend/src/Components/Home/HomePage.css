@@ -44,13 +44,13 @@
   @apply text-center font-bold text-3xl ;
 }
 
-.goStake-btn{
+.Explore-btn{
   @apply flex justify-center mt-24
 }
 
-.goStake-btn > button{
+.Explore-btn > button{
 
-  @apply p-3 w-56 px-[50px] text-2xl  rounded-xl font-medium  shadow-lg 
+  @apply p-3 w-56 px-8 text-2xl  rounded-xl font-medium  shadow-lg 
 }
 
 

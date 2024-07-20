@@ -5,14 +5,14 @@ import HomePage from './Components/Home/HomePage';
 import MySpaces from './Components/My Spaces/MySpaces';
 import FAQ from './Components/FAQ/FAQ';
 import Dashboard from './Components/Dashboard/Dashboard';
-import MyWorlds from './Components/Dashboard/MyWorlds';
 import UserDashboard from './Components/Dashboard/User Dashboard/UserDashboard';
 import { Provider } from 'react-redux';
 import { myStore } from './utils/Redux-Config/ReduxStore';
-import World from './Components/World/World';
+import World from './Components/Worlds/World';
 import RegisterUser from './Components/RegisterUser/RegisterUser';
 import StakedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/StakedNFTs';
 import ImportedNFTs from './Components/Dashboard/User Dashboard/NFTsComp/ImportedNFTs';
+import MyWorlds from './Components/Worlds/MyWorlds';
 
 function App() {
 
@@ -30,9 +30,13 @@ function App() {
           element: <MySpaces />
         },
         {
-          path: '/FAQ',
+          path: '/faq',
           element: <FAQ/>
         },
+        {
+          path: '/myWorlds',
+          element: <MyWorlds/>
+      },
         {
             path: '/world/:world',
             element: <World/>
@@ -43,18 +47,14 @@ function App() {
           children:[
             {
               path:'/Dashboard',
-              element:<MyWorlds/>
-            },
-            {
-              path:'/Dashboard/userDashboard',
               element:<UserDashboard/>,
               children:[
                 {
-                  path:'/Dashboard/userDashboard',
+                  path:'/Dashboard/',
                   element:<StakedNFTs/>
                 },
                 {
-                  path:'/Dashboard/userDashboard/importedNFTs',
+                  path:'/Dashboard/importedNFTs',
                   element:<ImportedNFTs/>
                 }
               ]

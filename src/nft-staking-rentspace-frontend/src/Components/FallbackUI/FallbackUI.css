@@ -1,3 +1,5 @@
+/* fallbackUI component styling*/
+
 .fallbackUI-cont{
     @apply bg-white h-full rounded-2xl
 }
@@ -15,4 +17,24 @@
 
 .fallbackUI-innerCont h2{
     @apply font-medium text-lg -mt-10
+}
+
+
+
+/* FallbackUI_404 component */
+
+.fallbackUI_404-cont{
+    @apply bg-white rounded-2xl mt-4 flex justify-center items-center h-screen
+}
+.fallbackUI_404-innerCont{
+    @apply  justify-center items-center -mt-32
+}
+.fallbackUI_404-innerCont > h1{
+    @apply text-9xl font-bold 
+}
+.fallbackUI_404-innerCont > p{
+    @apply text-xl font-bold  text-center
+}
+.fallbackUI_404-innerCont > button{
+    @apply text-lg font-bold mt-10 text-white
 }

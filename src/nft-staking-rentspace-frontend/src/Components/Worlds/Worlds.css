@@ -1,0 +1,136 @@
+
+/* myWorlds component styling */
+
+.myWorlds-Cont {
+  @apply pt-8 overflow-hidden w-full pb-16;
+  background-image: url('image 808.png');
+@apply  w-screen bg-cover bg-no-repeat  bg-center
+}
+
+.myWorlds-Cont > .heading-staking{
+  @apply text-[38px] flex justify-center mt-20 mb-10 text-white font-medium
+  }
+
+.myWorlds-wrapper {
+  @apply relative flex w-full overflow-hidden;
+}
+
+.myWorlds {
+  @apply flex overflow-x-scroll flex-grow;
+}
+
+.flexWorlds {
+  @apply flex ml-[30%] lg:ml-[40%];
+}
+
+.worlds {
+  @apply transition-all ease-out duration-100 w-72 mx-2;
+}
+
+.worlds img {
+  @apply w-[380px];
+}
+
+.carousel-btn {
+  @apply flex justify-center items-center mb-8 text-white text-lg font-medium;
+}
+
+.favIcon {
+  @apply cursor-pointer;
+}
+
+.carousel-btn h1 {
+  @apply rounded-full border-[3px] p-2 px-10 mx-4;
+}
+
+.explore-btn {
+  @apply flex mb-16 justify-center transition-all duration-100 ease-in-out;
+}
+
+.explore-btn > button {
+  @apply p-[10px] w-[170px] mt-8 px-7 text-lg rounded-full text-white border font-medium shadow-lg;
+}
+
+.blurred {
+  @apply absolute top-0 bottom-0 w-[35%] pointer-events-none outline-none;
+  backdrop-filter: blur(3px);
+}
+
+.left-blur {
+  @apply left-0;
+}
+
+.right-blur {
+  @apply right-0;
+}
+
+
+
+
+
+/* World component styling */
+
+.min-world-MainCont {
+  background-image: url('image 808.png');
+  @apply w-screen bg-no-repeat bg-cover bg-center min-h-screen py-[10%]
+}
+
+.min-world-InnerCont {
+  @apply bg-[#F0F0F0] mx-5 rounded-3xl grid grid-cols-4 min-h-dvh
+}
+
+.back-btn {
+  @apply cursor-pointer
+}
+
+.worlds-navCont {
+  @apply bg-[#f0f0f0] col-span-1 border-r-[1px] border-gray-400 rounded-l-2xl
+}
+
+.world-innerCont {
+  @apply flex flex-col items-start gap-4 px-4 py-8
+}
+
+.world-links {
+  @apply flex flex-col gap-4
+}
+
+.worlds-nav {
+  @apply  w-full px-4
+}
+
+.world-name {
+  @apply text-3xl font-semibold capitalize mb-10
+}
+
+.cards-cont {
+  @apply m-3 ml-0 col-span-3
+}
+
+.cards-grid {
+  @apply flex flex-wrap w-full gap-10
+  
+}
+
+.cards-box {
+  @apply w-full rounded-2xl px-14 py-6
+}
+
+.active {
+  @apply text-[#01ABFE]
+}
+
+.staking {
+  @apply flex items-center gap-2 p-2
+}
+
+.staking-header {
+  @apply font-semibold text-2xl
+}
+
+
+
+
+
+
+ 
