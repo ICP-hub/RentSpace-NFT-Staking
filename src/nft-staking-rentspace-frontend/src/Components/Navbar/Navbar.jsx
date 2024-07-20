@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import './Navbar.css'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../utils/useAuthClient';
+import { useDispatch } from 'react-redux';
+import { addUserData } from '../../utils/Redux-Config/UserSlice';
 
 const Navbar = () => {
 
-  const [isConnected, setConnected]= useState(false);
+  const {login , actors, isAuthenticated, logout} = useAuth()
+  // const [isConnected, setConnected]= useState(isAuthenticated);
   const navigate = useNavigate();
-  const {login , actors} = useAuth()
   const dispatch = useDispatch()
 
 
@@ -27,24 +30,21 @@ const Navbar = () => {
       else {
         console.log("User : ",userResponse.ok)
         dispatch(addUserData(userResponse.ok))
-        setConnected(true)
-        navigate('Dashboard/userDashboard')
+        navigate('dashboard')
       }
-
-
-
     } catch(err) {
-      // Pop Up
+      console.log("Error in connecting :", err)
     }
   };
 
   const handleClick = async () => {
-    if(isConnected) {
-      setConnected(false)
+    if(isAuthenticated) {
+      // setConnected(false)
       await logout()
     }
     else {
-      connectWallet()
+      // setConnected(true)
+      await connectWallet()
     }
   }
 
@@ -63,8 +63,8 @@ const Navbar = () => {
 
       <section className='connectBtn-mainCont'>
          <div className='connectBtn-cont'>
-         <div className='btn1'>{ isConnected ? 'Connected' : '' }</div>
-         <div onClick={handleClick} className='btn2 ' style={isConnected ? { right:0 } : { }}> <span>{isConnected ? 'Logout' : 'Connect Wallet'} </span></div>
+         <div className='btn1'>{ isAuthenticated ? 'Connected' : '' }</div>
+         <div onClick={handleClick} className='btn2 ' style={isAuthenticated ? { right:0 } : { }}> <span>{isAuthenticated ? 'Logout' : 'Connect Wallet'} </span></div>
          </div>
           
       </section>
