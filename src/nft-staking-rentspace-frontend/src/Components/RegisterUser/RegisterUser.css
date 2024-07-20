@@ -1,5 +1,5 @@
 .RegisterPage-container {
-  background-image: url('image 808.png');
+  background-image: url('image_808.png');
   @apply flex justify-center items-center text-lg h-screen bg-cover bg-no-repeat ;
 }
 

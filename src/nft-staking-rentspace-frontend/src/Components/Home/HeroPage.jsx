@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom'
 const HeroPage = () => {
   const navigate= useNavigate();
   return (
-   <div className='Hero-MainCont'> 
+   <div className='Hero-MainCont'
+   style={{
+    backgroundImage: `url('Rectangle_39920.png')`,
+   }}
+   > 
     
      <div className='Hero-innerCont'>
      <div className=' Hero-cont'>

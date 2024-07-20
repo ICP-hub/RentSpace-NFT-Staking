@@ -1,5 +1,5 @@
 .nftDetails-Cont{
-    background-image: url('image 808.png');
+    background-image: url('image_808.png');
     @apply flex mx-[10%] lg:mx-[20%] my-[5%] mt-[10%]
 }
 

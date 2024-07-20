@@ -9,11 +9,11 @@ const MyWorlds = () => {
 
   const worldNames = ['Minimalistic world', 'Modernistic world', 'Futuristic world', 'Moon World', 'Mars World'];
   const worldsIMG = [
-    ['image 803.png', 'image 803.png', 'image 803.png', 'image 1726.png', 'image 1726.png', 'image 1726.png', 'image 1726.png'],
-    ['image 1726.png', 'image 1726.png', 'image 803.png', 'image 1726.png'],
-    ['image 803.png', 'image 1726.png', 'image 1726.png'],
-    ['image 1717.png', 'image 1726.png'],
-    ['image 803.png', 'image 1726.png', 'image 1726.png'],
+    ['image_803.png', 'image_803.png', 'image_803.png', 'image_1726.png', 'image_1726.png', 'image_1726.png', 'image_1726.png'],
+    ['image_1726.png', 'image_1726.png', 'image_803.png', 'image_1726.png'],
+    ['image_803.png', 'image_1726.png', 'image_1726.png'],
+    ['image_1717.png', 'image_1726.png'],
+    ['image_803.png', 'image_1726.png', 'image_1726.png'],
   ];
 
   const prevWorld = () => {
@@ -25,7 +25,11 @@ const MyWorlds = () => {
   }
 
   return (
-    <div className='myWorlds-Cont'>
+    <div className='myWorlds-Cont'
+    style={{
+      backgroundImage: "url('image_803.png')",
+    }}
+    >
       <h1 className='heading-staking'> Staking </h1>
       <div className='carousel-btn'>
         <FaChevronLeft className='favIcon' size={25} onClick={prevWorld} />

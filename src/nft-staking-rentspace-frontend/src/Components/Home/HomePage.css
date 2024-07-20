@@ -2,7 +2,6 @@
 /* HeroPage component styling */
 
 .Hero-MainCont {
-  background-image: url('Rectangle 39920.png');
   @apply w-screen bg-cover h-screen
 }
 
