@@ -34,11 +34,11 @@
   }
   
   .btn1{
-     @apply m-2 ml-4
+     @apply p-2 w-1/2 text-center
   }
   
   .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute
+      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute min-w-[50%]
   }
   
   .btn2 span{

@@ -29,7 +29,7 @@ const Navbar = () => {
       <section className='connectBtn-mainCont'>
          <div className='connectBtn-cont'>
          <div className='btn1'>{ isConnected ? 'Connected' : '' }</div>
-         <div onClick={ConnectWallet} className='btn2 ' style={isConnected ? { right:0 } : { }}> <span>Connect Wallet </span></div>
+         <div onClick={ConnectWallet} className='btn2 ' style={isConnected ? { right:0 } : { }}> <span>{isConnected ? 'Logout' : 'Connect Wallet'} </span></div>
          </div>
           
       </section>
