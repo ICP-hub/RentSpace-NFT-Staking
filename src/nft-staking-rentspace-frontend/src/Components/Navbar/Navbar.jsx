@@ -38,9 +38,7 @@ const Navbar = () => {
       <section className='connectBtn-mainCont'>
          <div className='connectBtn-cont'>
          <div className='btn1'>{ isConnected ? 'Connected' : '' }</div>
-         <div  className='btn2 ' style={isConnected ? { right:0 } : { }}>
-          { isConnected ? <button onClick={handleLogout}> Logout </button> : <button onClick={ ConnectWallet } >Connect Wallet </button> }
-           </div>
+         <div onClick={ConnectWallet} className='btn2 ' style={isConnected ? { right:0 } : { }}> <span>Connect Wallet </span></div>
          </div>
           
       </section>
