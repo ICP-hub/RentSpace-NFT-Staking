@@ -71,7 +71,7 @@ const ImportedNFTs = () => {
               <div key={ind}>
                 <Card
                   name={formatMetadata(NFT[0].metadata).name}
-                  imgURL={formatMetadata(NFT[0].metadata).url}
+                  imgURL={formatMetadata(NFT[0].metadata).thumb}
                   desc={formatMetadata(NFT[0].metadata).description}
                   isStaked={NFT[0].isStaked}
                   isImported={!NFT[0].isStaked}
