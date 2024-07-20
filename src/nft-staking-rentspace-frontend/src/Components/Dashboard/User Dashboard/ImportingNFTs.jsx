@@ -21,7 +21,7 @@ const ImportingNFTs = ({ setImportModule }) => {
       if (userTokens.ok) {
         setNFTList(userTokens.ok.map((token) => ({
           tid: token.tid,
-          metadata: formatMetadata(token.metadata),
+          metadata: token.metadata,
         })));
       } else {
         setNFTList([]);
@@ -42,9 +42,8 @@ const ImportingNFTs = ({ setImportModule }) => {
   const handleImport = async() => {
     const selectedCards = NFTList.filter((NFT) => checkedCards.includes(NFT.tid));
     // Processing selected cards to convert metadata from JSON to String
-    selectedCards.forEach((nft) => {
-      nft.metadata = JSON.stringify(nft.metadata);
-    });
+
+    console.log("Selected : ",selectedCards)
 
     const importNFTReq = await backendActor.importNFTs(selectedCards);
 
