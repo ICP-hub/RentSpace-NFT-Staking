@@ -47,9 +47,9 @@ module {
 
     public class NftHandler(nftData : StableData, userHandler : UserHandler.UserHandler) {
 
-        let EXTCanisterId = "bkyz2-fmaaa-aaaaa-qaaaq-cai";
+        let EXTCanisterId = "m2nno-7aaaa-aaaah-adzba-cai";
         let BackendCanisterId = "bd3sg-teaaa-aaaaa-qaaba-cai";
-        let EXTActor = actor (EXTCanisterId) : EXT.erc721_token;
+        let EXTActor = actor (EXTCanisterId) : EXT.Self;
 
         private func toMutableNFT(nft : Nft) : MutableNFT {
             {

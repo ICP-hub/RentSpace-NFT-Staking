@@ -6,14 +6,17 @@ import Float "mo:base/Float";
 import Text "mo:base/Text";
 import Nat8 "mo:base/Nat8";
 import Nat "mo:base/Nat";
+import Option "mo:base/Option";
+import Blob "mo:base/Blob";
+import Array "mo:base/Array";
 import NftModel "./models/NFT";
 
 module {
     public func checkAnonymous(_user : Principal) : async () {
-        // if (Principal.isAnonymous(_user)) {
-        //     let err = Error.reject("Anonymous users cannot interact!");
-        //     throw err;
-        // };
+        if (Principal.isAnonymous(_user)) {
+            let err = Error.reject("Anonymous users cannot interact!");
+            throw err;
+        };
     };
 
     public func calculateReward(_stakeTime : Int, rarity : NftModel.Rarity) : async Nat {
@@ -29,13 +32,18 @@ module {
         return Int.abs(Float.toInt(diff)) * rarityToPoint;
     };
 
-    public func serializeMetadata(_metadata : { #fungible : { decimals : Nat8; metadata : Text; name : Text; symbol : Text }; #nonfungible : { metadata : Text } }) : Text {
+    public func serializeMetadata(_metadata : { #fungible : { decimals : Nat8; metadata : ?Blob; name : Text; symbol : Text }; #nonfungible : { metadata : ?Blob } }) : Text {
         switch (_metadata) {
             case (#fungible(data)) {
                 return "Fungible Token: Name: ";
             };
             case (#nonfungible(data)) {
-                return data.metadata;
+                let blob : Blob = Option.unwrap<Blob>(data.metadata);
+                let blobArray : [Nat8] = Blob.toArray(blob);
+                let blobText: Text = Array.foldLeft<Nat8, Text>(blobArray, "", func(acc: Text, byte: Nat8): Text {
+                        acc # Nat8.toText(byte) # " "
+                });
+                
             };
         };
     };
