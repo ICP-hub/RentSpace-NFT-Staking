@@ -90,7 +90,7 @@ const UserDashboard = () => {
 
       {/* Redeem Rewards Modal */}
       {isModalOpen && (
-        <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen} />
+        <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen} userID={user.id} rewardPoints={user.rewardPoints} />
       )}
     </>
   );

@@ -3,12 +3,9 @@ import "./RedeemModal.css";
 import coinAnimation from "/coins.gif?url";
 import { convertPointstoICP } from "../../utils/utils";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { useAuth } from "../../utils/useAuthClient";
 
-function handleSubmit(event) {
-  // Remove this after handleSubmit function is defined
-  event.preventDefault();
-  console.log("Redeem Successful");
-}
+
 
 export const Info = ({message})=> {
   return (
@@ -22,6 +19,29 @@ export const Info = ({message})=> {
 }
 
 const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
+  const {actors} = useAuth()
+  const MIN_REQ_POINTS = 10;
+
+  const handleClick = async(e)=> {
+    e.preventDefault()
+    if(points < MIN_REQ_POINTS){
+      alert('Minimum 10 points required for redemption.')
+      return
+    }
+    try{
+      const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
+      if(transfer?.ok) {
+        alert("Transfered Success!")
+      }
+      else {
+        throw new Error(transfer?.err)
+      }
+    }
+    catch(e) {
+      alert(e);
+    }
+  }
+
   if (!isModalOpen) return;
 
   const rarity = [
@@ -55,13 +75,13 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
           <p>{convertPointstoICP(rewardPoints)} ICP</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="widthfull">
+      <form onSubmit={handleClick} className="widthfull">
         <h6 className="secondary-color">Amount to Redeem</h6>
         <div className="slider-Cont widthfull">
           <input
             type="range"
             min={0}
-            max={rewardPoints}
+            max={convertPointstoICP(rewardPoints)}
             value={redeemAmount}
             onChange={handleChange}
             className="widthfull amount-slider"

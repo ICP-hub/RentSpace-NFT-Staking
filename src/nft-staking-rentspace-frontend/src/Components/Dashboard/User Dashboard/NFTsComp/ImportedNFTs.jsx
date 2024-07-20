@@ -70,6 +70,7 @@ const ImportedNFTs = () => {
             {importedNFTs?.map((NFT, ind) => (
               <div key={ind}>
                 <Card
+                  id={NFT[0].id}
                   name={formatMetadata(NFT[0].metadata).name}
                   imgURL={formatMetadata(NFT[0].metadata).thumb}
                   desc={formatMetadata(NFT[0].metadata).description}
