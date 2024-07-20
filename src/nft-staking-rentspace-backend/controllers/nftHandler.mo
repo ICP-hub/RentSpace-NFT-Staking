@@ -107,6 +107,10 @@ module {
             };
         };
 
+        public func addNFT(tokenId : Text, token : MutableNFT) {
+            nftRecords.put(tokenId, token);
+        };
+
         public func getAllUserStakedNfts(userId : Principal) : [Text] {
             switch (userHandler.get(userId)) {
                 case (?user) {
@@ -167,10 +171,16 @@ module {
             var isImported = false;
 
             for (token in tokenData.vals()) {
+                let nftExists = checkIfNFTExist(token.tid);
+                if (nftExists == true) {
+                    return #err("NFT Already Imported" # token.tid);
+                };
+                
                 let result = userHandler.addNFT(userId, token.tid, token.metadata, EXTCanisterId);
                 
                 switch result {
                     case (#ok(nft)) {
+                        addNFT(token.tid, toMutableNFT(nft));
                         isImported:=true;
                     };
                     case (#err(err)) {
