@@ -19,11 +19,14 @@ const ImportingNFTs = ({ setImportModule }) => {
       const userTokens = await backendActor.getAllUserTokens(userAccountId);
 
       if (userTokens.ok) {
+        console.log("User Tokens : ", userTokens.ok);
         setNFTList(userTokens.ok.map((token) => ({
           tid: token.tid,
           metadata: token.metadata,
         })));
+        console.log("NFT List : ", NFTList);
       } else {
+        console.log("Error in fetching user tokens : ", userTokens.err);
         setNFTList([]);
       }
     };
@@ -67,12 +70,12 @@ const ImportingNFTs = ({ setImportModule }) => {
       <div className='importNfts-OuterCont no-scrollbar'>
         <div className='importNfts-InnerCont'>
           {NFTList.map((NFT) => (
-            <div className='nft-cont' key={NFT.id}>
+            <div className='nft-cont' key={NFT.tid}>
               <CheckCard
                 id={NFT.tid}
-                name={NFT.metadata.name}
-                imgURL={NFT.metadata.url}
-                desc={NFT.metadata.description}
+                name={formatMetadata(NFT.metadata).name}
+                imgURL={formatMetadata(NFT.metadata).url}
+                desc={formatMetadata(NFT.metadata).description}
                 handleChange={handleCheckChange}
               />
             </div>
