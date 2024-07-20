@@ -1,19 +1,40 @@
-import React from "react";
+import React, {useState, useMemo, useEffect} from "react";
 import "./Worlds.css";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
+import {nft_staking_rentspace_backend as actors} from "../../../../declarations/nft-staking-rentspace-backend/index.js";
 import { NFTsData } from "../../Constants/useNFTsData";
 import Card from "../Card/Card";
+import {formatMetadata} from "../../utils/utils";
 import { FaAngleLeft } from "react-icons/fa6";
 
 const World = () => {
   const { world } = useParams();
-  const { NFTs, setNFTs } = NFTsData();
+  console.log(actors)
+
+  const [NFTs,setNFTs] = useState([])
+
+  useEffect(()=>{
+    const getNFTs = async () => {
+      let NFTs = await actors.getAllStaked();
+      // Map over the array and use function formatMetadat on metadata field of each element
+      NFTs = NFTs.map((NFT) => {
+        NFT.metadata = formatMetadata(NFT.metadata);
+        return NFT;
+      });
+      console.log("NFTs : ", NFTs);
+      setNFTs(NFTs);
+    };
+    getNFTs();
+  },[actors])
+
   const worldName = world.split("-").join(" ");
-  const filteredWorlds = NFTs.filter((data) =>
-    data.metadata.name
-      .toLocaleLowerCase()
-      .includes(worldName.split(" ")[0].toLowerCase())
-  );
+  const filteredWorlds = useMemo(()=>{
+    return NFTs.filter((data) =>
+      data.metadata.name
+        .toLocaleLowerCase()
+        .includes(worldName.split(" ")[0].toLowerCase())
+    );
+  }, [NFTs, worldName])
   const navigate = useNavigate();
   return (
     <div className="min-world-MainCont">
