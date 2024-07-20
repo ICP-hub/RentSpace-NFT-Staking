@@ -52,6 +52,11 @@ actor {
         };
     };
 
+    public shared query func getAllStaked() : async [NFT.NFT] {
+        let stakedNFTs = nftHandler.getAllStaked();
+        return stakedNFTs;
+    };
+
     public shared query ({ caller }) func getUser() : async Types.GetUserResult {
         let user = userHandler.get(caller);
         switch (user) {
