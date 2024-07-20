@@ -202,6 +202,7 @@ module {
                 };
             };
             ignore updatedStakedNFTs.remove(removeIndex);
+            user.stakedNFTs := Buffer.toArray(updatedStakedNFTs);
             return true;
         };
 
