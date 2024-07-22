@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
 import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
-// import { useAuth } from '../../../utils/useAuthClient';
+
 
 const ImportedNFTs = () => {
  
@@ -28,6 +28,7 @@ const ImportedNFTs = () => {
     console.log("Req : ",importedNFTDetails.ok);
     if (importedNFTDetails.ok) {
       setImportedNFTs(importedNFTDetails.ok);
+      setIsLoading(false)
     }
   };
 

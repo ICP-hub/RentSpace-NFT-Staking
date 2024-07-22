@@ -23,6 +23,7 @@ const StakedNFTs = () => {
     console.log("Req : ",stakedNFTDetails.ok);
     if (stakedNFTDetails.ok) {
       setStakedNFTs(stakedNFTDetails.ok);
+      setIsLoading(false)
     } else {
       console.log("Error in fetching staked NFTs ", err);
     } 
