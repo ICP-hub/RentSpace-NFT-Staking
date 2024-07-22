@@ -37,7 +37,7 @@ const World = () => {
   }, [NFTs, worldName])
   const navigate = useNavigate();
   return (
-    <div className="min-world-MainCont">
+    <div className="min-world-MainCont"  style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
       <div className="min-world-InnerCont">
         <div className="worlds-navCont">
           <div className="world-innerCont">

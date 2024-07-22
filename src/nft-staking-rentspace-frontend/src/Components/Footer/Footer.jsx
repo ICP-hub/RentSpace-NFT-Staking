@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='Footer-mainCont'>
         <h1 > 2024 Rentspace </h1>
         <div className='logos'> 
-        <img  src='X_Logo.svg'/>
+        <img  src='Assets/X_Logo.svg'/>
 
         </div>
     </div>

@@ -10,7 +10,7 @@ const FallbackUI = ({ purpose }) => {
 
       <div className='fallbackUI-innerCont'>
          <div>
-              <img src='fileLogo.svg' alt='file logo'/>
+              <img src='Assets/fileLogo.svg' alt='file logo'/>
               <h2> <span> {purpose === 'Stacked' ? 'No Staked NFT ' : purpose === 'Imported' ? 'No Imported NFT ' : 'No Data '} </span>  available to show </h2>
               </div>
       </div>

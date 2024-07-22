@@ -32,7 +32,7 @@ const UserDashboard = () => {
           <div className='left-cont'>
             <div className='userInfo-cont'>
               <div className='profile-cont'>
-                <img className='profile-img' src={'profileImg.jpg'} alt='Profile' />
+                <img className='profile-img' src={'Assets/profileImg.jpg'} alt='Profile' />
               </div>
               <div className='userInfo'>
                 <h1>{user.name}</h1>
@@ -44,7 +44,7 @@ const UserDashboard = () => {
               </div>
               <div className='social-cont'>
                 {socialHandles.map((imgLink, ind) => (
-                  <img key={ind} src={imgLink} alt={`Social icon ${ind}`} />
+                  <img key={ind} src={`Assets/${imgLink}`} alt={`Social icon ${ind}`} />
                 ))}
               </div>
               <div className='NFTsCount-cont'>
