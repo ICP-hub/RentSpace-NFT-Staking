@@ -38,3 +38,22 @@
 .fallbackUI_404-innerCont > button{
     @apply text-lg font-bold mt-10 text-white
 }
+
+
+
+
+/*  FallbackUI_NFTs component styling */
+.FallbackUI_NFTs-cont{
+    @apply bg-white h-full rounded-2xl
+}
+
+.FallbackUI_NFTs-cont > h1{
+    @apply text-2xl font-semibold ml-20 pt-6
+}
+
+.innerCont{
+    @apply flex flex-wrap gap-10 my-6 mx-12
+}
+.Fallback_card{
+    @apply bg-[#bebdc2] w-60 h-80 rounded-2xl shadow-lg
+}

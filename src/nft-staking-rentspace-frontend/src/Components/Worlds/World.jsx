@@ -42,7 +42,7 @@ const World = () => {
         <div className="worlds-navCont">
           <div className="world-innerCont">
             <div className="staking">
-              <FaAngleLeft size={15} onClick={() => navigate(-1)} />
+              <FaAngleLeft size={18}  className="backIcon" onClick={() => navigate('/myWorlds')} />
               <div className="staking-header">Staking</div>
             </div>
 

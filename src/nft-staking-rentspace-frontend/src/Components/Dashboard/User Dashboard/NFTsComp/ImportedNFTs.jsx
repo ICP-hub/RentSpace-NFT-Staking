@@ -7,6 +7,8 @@ import FallbackUI from '../../../FallbackUI/FallbackUI';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
+import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
+// import { useAuth } from '../../../utils/useAuthClient';
 
 const ImportedNFTs = () => {
  
@@ -14,6 +16,9 @@ const ImportedNFTs = () => {
 
   const { actors, principal } = useAuth();
   
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  // const { actors } = useAuth();
+
   const navigate = useNavigate();
   
   // Function to filter staked NFTs
@@ -26,17 +31,16 @@ const ImportedNFTs = () => {
     }
   };
 
-  // Effect hook to filter staked NFTs and delay used for testing FallbackUI
+  // Effect hook to filter imported NFTs and delay used for testing FallbackUI
   useEffect(() => {
     const timeoutId = setTimeout(filterStakedNFTs, 2000);
     return () => clearTimeout(timeoutId);
   }, [principal]);
 
   // Event handler for viewing NFT details
-  function nftDetailsHandle(id, name, img) {
+  const nftDetailsHandle = (id, name, img) => {
     navigate('/StakNftDetails', { state: { id, name, img } });
-  }
-
+  };
 
   // // write this backend logic for importedNfts
   // const getAllStakedNFTs = async () => {
@@ -63,11 +67,13 @@ const ImportedNFTs = () => {
  
   return (
     <>
-      {importedNFTs.length > 0 ? (
+      {isLoading ? (
+        <FallbackUI_NFTs /> // Render this during loading
+      ) : importedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Imported NFT</h1>
           <div className='nftOuter-Cont'>
-            {importedNFTs?.map((NFT, ind) => (
+            {importedNFTs.map((NFT, ind) => (
               <div key={ind}>
                 <Card
                   id={NFT[0].id}

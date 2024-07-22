@@ -77,6 +77,7 @@ const UserDashboard = () => {
               </div>
             </div>
           </div>
+
           <div className='right-cont'>
             <Outlet />
           </div>

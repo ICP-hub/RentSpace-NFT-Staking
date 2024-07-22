@@ -18,11 +18,10 @@
 }
 
 .Question-cont{
-    @apply flex justify-between mx-8 text-xl font-medium py-4
+    @apply flex justify-between mx-8 text-xl font-medium py-4 transition-all duration-300
 }
-
-.Question-cont img{
-    @apply w-5
+.fi_Icon{
+    @apply  cursor-pointer
 }
 
 .FAQ-answer{

@@ -6,12 +6,13 @@ import Card from '../../../Card/Card';
 import FallbackUI from '../../../FallbackUI/FallbackUI';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
+import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
 
 const StakedNFTs = () => {
- 
-  const { NFTs } = NFTsData();
   const [stakedNFTs, setStakedNFTs] = useState([]);
   const { actors, principal } = useAuth();
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  // const { actors } = useAuth();
 
   const navigate = useNavigate();
 
@@ -63,11 +64,13 @@ const StakedNFTs = () => {
   
   return (
     <>
-      {stakedNFTs.length > 0 ? (
+      {isLoading ? (
+        <FallbackUI_NFTs purpose='Loading' /> // Render this during loading
+      ) : stakedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Staked NFT</h1>
           <div className='nftOuter-Cont'>
-            {stakedNFTs?.map((NFT, ind) => (
+            {stakedNFTs.map((NFT, ind) => (
               <div key={ind}>
                 {NFT[0]?.id && <Card
                   id={NFT[0].id}
@@ -81,7 +84,7 @@ const StakedNFTs = () => {
           </div>
         </div>
       ) : (
-        <FallbackUI purpose='Stacked' />
+        <FallbackUI purpose='Staked' />
       )}
     </>
   );

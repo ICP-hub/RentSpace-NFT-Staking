@@ -48,6 +48,14 @@ const Navbar = () => {
     }
   }
 
+    // logic for logout and get response from backend
+   function handleLogout(){
+     const response = !isConnected     // demo value for testing
+
+    setConnected(response)
+   }
+
+
   return (
     <div className='navbar-mainCont'>
     <div className='navbar-cont'>

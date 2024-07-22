@@ -64,7 +64,7 @@
 /* ImportingNFTs component styling */
 
 .importNfts-mainCont {
-    @apply absolute w-[60%]  bg-[#F0F0F0] top-[8%] left-1/2 transform -translate-x-1/2  rounded-xl ;
+    @apply absolute w-[55%]   bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2  rounded-xl ;
     
   }
   .importNfts-OuterCont {
