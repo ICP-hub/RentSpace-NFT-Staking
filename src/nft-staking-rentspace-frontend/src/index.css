@@ -18,7 +18,7 @@
 
 
 html{
-    @apply relative overflow-x-hidden
+    @apply relative overflow-x-hidden font-[Poppins]
 }
 
 

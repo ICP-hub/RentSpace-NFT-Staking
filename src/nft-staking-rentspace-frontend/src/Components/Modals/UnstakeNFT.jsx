@@ -1,7 +1,7 @@
 import React from 'react'
 import "./UnstakeNFT.css"
 
-const UnstackNFT = ({redeemPoints}) => {
+const UnstakeNFT = ({redeemPoints}) => {
   return (
     <div className='unstake-cont'>
       <h1 className='unstake-heading'>Unstake NFT!</h1>
@@ -19,4 +19,4 @@ const UnstackNFT = ({redeemPoints}) => {
   )
 }
 
-export default UnstackNFT
+export default UnstakeNFT
