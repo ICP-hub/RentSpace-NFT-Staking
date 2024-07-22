@@ -38,8 +38,8 @@
   @apply cursor-pointer;
 }
 
-.carousel-btn h1 {
-  @apply rounded-full border-[3px] p-2 px-10 mx-4;
+.carousel-btn > h1 {
+  @apply rounded-full w-64 text-center border-[3px] p-2 px-10 mx-4;
 
 }
 
