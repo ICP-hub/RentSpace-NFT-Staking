@@ -2,6 +2,10 @@
   @apply border bg-white border-gray-200 rounded-2xl shadow-lg overflow-hidden w-60 justify-center items-center
 }
 
+.checked-card {
+  @apply relative
+}
+
 .card-image {
   @apply object-contain
 }
