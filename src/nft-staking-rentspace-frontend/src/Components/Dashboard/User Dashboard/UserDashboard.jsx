@@ -31,7 +31,7 @@ const UserDashboard = () => {
       }
     }
     fetchUser()
-  }, [actors, isAuthenticated])
+  }, [actors, isAuthenticated, user])
 
   return (
     <>
