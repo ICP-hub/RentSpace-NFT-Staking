@@ -2,19 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 import ImportingNFTs from './ImportingNFTs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RedeemModal from '../../Modals/RedeemModal';
 import FallbackUI_404 from '../../FallbackUI/FallbackUI_404';
+import { useAuth } from '../../../utils/useAuthClient';
+import { addUserData } from '../../../utils/Redux-Config/UserSlice';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule] = useState(false);
+  const {isAuthenticated, actors} = useAuth();
+  const dispatch = useDispatch()
   const user= useSelector((state) => state.user);
 
   const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
 
   const handleImportModule = () => setImportModule(true);
+
+  useEffect(()=>{
+    const fetchUser = async () => {
+      if(isAuthenticated && user === undefined) {
+        const backendActor = actors.userActor;
+        const userReq = await backendActor.getUser();
+        if(userReq.ok) {
+          dispatch(addUserData(userReq.ok))
+        }
+      }
+    }
+    fetchUser()
+  }, [actors, isAuthenticated])
 
   return (
     <>
