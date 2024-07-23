@@ -37,10 +37,10 @@ const StakeButton = ({ id }) => {
       const stakeNFTReq = await actors.userActor.stakeNFT(tokenIdentifier);
 
       if (stakeNFTReq.ok) {
-        setDialogInfo({ status: 'success', message: 'NFTs imported successfully' });
+        setDialogInfo({ status: 'success', message: 'NFTs staked successfully' });
         displayDialog();
       } else {
-        setDialogInfo({ status: 'error', message: 'Error importing NFTs' });
+        setDialogInfo({ status: 'error', message: 'Error staking NFTs' });
         displayDialog();
       }
     } catch (err) {
@@ -50,7 +50,7 @@ const StakeButton = ({ id }) => {
   return (
     <>
       <button className='btn' onClick={handleStaking}>Stake</button>
-      {showDialog && <Modal status={'success'} message={'NFTs imported successfully'} closeModal={setShowDialog} />}
+      {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} />}
     </>
   )
 }
