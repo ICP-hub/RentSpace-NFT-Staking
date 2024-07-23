@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const HeroPage = () => {
   const navigate= useNavigate();
   return (
-   <div className='Hero-MainCont'> 
+   <div className='Hero-MainCont' style={{  backgroundImage: "url('Assets/HeroBackground.png')" }}> 
     
      <div className='Hero-innerCont'>
      <div className=' Hero-cont'>

@@ -82,6 +82,27 @@ actor {
         };
     };
 
+    public shared ({caller}) func getPointsAccumulated(nftId : Text) : async Result.Result<Nat, Text> {
+        // await Functions.checkAnonymous(caller);
+        let user = userHandler.get(caller);
+        switch user {
+            case (null) {
+                return #err("User not Authorized");
+            };
+            case (?_) {
+                let pointsReq = await nftHandler.getPoints(nftId,caller);
+                switch pointsReq {
+                    case (#ok(points)) {
+                        return #ok(points);
+                    };
+                    case(#err(e)) {
+                        return #err(e);
+                    };
+                };
+            };
+        };
+    };
+
     public shared ({ caller }) func importNFTs(tokenData :[{tid : Text; metadata: Text}]) : async Result.Result<Text, Text> {
         await Functions.checkAnonymous(caller);
         let importedNFTs = await nftHandler.importNFTs(tokenData, caller);
