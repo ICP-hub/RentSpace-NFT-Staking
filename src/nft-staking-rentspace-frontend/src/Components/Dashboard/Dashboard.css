@@ -1,7 +1,7 @@
 /*  Dashboard component styling */
 .Dashboard-MainCont {
-  background-image: url('image_808.png');
-  @apply  w-screen bg-cover bg-no-repeat  bg-center
+ 
+  @apply  w-screen bg-cover bg-no-repeat  bg-center bg-[#F0F0F0] min-h-screen
 }
 .Heading-staking{
 @apply text-[38px] flex justify-center pt-[7%] text-white font-medium

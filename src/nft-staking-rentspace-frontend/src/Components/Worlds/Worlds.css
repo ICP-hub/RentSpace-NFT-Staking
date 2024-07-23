@@ -1,32 +1,33 @@
-
-/* myWorlds component styling */
+/* MyWorld component styling*/
 
 .myWorlds-Cont {
-  @apply pt-8 overflow-hidden pb-16 w-screen bg-cover bg-no-repeat  bg-center
+  @apply pt-8 overflow-hidden pb-16 w-screen bg-cover bg-no-repeat bg-center;
 }
 
-.myWorlds-Cont > .heading-staking{
-  @apply text-[38px] flex justify-center mt-20 mb-10 text-white font-medium
-  }
+.myWorlds-Cont > .heading-staking {
+  @apply text-[38px] flex justify-center mt-20 mb-10 text-white font-medium;
+}
 
 .myWorlds-wrapper {
   @apply relative flex w-full overflow-hidden;
 }
 
 .myWorlds {
-  @apply flex overflow-x-scroll flex-grow;
+  @apply flex flex-grow items-center;
 }
 
 .flexWorlds {
-  @apply flex ml-[30%] lg:ml-[40%];
+  @apply flex ml-[10%] md:ml-[15%] lg:ml-[20%] xl:ml-[27%] 2xl:ml-[36%];
+  transition: transform 0.5s ease-in-out;
 }
 
 .worlds {
-  @apply transition-all ease-out duration-100 w-72 mx-2;
+  @apply  w-72 flex justify-center mx-2;
 }
 
 .worlds img {
   @apply w-[380px];
+  
 }
 
 .carousel-btn {
@@ -37,8 +38,9 @@
   @apply cursor-pointer;
 }
 
-.carousel-btn h1 {
-  @apply rounded-full border-[3px] p-2 px-10 mx-4;
+.carousel-btn > h1 {
+  @apply rounded-full w-64 text-center border-[3px] p-2 px-10 mx-4;
+
 }
 
 .explore-btn {
@@ -47,6 +49,7 @@
 
 .explore-btn > button {
   @apply p-[10px] w-[170px] mt-8 px-7 text-lg rounded-full text-white border font-medium shadow-lg;
+
 }
 
 .blurred {
@@ -55,7 +58,7 @@
 }
 
 .left-blur {
-  @apply left-0;
+  @apply left-0 z-50;
 }
 
 .right-blur {
@@ -66,10 +69,10 @@
 
 
 
+
 /* World component styling */
 
 .min-world-MainCont {
-  background-image: url('image_808.png');
   @apply w-screen bg-no-repeat bg-cover bg-center min-h-screen py-[10%]
 }
 
@@ -82,15 +85,15 @@
 }
 
 .worlds-navCont {
-  @apply bg-[#f0f0f0] col-span-1 border-r-[1px] border-gray-400 rounded-l-2xl
+  @apply bg-[#f0f0f0] col-span-1 border-r-[2px] border-opacity-30 border-gray-400 rounded-l-2xl
 }
 
 .world-innerCont {
-  @apply flex flex-col items-start gap-4 px-4 py-8
+  @apply flex flex-col items-start gap-4 mx-16 my-6
 }
 
 .world-links {
-  @apply flex flex-col gap-4
+  @apply flex flex-col gap-8 text-lg mt-6
 }
 
 .worlds-nav {
@@ -119,13 +122,15 @@
 }
 
 .staking {
-  @apply flex items-center gap-2 p-2
+  @apply flex items-center gap-2 p-2 mt-2
 }
 
 .staking-header {
-  @apply font-semibold text-2xl
+  @apply font-semibold text-4xl
 }
-
+.backIcon{
+  @apply cursor-pointer
+}
 
 
 

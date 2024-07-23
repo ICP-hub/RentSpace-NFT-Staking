@@ -48,12 +48,20 @@ const Navbar = () => {
     }
   }
 
+    // logic for logout and get response from backend
+   function handleLogout(){
+     const response = !isConnected     // demo value for testing
+
+    setConnected(response)
+   }
+
+
   return (
     <div className='navbar-mainCont'>
     <div className='navbar-cont'>
 
       <div className='Logo-cont' onClick={()=> navigate('/')}>
-      <img className='logo' src='RentSpace_logo_black(transp) 6.png'/>
+      <img className='logo' src='Assets/RentSpace_logo_black(transp).png'/>
       </div>
       <ul className='navItems-cont' >
          <li onClick={()=> navigate('') } >Leaderboard</li>

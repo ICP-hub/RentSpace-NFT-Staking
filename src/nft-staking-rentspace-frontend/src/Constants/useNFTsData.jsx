@@ -20,12 +20,8 @@ const [NFTs,setNFTs] =useState( [
       },
         isStaked: false,
         isImported: false,
-        rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+        rarity:{
+            Rare: 3,
         },
         canisterID: "String",
         owner: "String",
@@ -49,11 +45,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Common: 1,
         },
         canisterID: "String",
         owner: "String",
@@ -76,12 +68,8 @@ const [NFTs,setNFTs] =useState( [
       },
         isStaked: true,
         isImported: true,
-        rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+        rarity: {   
+            Uncommon: 2,
         },
         canisterID: "String",
         owner: "String",
@@ -105,11 +93,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Epic: 4,
         },
         canisterID: "String",
         owner: "String",
@@ -133,11 +117,8 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Rare: 3,
+    
         },
         canisterID: "String",
         owner: "String",
@@ -161,11 +142,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Legendary: 5
         },
         canisterID: "String",
         owner: "String",
@@ -188,11 +165,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Common: 1,
         },
         canisterID: "String",
         owner: "String",
@@ -216,11 +189,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Uncommon: 2,
         },
         canisterID: "String",
         owner: "String",
@@ -244,11 +213,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Epic: 3,
         },
         canisterID: "String",
         owner: "String",
@@ -272,11 +237,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Legendary: 5
         },
         canisterID: "String",
         owner: "String",
@@ -300,11 +261,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Uncommon: 2,
         },
         canisterID: "String",
         owner: "String",
@@ -328,11 +285,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Common: 1
         },
         canisterID: "String",
         owner: "String",
@@ -355,11 +308,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Uncommon: 2
         },
         canisterID: "String",
         owner: "String",
@@ -383,11 +332,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Rare: 3,
         },
         canisterID: "String",
         owner: "String",
@@ -411,11 +356,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Legendary: 5
         },
         canisterID: "String",
         owner: "String",
@@ -439,11 +380,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Common: 1
         },
         canisterID: "String",
         owner: "String",
@@ -467,11 +404,7 @@ const [NFTs,setNFTs] =useState( [
         isStaked: true,
         isImported: true,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Uncommon: 2,
         },
         canisterID: "String",
         owner: "String",
@@ -495,11 +428,82 @@ const [NFTs,setNFTs] =useState( [
         isStaked: false,
         isImported: false,
         rarity: {
-            Common: "Number",
-            Uncommon: "Number",
-            Rare: "Number",
-            Epic: "Number",
-            Legendary: "Number"
+            Epic: 4,
+ 
+        },
+        canisterID: "String",
+        owner: "String",
+        stakedAt: null
+    },
+    {
+        id: "18",
+        metadata: {
+          name: 'Minimalistic Villas#151',
+          mimeType: 'image',
+          url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
+          thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
+          description: 'This is the NFT from Minimalistic Villas collection',
+          attributes: [
+              {
+                  trait_type: 'Uncommon',
+                  value: 'Uncommon'
+              }
+          ]
+      },
+        isStaked: false,
+        isImported: false,
+        rarity: {
+            Common: 1,
+ 
+        },
+        canisterID: "String",
+        owner: "String",
+        stakedAt: null
+    },
+    {
+        id: "18",
+        metadata: {
+          name: 'Minimalistic Villas#150',
+          mimeType: 'image',
+          url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
+          thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
+          description: 'This is the NFT from Minimalistic Villas collection',
+          attributes: [
+              {
+                  trait_type: 'Uncommon',
+                  value: 'Uncommon'
+              }
+          ]
+      },
+        isStaked: false,
+        isImported: false,
+        rarity: {
+            Epic: 4,
+ 
+        },
+        canisterID: "String",
+        owner: "String",
+        stakedAt: null
+    },
+    {
+        id: "11",
+        metadata: {
+          name: 'Modernistic Villas#150',
+          mimeType: 'image',
+          url: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150.png',
+          thumb: 'https://cf-assets.yuku.app/BatchMint/Minimalistic/150_thumb.png',
+          description: 'This is the NFT from Minimalistic Villas collection',
+          attributes: [
+              {
+                  trait_type: 'Uncommon',
+                  value: 'Uncommon'
+              }
+          ]
+      },
+        isStaked: true,
+        isImported: true,
+        rarity: {
+            Common: 2,
         },
         canisterID: "String",
         owner: "String",

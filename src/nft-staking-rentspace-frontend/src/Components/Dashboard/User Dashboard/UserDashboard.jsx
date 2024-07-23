@@ -2,19 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 import ImportingNFTs from './ImportingNFTs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RedeemModal from '../../Modals/RedeemModal';
 import FallbackUI_404 from '../../FallbackUI/FallbackUI_404';
+import { useAuth } from '../../../utils/useAuthClient';
+import { addUserData } from '../../../utils/Redux-Config/UserSlice';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule] = useState(false);
+  const {isAuthenticated, actors} = useAuth();
+  const dispatch = useDispatch()
   const user= useSelector((state) => state.user);
 
   const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
 
   const handleImportModule = () => setImportModule(true);
+
+  useEffect(()=>{
+    const fetchUser = async () => {
+      if(isAuthenticated && user === undefined) {
+        const backendActor = actors.userActor;
+        const userReq = await backendActor.getUser();
+        if(userReq.ok) {
+          dispatch(addUserData(userReq.ok))
+        }
+      }
+    }
+    fetchUser()
+  }, [actors, isAuthenticated, user])
 
   return (
     <>
@@ -32,7 +49,7 @@ const UserDashboard = () => {
           <div className='left-cont'>
             <div className='userInfo-cont'>
               <div className='profile-cont'>
-                <img className='profile-img' src={'profileImg.jpg'} alt='Profile' />
+                <img className='profile-img' src={'Assets/profileImg.jpg'} alt='Profile' />
               </div>
               <div className='userInfo'>
                 <h1>{user.name}</h1>
@@ -44,7 +61,7 @@ const UserDashboard = () => {
               </div>
               <div className='social-cont'>
                 {socialHandles.map((imgLink, ind) => (
-                  <img key={ind} src={imgLink} alt={`Social icon ${ind}`} />
+                  <img key={ind} src={`Assets/${imgLink}`} alt={`Social icon ${ind}`} />
                 ))}
               </div>
               <div className='NFTsCount-cont'>
@@ -77,6 +94,7 @@ const UserDashboard = () => {
               </div>
             </div>
           </div>
+
           <div className='right-cont'>
             <Outlet />
           </div>

@@ -7,7 +7,7 @@ const CheckCard = ({ id, imgURL, name, desc, handleChange }) => {
   };
 
   return (
-    <div className="card">
+    <div className="card checked-card">
       <input onClick={handleCheck} id={id} type='checkbox' className='checkbox' />
       <img src={imgURL} className='card-image' alt={name} width={418} />
       <div className="card-body">

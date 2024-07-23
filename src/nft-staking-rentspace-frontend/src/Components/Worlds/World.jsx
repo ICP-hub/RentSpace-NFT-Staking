@@ -37,12 +37,12 @@ const World = () => {
   }, [NFTs, worldName])
   const navigate = useNavigate();
   return (
-    <div className="min-world-MainCont">
+    <div className="min-world-MainCont"  style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
       <div className="min-world-InnerCont">
         <div className="worlds-navCont">
           <div className="world-innerCont">
             <div className="staking">
-              <FaAngleLeft size={15} onClick={() => navigate(-1)} />
+              <FaAngleLeft size={18}  className="backIcon" onClick={() => navigate('/myWorlds')} />
               <div className="staking-header">Staking</div>
             </div>
 
