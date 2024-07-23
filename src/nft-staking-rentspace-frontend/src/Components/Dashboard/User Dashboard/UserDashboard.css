@@ -58,6 +58,10 @@
     @apply m-3 ml-0 col-span-3
 }
 
+.right-cont > .nft-Maincont {
+    @apply h-full
+}
+
 
 
 
