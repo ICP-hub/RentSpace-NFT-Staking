@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CheckCard from '../../Card/CheckBoxCard';
+import Modal from "../../Modals/Modal"
 import { NFTsData } from '../../../Constants/useNFTsData';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useAuth } from '../../../utils/useAuthClient';
@@ -10,6 +11,8 @@ const ImportingNFTs = ({ setImportModule }) => {
   const { actors, principal } = useAuth();
   const [NFTList, setNFTList] = useState([]);
   const [checkedCards, setCheckedCards] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogInfo, setDialogInfo] = useState({status: "", message: ""});
   const backendActor = actors.userActor;
 
   useEffect(() => {
@@ -34,6 +37,14 @@ const ImportingNFTs = ({ setImportModule }) => {
     getAllUserTokens();
   }, []);
 
+  const displayDialog=() => {
+    setShowDialog(true);
+    setTimeout(()=> {
+      setShowDialog(false);
+
+    },5000)
+  }
+
   const handleCheckChange = (isChecked, id) => {
     if (isChecked) {
       setCheckedCards((prev) => [...prev, id]);
@@ -53,16 +64,22 @@ const ImportingNFTs = ({ setImportModule }) => {
     if (importNFTReq.ok) {
       // Show Success Dialog
       console.log(importNFTReq)
-      alert('NFTs imported successfully');
+      // alert('NFTs imported successfully');
+      setDialogInfo({status:'success',message: 'NFTs imported successfully'});
+      displayDialog();
     }
     else {
       // Show Error Dialog
-      alert('Error in importing NFTs');
+      // alert('Error in importing NFTs');
+      console.log(importNFTReq)
+      setDialogInfo({status:'error',message: 'Error importing NFTs'});
+      displayDialog();
     }
     };
 
   return (
     <div className='importNfts-mainCont'>
+    {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog}/>}
       <div className='header-cont'>
         <FaChevronLeft className='favIcon' size={25} onClick={() => setImportModule(false)} />
         <div><h1>Your NFTs</h1></div>

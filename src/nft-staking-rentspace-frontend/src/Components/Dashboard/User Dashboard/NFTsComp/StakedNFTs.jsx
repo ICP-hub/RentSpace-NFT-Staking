@@ -13,7 +13,6 @@ const StakedNFTs = () => {
   const { actors, principal } = useAuth();
   const [isLoading, setIsLoading] = useState(true); // Loading state
   // const { actors } = useAuth();
-
   const navigate = useNavigate();
 
   // Function to filter staked NFTs
