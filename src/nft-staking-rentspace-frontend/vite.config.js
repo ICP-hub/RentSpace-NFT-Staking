@@ -10,6 +10,7 @@ dotenv.config({ path: '../../.env' });
 export default defineConfig({
   build: {
     emptyOutDir: true,
+    assetsDir:'Assets'
   },
   esbuild:{
     include: /\.(mdx|js|jsx|ts|tsx)$/,
