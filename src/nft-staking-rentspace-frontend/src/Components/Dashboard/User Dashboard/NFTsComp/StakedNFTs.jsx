@@ -1,90 +1,80 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NFTsData } from '../../../../Constants/useNFTsData';
 import './NFTsComp.css';
 import Card from '../../../Card/Card';
 import FallbackUI from '../../../FallbackUI/FallbackUI';
+import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
-import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
+import { useDispatch, useSelector } from 'react-redux';
+import { addStakedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
 
 const StakedNFTs = () => {
-  const [stakedNFTs, setStakedNFTs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { actors, principal } = useAuth();
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-  // const { actors } = useAuth();
+  const dispatch = useDispatch();
+  const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
   const navigate = useNavigate();
 
-  // Function to filter staked NFTs
   const filterStakedNFTs = async () => {
-    const backendActor = actors?.userActor;
-    const stakedNFTDetails = await backendActor.getUserStakedNFTs();
-    console.log("Req : ",stakedNFTDetails.ok);
-    if (stakedNFTDetails.ok) {
-      setStakedNFTs(stakedNFTDetails.ok);
-      setIsLoading(false)
-    } else {
-      console.log("Error in fetching staked NFTs ", err);
-    } 
+    try {
+      const backendActor = actors?.userActor;
+      const stakedNFTDetails = await backendActor.getUserStakedNFTs();
+      console.log("Req : ", stakedNFTDetails.ok);
+
+      if (stakedNFTDetails.ok) {
+        dispatch(addStakedNFTs(stakedNFTDetails.ok));
+        setIsLoading(false);
+      } else {
+        throw new Error("No staked NFTs found.");
+      }
+    } catch (err) {
+      console.error("Error fetching staked NFTs: ", err);
+      setError(err.message || "Failed to fetch staked NFTs.");
+      setIsLoading(false);
+    }
   };
 
-   // Effect hook to filter staked NFTs and delay used for testing FallbackUI
   useEffect(() => {
-    const timeoutId = setTimeout(filterStakedNFTs, 2000);
-    return () => clearTimeout(timeoutId);
-  }, [actors, principal]);
+    if (principal) {
+      filterStakedNFTs();
+    }
+  }, [principal, actors]);
 
-  // Event handler for viewing NFT details
-  function nftDetailsHandle(id, name, img) {
+  const nftDetailsHandle = (id, name, img) => {
     navigate('/StakNftDetails', { state: { id, name, img } });
-  }
+  };
 
-  // const getAllStakedNFTs = async () => {
-  //   await actors.userActor.getAllUserStakedNFTs().then(async (res) => {
-  //     const arr = [];
-  //     console.log(res);
-  //     if (res.ok?.length > 0) {
-  //       for (let i = 0; i < res.length; i++) {
-  //         let resp = await actors.userActor.getStakedNFTDetails(res[i][0]);
-  //         if (resp.err != undefined) continue;
-  //         arr.push(resp.ok);
-  //       }
-  //       setStakedNFTs(arr);
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getAllStakedNFTs();
-  // }, []);
-
-  // Render Method
-
-  console.log(stakedNFTs)
-  
   return (
     <>
       {isLoading ? (
         <FallbackUI_NFTs purpose='Loading' /> // Render this during loading
+      ) : error ? (
+        <FallbackUI purpose='Error' message={error} /> // Render this on error
       ) : stakedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Staked NFT</h1>
           <div className='nftOuter-Cont'>
             {stakedNFTs.map((NFT, ind) => (
               <div key={ind}>
-                {NFT[0]?.id && <Card
-                  id={NFT[0].id}
-                  name={formatMetadata(NFT[0].metadata).name}
-                  imgURL={formatMetadata(NFT[0].metadata).url}
-                  desc={formatMetadata(NFT[0].metadata).description}
-                  isStaked={NFT[0].isStaked}
-                />}
+                {NFT[0]?.id && (
+                  <Card
+                    id={NFT[0].id}
+                    name={formatMetadata(NFT[0].metadata).name}
+                    imgURL={formatMetadata(NFT[0].metadata).thumb} // Adjusted key for image URL
+                    desc={formatMetadata(NFT[0].metadata).description}
+                    isStaked={NFT[0].isStaked}
+                    isImported={!NFT[0].isStaked}
+                    onClick={() => nftDetailsHandle(NFT[0].id, formatMetadata(NFT[0].metadata).name, formatMetadata(NFT[0].metadata).thumb)}
+                  />
+                )}
               </div>
             ))}
           </div>
         </div>
       ) : (
-        <FallbackUI purpose='Staked' />
+        <FallbackUI purpose='Staked' /> // Render this when no NFTs are found
       )}
     </>
   );

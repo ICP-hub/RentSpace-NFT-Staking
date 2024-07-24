@@ -2,14 +2,34 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const NftsSlice = createSlice({
   name: "Nfts",
-  initialState: [],
+  initialState: {
+    importedNFTs: [],
+    stakedNFTs: []
+  },
   reducers: {
-    addNfts: (state, action) => {
-      return action.payload;
+    addImportedNFTs: (state, action) => {
+      state.importedNFTs = action.payload;
     },
+    addStakedNFTs: (state, action) => {
+      state.stakedNFTs = action.payload;
+    },
+
+    modifyImportedNFTs: (state, action) => {
+      const  id  = action.payload;
+      state.importedNFTs = state.importedNFTs.map(nft =>
+        nft.id === id ? { ...nft, isStaked: true } : nft
+      );
+    },
+    modifyStakedNFTs: (state, action) => {
+      const  id  = action.payload;
+      state.stakedNFTs = state.stakedNFTs.map(nft =>
+        nft.id === id ? { ...nft, isStaked: false } : nft
+      );
+    }
     // we can add more actions here if needed
   }
 });
 
-export const { addNfts } = NftsSlice.actions;
+export const { addImportedNFTs, addStakedNFTs, modifyImportedNFTs, modifyStakedNFTs } = NftsSlice.actions;
+
 export default NftsSlice.reducer;

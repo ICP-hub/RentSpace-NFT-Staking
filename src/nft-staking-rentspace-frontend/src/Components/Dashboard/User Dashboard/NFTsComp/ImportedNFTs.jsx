@@ -1,41 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NFTsData } from '../../../../Constants/useNFTsData';
-import './NFTsComp.css';
-import Card from '../../../Card/Card';
-import FallbackUI from '../../../FallbackUI/FallbackUI';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
+import FallbackUI from '../../../FallbackUI/FallbackUI';
 import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
-
+import { addImportedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
+import Card from '../../../Card/Card';
+import './NFTsComp.css';
 
 const ImportedNFTs = () => {
- 
-  const [importedNFTs, setImportedNFTs] = useState([]);
-
-  const { actors, principal } = useAuth();
-  
   const [isLoading, setIsLoading] = useState(true); // Loading state
-  // const { actors } = useAuth();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  // Function to filter staked NFTs
-  const filterStakedNFTs = async () => {
+  const { actors, principal } = useAuth();
+  const importedNFTs = useSelector((state) => state.Nfts.importedNFTs);
+
+  // Function to filter imported NFTs
+  const filterImportedNFTs = async () => {
     const backendActor = actors.userActor;
     const importedNFTDetails = await backendActor.getUserImportedNFTs();
-    console.log("Req : ",importedNFTDetails.ok);
+    console.log("Req : ", importedNFTDetails.ok);
     if (importedNFTDetails.ok) {
-      setImportedNFTs(importedNFTDetails.ok);
-      setIsLoading(false)
+      dispatch(addImportedNFTs(importedNFTDetails.ok));
+      setIsLoading(false);
     }
   };
 
-  // Effect hook to filter imported NFTs and delay used for testing FallbackUI
+  // Effect hook to filter imported NFTs
   useEffect(() => {
-    const timeoutId = setTimeout(filterStakedNFTs, 2000);
-    return () => clearTimeout(timeoutId);
+    if (principal) {
+      filterImportedNFTs();
+    }
   }, [principal]);
 
   // Event handler for viewing NFT details
@@ -43,29 +39,8 @@ const ImportedNFTs = () => {
     navigate('/StakNftDetails', { state: { id, name, img } });
   };
 
-  // // write this backend logic for importedNfts
-  // const getAllStakedNFTs = async () => {
-  //   await actors.userActor.getAllUserStakedNFTs().then(async (res) => {
-  //     const arr = [];
-  //     console.log(res);
-  //     if (res.ok?.length > 0) {
-  //       for (let i = 0; i < res.length; i++) {
-  //         let resp = await actors.userActor.getStakedNFTDetails(res[i][0]);
-  //         if (resp.err != undefined) continue;
-  //         arr.push(resp.ok);
-  //       }
-  //       setImportedNFTs(arr);
-  //     }
-  //   });
-  // };
+  console.log(importedNFTs);
 
-  // useEffect(() => {
-  //   getAllStakedNFTs();
-  // }, []);
-
-  console.log(importedNFTs)
-
- 
   return (
     <>
       {isLoading ? (
