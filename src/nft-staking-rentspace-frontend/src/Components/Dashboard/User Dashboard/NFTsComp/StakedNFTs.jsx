@@ -15,6 +15,7 @@ const StakedNFTs = () => {
   const { actors, principal } = useAuth();
   const dispatch = useDispatch();
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
+  const [cardElements, setCardElements] = useState(<></>);
   const navigate = useNavigate();
 
   const filterStakedNFTs = async () => {
@@ -42,6 +43,31 @@ const StakedNFTs = () => {
     }
   }, [principal, actors]);
 
+  useEffect(()=>{
+    const renderCardElements = () => {
+      const elements = stakedNFTs.map((NFT, ind) => (
+        <div key={ind}>
+          {NFT[0]?.id && (
+            <Card
+              id={NFT[0].id}
+              name={formatMetadata(NFT[0].metadata).name}
+              imgURL={formatMetadata(NFT[0].metadata).thumb} // Adjusted key for image URL
+              desc={formatMetadata(NFT[0].metadata).description}
+              isStaked={NFT[0].isStaked}
+              isImported={!NFT[0].isStaked}
+              onClick={() => nftDetailsHandle(NFT[0].id, formatMetadata(NFT[0].metadata).name, formatMetadata(NFT[0].metadata).thumb)}
+            />
+          )}
+        </div>
+      ))
+      setCardElements(elements)
+    }
+
+    renderCardElements()
+  },[stakedNFTs])
+
+  console.log("Elements : ", cardElements);
+
   const nftDetailsHandle = (id, name, img) => {
     navigate('/StakNftDetails', { state: { id, name, img } });
   };
@@ -56,7 +82,7 @@ const StakedNFTs = () => {
         <div className='nft-Maincont'>
           <h1>Staked NFT</h1>
           <div className='nftOuter-Cont'>
-            {stakedNFTs.map((NFT, ind) => (
+            {/* {stakedNFTs.map((NFT, ind) => (
               <div key={ind}>
                 {NFT[0]?.id && (
                   <Card
@@ -70,7 +96,8 @@ const StakedNFTs = () => {
                   />
                 )}
               </div>
-            ))}
+            ))} */}
+            {cardElements}
           </div>
         </div>
       ) : (

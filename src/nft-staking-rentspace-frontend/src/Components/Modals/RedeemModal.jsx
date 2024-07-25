@@ -4,6 +4,8 @@ import coinAnimation from "/Assets/coins.gif?url";
 import { convertPointstoICP } from "../../utils/utils";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { useAuth } from "../../utils/useAuthClient";
+import { useDispatch } from "react-redux";
+import { updatePoints } from "../../utils/Redux-Config/UserSlice";
 
 
 
@@ -21,6 +23,8 @@ export const Info = ({message})=> {
 const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   const {actors} = useAuth()
   const MIN_REQ_POINTS = 10;
+  const [redeemAmount, setRedeemAmount] = useState(0);
+  const dispatch = useDispatch()
 
   const handleClick = async(e)=> {
     e.preventDefault()
@@ -32,6 +36,7 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
       const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
       if(transfer?.ok) {
         alert("Transfered Success!")
+        dispatch(updatePoints(parseInt(rewardPoints)-parseInt(redeemAmount)))
       }
       else {
         throw new Error(transfer?.err)
@@ -56,7 +61,6 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
 
   const rarityData = rarity[0];
   const entries = Object.entries(rarityData);
-  const [redeemAmount, setRedeemAmount] = useState(0);
 
   const handleChange = (event) => {
     setRedeemAmount(event.target.value);

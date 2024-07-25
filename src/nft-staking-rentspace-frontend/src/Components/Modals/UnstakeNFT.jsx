@@ -4,6 +4,9 @@ import Modal from '../Modals/Modal';
 import { tokenIndexToTokenIdentifier } from '../../utils/utils';
 import { useAuth } from '../../utils/useAuthClient';
 import { Hourglass } from 'react-loader-spinner';
+import { addPoints } from '../../utils/Redux-Config/UserSlice';
+import {removeStakedNFTs, modifyStakedNFTs} from '../../utils/Redux-Config/NftsSlice'
+import { useDispatch } from 'react-redux';
 
 const UnstakeNFT = ({redeemPoints=0, id, setShow}) => {
   const [showDialog, setShowDialog] = useState(false);
@@ -11,6 +14,7 @@ const UnstakeNFT = ({redeemPoints=0, id, setShow}) => {
   const [isLoading, setIsLoading] = useState(true)
   const [points, setPoints] = useState(0)
   const {actors} = useAuth()
+  const dispatch = useDispatch()
 
   const displayDialog=() => {
     setShowDialog(true);
@@ -33,7 +37,7 @@ const UnstakeNFT = ({redeemPoints=0, id, setShow}) => {
         setIsLoading(false)
       }
       else {
-        alert('Error while fetching points' + pointsReq.err)
+        console.log('Error while fetching points' + pointsReq.err)
       }
     }
 
@@ -46,6 +50,9 @@ const UnstakeNFT = ({redeemPoints=0, id, setShow}) => {
     //Transfer NFT from owner to platform
     const unStakeNFTReq = await actors.userActor.unstakeNFT(tokenIdentifier);
     if(unStakeNFTReq.ok) {
+      dispatch(addPoints(points))
+      dispatch(removeStakedNFTs(id))
+      dispatch(modifyStakedNFTs(id))
       setDialogInfo({status:'success',message: 'NFT Unstaked successfully'});
       displayDialog();
     }

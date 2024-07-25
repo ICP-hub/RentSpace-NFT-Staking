@@ -15,6 +15,7 @@ const UserDashboard = () => {
   const {isAuthenticated, actors} = useAuth();
   const dispatch = useDispatch()
   const user= useSelector((state) => state.user);
+  const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
 
   const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
 
@@ -56,7 +57,7 @@ const UserDashboard = () => {
                 <h2>{user.email}</h2>
               </div>
               <div className='points-cont'>
-                <h1>Total Points</h1>
+                <h1>Total Points </h1>
                 <h1>{user.rewardPoints.toString()}</h1>
               </div>
               <div className='social-cont'>
@@ -81,7 +82,7 @@ const UserDashboard = () => {
                   >
                     Staked NFTs
                   </h2>
-                  <h1>{user.stakedNFTs.length}</h1>
+                  <h1>{stakedNFTs.length}</h1>
                 </div>
               </div>
             </div>

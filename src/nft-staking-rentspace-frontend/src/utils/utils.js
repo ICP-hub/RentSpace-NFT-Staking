@@ -11,8 +11,6 @@ export const convertPrincipalToAccountIdentifier = async (principal) => {
 export function formatMetadata(str){
     let val=str.split("22").join('')
     val=val.split('\\').join('"')
-    console.log(val)
-    console.log(JSON.parse(val))
     return JSON.parse(val)
 }
 

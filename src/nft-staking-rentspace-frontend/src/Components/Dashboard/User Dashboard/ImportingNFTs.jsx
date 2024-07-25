@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import CheckCard from '../../Card/CheckBoxCard';
 import Modal from "../../Modals/Modal"
-import { NFTsData } from '../../../Constants/useNFTsData';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useAuth } from '../../../utils/useAuthClient';
 import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../../utils/utils';
 
 const ImportingNFTs = ({ setImportModule }) => {
-  const { NFTs } = NFTsData();
   const { actors, principal } = useAuth();
   const [NFTList, setNFTList] = useState([]);
   const [checkedCards, setCheckedCards] = useState([]);
@@ -41,7 +39,6 @@ const ImportingNFTs = ({ setImportModule }) => {
     setShowDialog(true);
     setTimeout(()=> {
       setShowDialog(false);
-
     },5000)
   }
 

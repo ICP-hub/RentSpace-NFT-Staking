@@ -14,6 +14,16 @@ const NftsSlice = createSlice({
       state.stakedNFTs = action.payload;
     },
 
+    appendStakedNFTs: (state, action) => {
+      state.stakedNFTs.push(action.payload);
+    },
+    appendImportedNFTs: (state, action) => {
+      state.importedNFTs.push(action.payload);
+    },
+    removeStakedNFTs: (state, action) => {
+      const id = action.payload;
+      state.stakedNFTs = state.stakedNFTs.filter(nft => nft.id !== id);
+    },
     modifyImportedNFTs: (state, action) => {
       const  id  = action.payload;
       state.importedNFTs = state.importedNFTs.map(nft =>
@@ -30,6 +40,6 @@ const NftsSlice = createSlice({
   }
 });
 
-export const { addImportedNFTs, addStakedNFTs, modifyImportedNFTs, modifyStakedNFTs } = NftsSlice.actions;
+export const { addImportedNFTs, addStakedNFTs, modifyImportedNFTs, modifyStakedNFTs, appendStakedNFTs, removeStakedNFTs, appendImportedNFTs } = NftsSlice.actions;
 
 export default NftsSlice.reducer;
