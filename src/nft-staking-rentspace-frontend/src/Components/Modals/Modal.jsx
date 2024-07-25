@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import "./Modal.css"
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";

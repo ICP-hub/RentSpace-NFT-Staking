@@ -1,52 +1,82 @@
-
-
 .navbar-mainCont{
     @apply w-full top-4 fixed z-50
-  }
-  
-  .navbar-cont{
-      @apply grid grid-cols-12 bg-[#000000] bg-opacity-35   mx-[2%] rounded-full items-center text-white;
-      backdrop-filter:blur(8px)
-  }
-  
-  .Logo-cont{
-      @apply col-span-4 cursor-pointer
-  }
-  
-  .logo{
-      @apply w-20 ml-5
-  }
-  
-  .navItems-cont{
-      @apply col-span-4 flex justify-evenly text-lg font-semibold
-  }
+}
 
-  .navItems-cont > li {
+.navbar-cont{
+    @apply grid grid-cols-12 bg-[#000000] bg-opacity-35 mx-[2%] rounded-full items-center text-white;
+    backdrop-filter:blur(8px)
+}
+
+.Logo-cont{
+    @apply col-span-4 cursor-pointer
+}
+
+.logo{
+    @apply w-20 ml-5
+}
+
+.navItems-cont{
+    @apply col-span-4 flex justify-evenly text-lg font-semibold
+}
+
+.navItems-cont > li {
     @apply cursor-pointer
-  } 
-  
-  .connectBtn-mainCont{
-      @apply col-span-4 flex justify-end mr-10  py-4
-  }
-  
-  .connectBtn-cont{
-     @apply outline outline-blue-600 flex rounded-full w-[300px]  relative h-10 transition-all duration-500 font-medium
-  }
-  
-  .btn1{
-     @apply m-2 ml-6 w-[43%]
-  }
-  
-  .btn2{
-      @apply  h-full bg-gradient-to-r  from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full   text-center  absolute cursor-pointer
+}
 
+.connectBtn-mainCont{
+    @apply col-span-4 flex justify-end mr-10 py-4
+}
+
+.connectBtn-cont{
+    @apply outline outline-blue-600 flex rounded-full w-[300px] relative h-10 transition-all duration-500 font-medium
+}
+
+.btn1{
+    @apply m-2 ml-6 w-[43%]
+}
+
+.btn2 {
+    @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer
+}
+
+.btn2 {
+    @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2 text-center absolute cursor-pointer min-w-[50%]
+}
+
+.btn2 button {
+    @apply p-0 border-0 h-full rounded-full hover:bg-[#0284E2]
+}
+
+/* ///////////////////////// */
+/* Login container styles */
+/* //////////////////////// */
+
+.pointer-box {
+    @apply absolute bg-gray-100 border border-gray-300 px-2 py-4 rounded-lg -mt-4 right-[6%] z-10 translate-x-[-50%] ; /* Adjust mt value to position it correctly */
+    top: calc(100% + 10px); /* Position below the "Connect Wallet" button */
   }
   
-  .btn2{
-      @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2  text-center  absolute cursor-pointer min-w-[50%]
+  .pointer {
+    @apply absolute top-1 left-1/2 transform -translate-x-1/2 -mt-3 border-solid border-transparent border-8 border-gray-100 border-t-0;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   }
   
-  .btn2 button{
-      @apply p-0 border-0 h-full rounded-full hover:bg-[#0284E2]  
+  .content {
+    @apply text-gray-700 flex flex-col gap-2 text-sm;
   }
- 
+
+  .icp-img {
+    @apply h-5 w-5
+  }
+
+  .plug-wallet-img {
+    @apply h-5 w-5
+  }
+
+  .internet-identity-cont, .plug-wallet-cont {
+    @apply rounded-xl hover:bg-gray-200 transition-all duration-300  px-4 py-2
+  }
+
+  .internet-identity, .plug-wallet {
+    @apply flex items-center gap-4 justify-start hover:cursor-pointer
+  }
