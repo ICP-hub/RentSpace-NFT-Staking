@@ -1,59 +1,115 @@
-# nft-staking-rentspace
+# RentSpace NFT Staking Platform
 
-Welcome to your new nft-staking-rentspace project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+Welcome to the RentSpace NFT Staking Platform! RentSpace offers versatile NFTs that can be staked, traded, and used to earn various rewards. Currently operating on the Internet Computer Protocol (ICP), our multichain approach will soon incorporate more blockchains, enhancing our dynamic ecosystem. These NFTs serve as key assets for both entertainment and the ability to earn real rewards.
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+## RentSpace Collections
 
-To learn more before you start working with nft-staking-rentspace, see the following documentation available online:
+RentSpace is excited to announce a planned series of five sequential NFT villa collections, each themed around different futuristic concepts and timed with key Technical Development Milestones as approved by the Dfinity Developer Grant team and the Solana Foundation. Each collection will contain NFTs categorized into five types of rarity: Common, Uncommon, Rare, Epic, and Legendary, offering escalating levels of exclusivity and benefits.
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
-- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+### Collection Overview
 
-If you want to start working on your project right away, you might want to try the following commands:
+- **Minimalistic Villas (Modern days)**: This collection captures the essence of contemporary design with villas that blend modern aesthetics with functional living spaces.
+- **Modernistic Villas (Next decade)**: Looking slightly ahead, this collection features cutting-edge designs that anticipate the architectural trends of the near future.
+- **Futuristic Villas (2040s)**: These villas showcase radical architectural innovations and smart home technologies expected in the 2040s, offering a glimpse into a fully integrated future.
+- **Moon Villas (2050s)**: As humanity expands its reach, these villas represent lunar living with designs suited for life on the Moon, combining Earthly comfort with space adaptability.
+- **Mars Villas (2060s)**: The pinnacle of extraterrestrial luxury, these villas are designed for life on Mars, featuring environments that cater to the harsh Martian climate while providing an unmatched living experience.
 
-```bash
-cd nft-staking-rentspace/
-dfx help
-dfx canister --help
-```
+## RentSpace Rarities
 
-## Running the project locally
+### Rarity Levels and Benefits
 
-If you want to test your project locally, you can use the following commands:
+- **Common**: Provides basic access to the ecosystem, whitelist opportunities for future collections, and 1000 RentSpace Points.
+- **Uncommon**: Features unique design elements, early access to subsequent collections, and 2000 RentSpace Points.
+- **Rare**: Offers distinctive, sophisticated designs with priority access, enhanced community benefits, 3000 RentSpace Points, and eligibility for public token sales.
+- **Epic**: Grants top-tier access privileges, exclusive community channels, special events participation, 5000 RentSpace Points, and access to private token sales.
+- **Legendary**: Ensures the most exclusive benefits, including comprehensive access to all future NFT collections, unique community events, 10000 RentSpace Points, and private sales opportunities.
 
-```bash
-# Starts the replica, running in the background
-dfx start --background
+As these collections are released, each will bring a unique set of villas that reflect their era and thematic inspiration, enhancing their value and desirability within the RentSpace ecosystem.
 
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
-```
+For detailed information about each collection and the associated benefits, please visit our official [Medium page](https://medium.com/@rentspace/the-launch-of-rentspaces-second-nft-collection-modernistic-villas-0db4635956cf).
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+## Staking
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+### How the Staking System Works
 
-```bash
-npm run generate
-```
+RentSpace's website allows you to stake your NFTs and earn RentSpace points in return. Additionally, possessing the NFT itself grants you a fixed amount of points at the start, which corresponds to the uniqueness of the villa. You can stake any number of villas using villas from the corresponding period. There are a total of five collections and five corresponding worlds:
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+- Minimalistic World
+- Modernistic World
+- Futuristic World
+- Moon World
+- Mars World
 
-If you are making frontend changes, you can start a development server with
+For example, you can stake all your Minimalistic Villas only in Minimalistic World.
 
-```bash
-npm start
-```
+The basic staking percentage is 17% per month. RentSpace points are accrued every hour.
 
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
+### Boosting Your Staking Rewards
 
-### Note on frontend environment variables
+The website also provides several additional methods to increase the farming speed:
 
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
+- **Presence in each collection**:
+  - One RentSpace World: +0%
+  - Two RentSpace Worlds: +10%
+  - Three RentSpace Worlds: +30%
+  - Four RentSpace Worlds: +50%
+  - Five RentSpace Worlds: +100%
+  
+  You can mix any worlds. The number of villas in them will not affect the boost.
 
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+- **Unique location in each world**: During specific periods, it will be possible to unlock an additional location in each world. Purchasing this location will cost a certain amount of points and will significantly boost point farming for several months.
+- **Social media interaction**: You can share how you've populated the RentSpace worlds with your NFTs on Twitter. Doing so will earn you an additional 100 points.
+
+The website features a dashboard that displays the hourly rate of RentSpace point farming, the total amount of coins farmed, and the staking period.
+
+### Staking Conditions
+
+- **Staking Fee**: None. It's free.
+- **Locking Time**: The minimum staking period is set to 10 days, during which you cannot unstake. Following the 10 days you can unstake your NFTs at any time. During the staking period, you will earn RentSpace points.
+
+## Source of Rewards
+
+According to our tokenomics, we allocate 5% for rewards to our early community. The points earned on the platform can be exchanged for tokens of our project.
+
+## Project Funding
+
+The project is funded and created by RentSpace.
+
+## Our Values
+
+Our values are based on courtesy, kindness, and transparency. Our goal is to give our early community the opportunity to support us, for which we want to express our gratitude with well-earned rewards.
+
+## RentSpace Holder Roles
+
+Users who hold a significant number of our NFTs will also be rewarded with specific roles in our Discord, based on the number of villas they own:
+
+- 1-5 villas
+- 5-10 villas
+- 10-15 villas
+- 15-20 villas
+- 25+ villas
+
+## Setting Up Locally
+
+To set up the RentSpace NFT Staking Platform locally, follow these steps:
+
+1. Fork this repo.
+2. Open the project in WSL and run: `dfx start --background`
+3. Install dependencies: `npm i --force`
+4. Deploy the backend: `dfx deploy --specified-id bd3sg-teaaa-aaaaa-qaaba-cai nft-staking-rentspace-backend`
+5. Pull and deploy dependencies:
+   ```bash
+   dfx deps pull
+   dfx deps deploy
+   ```
+6. Deploy the project: `dfx deploy`
+7. Start the application: `npm start`
+
+### Setting up Local EXT Canister
+
+8. Clone this repo: [NFT_STANDARD](https://github.com/ArjunQBTech/NFT_STANDARD)
+9. Open this project in WSL and run: `dfx deploy --specified-id bkyz2-fmaaa-aaaaa-qaaaq-cai`
+
+### Setting Up Local ICP Ledger
+
+Refer to the [ICP Ledger Local Setup documentation](https://internetcomputer.org/docs/current/developer-docs/defi/icp-tokens/ledger-local-setup) for details.
