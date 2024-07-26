@@ -70,7 +70,7 @@ const Navbar = () => {
     <div className='navbar-mainCont'>
       <div className='navbar-cont'>
         <div className='Logo-cont' onClick={() => navigate('/')}>
-          <img className='logo' src='Assets/RentSpace_logo_black(transp).png' />
+          <img className='logo' src='Assets/rentSpaceLogo.png' />
         </div>
         <ul className='navItems-cont'>
           <li onClick={() => navigate('')}>Leaderboard</li>
