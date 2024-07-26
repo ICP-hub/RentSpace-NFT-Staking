@@ -1,19 +1,82 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Card.css"
 import { add_ImportNfts } from '../../utils/Redux-Config/ImportNfts_Slice';
 import { useDispatch } from 'react-redux';
+import { tokenIndexToTokenIdentifier } from '../../utils/utils';
+import { useAuth } from '../../utils/useAuthClient';
+import { Principal } from '@dfinity/principal';
+import Modal from '../Modals/Modal';
+import UnStakeButton from '../Button/UnStakeButton';
+import StakeButton from '../Button/StakeButton';
 
 
 const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
-  const dispatch= useDispatch();
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogInfo, setDialogInfo] = useState({status: "", message: ""});
 
-  function handleStaking(){
-    if(isStaked){
-      // write  unstaking logic 
+  const dispatch= useDispatch();
+  const {actors} = useAuth()
+
+  const handleClick = async () => {
+    if(isStaked) {
+      await handleUnStake()
     }
-    else{
-      // Staking logic
+    else {
+      await handleStaking()
     }
+  }
+
+  // const handleStaking = async () => {
+  //   try {
+  //     const tokenIdentifier = tokenIndexToTokenIdentifier(id)
+  //     console.log("Token Identifier : ", tokenIdentifier)
+
+  //     const backendCanister = Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai")
+
+  //     const _approveTransferReq = await actors.EXTActor.approve({
+  //       token : tokenIdentifier,
+  //       spender : backendCanister,
+  //       allowance : 1,
+  //       subaccount : []
+  //     })
+
+  //     console.log("Approve Transfer Req : ", _approveTransferReq)
+
+  //     const stakeNFTReq = await actors.userActor.stakeNFT(tokenIdentifier);
+
+  //     if(stakeNFTReq.ok) {
+  //       setDialogInfo({status:'success',message: 'NFTs staked successfully'});
+  //       displayDialog();
+  //     } else {
+  //       setDialogInfo({status:'error',message:'NFT stake failed : '+ stakeNFTReq.err})
+  //     }
+  //   } catch(err) {
+  //     console.log(err)
+  //   }
+  // }
+
+  const displayDialog=() => {
+    setShowDialog(true);
+    setTimeout(()=> {
+      setShowDialog(false);
+
+    },5000)
+  }
+
+  const handleUnStake = async () => {
+    const tokenIdentifier = tokenIndexToTokenIdentifier(id)
+    //Transfer NFT from owner to platform
+    const unStakeNFTReq = await actors.userActor.unstakeNFT(tokenIdentifier);
+
+    if(unStakeNFTReq.ok) {
+      setDialogInfo({status:'success',message: 'NFTs unstaked successfully'});
+      displayDialog();
+    }
+    else {
+      setDialogInfo({status:'error',message: 'Error unstaking NFTs'});
+      displayDialog();
+    }
+
   }
 
   function handle_CheckNfts(){
@@ -22,6 +85,9 @@ const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
   }
 
   return (
+    <>
+    
+    {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog}/>}
     <div className="card">
       {
         purpose === 'import' ? 
@@ -33,12 +99,10 @@ const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
         <p className="card-content">{desc}</p>
-      { purpose === 'import'  ?   ''
-      :
-       <button className='card-btn' onClick={handleStaking} > { isStaked ? 'Unstake' : 'Stake' }</button> 
-       }
+      { isStaked ? <UnStakeButton id={id}/> : <StakeButton id={id}/>}
       </div>
     </div>
+    </>
   );
 };
 

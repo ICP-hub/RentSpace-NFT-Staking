@@ -2,7 +2,6 @@
 /* HeroPage component styling */
 
 .Hero-MainCont {
-
   @apply w-screen bg-cover h-screen
 }
 

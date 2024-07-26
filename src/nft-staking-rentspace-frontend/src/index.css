@@ -18,7 +18,7 @@
 
 
 html{
-    @apply relative overflow-x-hidden
+    @apply relative overflow-x-hidden font-[Poppins]
 }
 
 
@@ -26,7 +26,7 @@ html{
 
 
  button {
-    @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] transition-all duration-1000;
+    @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] transition-all duration-1000
  }
 
 button:hover {

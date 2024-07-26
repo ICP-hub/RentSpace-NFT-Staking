@@ -1,0 +1,11 @@
+.btn {
+  @apply from-[#01ABFE] via-[#0285E3] to-[#3E9EE2]  w-full text-white py-1 rounded-3xl text-center cursor-pointer
+}
+
+.btn:hover {
+  @apply hover:bg-black transition-colors duration-500 ease-in-out 
+}
+
+.btn > .icon {
+  @apply flex items-center
+}

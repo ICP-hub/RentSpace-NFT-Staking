@@ -1,5 +1,5 @@
 .unstake-cont {
-  @apply bg-[#162e5d] text-white flex flex-col justify-center items-center py-4 px-8 rounded-xl border-white border-2 gap-4 w-[40%] mx-auto
+  @apply bg-[#162e5d] text-white flex flex-col justify-center items-center py-4 px-8 rounded-xl border-white border-2 gap-4 w-fit -translate-x-1/2 absolute top-1/3 z-10 left-1/2
 }
 
 .unstake-heading {
@@ -15,7 +15,7 @@
 }
 
 .btn-cont {
-  @apply flex justify-around w-full
+  @apply flex justify-around w-full gap-4
 }
 
 .btn {
@@ -23,9 +23,9 @@
 }
 
 .cancel-btn {
-  @apply bg-black 
+  @apply bg-none bg-[#061d2d] hover:bg-[#092a41] active:bg-[#061d2d]
 }
 
 .unstake-btn {
-  @apply bg-red-700
+  @apply bg-none bg-[#c30721] hover:bg-[#d83e52] active:bg-[#c30721]
 }

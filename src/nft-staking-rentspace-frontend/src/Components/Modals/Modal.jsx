@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import "./Modal.css"
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
@@ -12,7 +12,7 @@ const Modal = ({status, message, closeModal}) => {
       {error ? <FaXmark size={20} color='#fff'/> :  <FaCheck size={20} color='#fff'/>}
     </div>
       <p className='message'>{message}</p>
-      <button onClick={()=> closeModal}>Go Back</button>
+      <button className='modal-btn' onClick={()=> closeModal(false)}>Go Back</button>
     </div>
   )
 }

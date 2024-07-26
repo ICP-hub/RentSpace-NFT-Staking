@@ -52,6 +52,11 @@ actor {
         };
     };
 
+    public shared query func getAllStaked() : async [NFT.NFT] {
+        let stakedNFTs = nftHandler.getAllStaked();
+        return stakedNFTs;
+    };
+
     public shared query ({ caller }) func getUser() : async Types.GetUserResult {
         let user = userHandler.get(caller);
         switch (user) {
@@ -73,6 +78,27 @@ actor {
             };
             case (#err(error)) {
                 return #err(error);
+            };
+        };
+    };
+
+    public shared ({caller}) func getPointsAccumulated(nftId : Text) : async Result.Result<Nat, Text> {
+        // await Functions.checkAnonymous(caller);
+        let user = userHandler.get(caller);
+        switch user {
+            case (null) {
+                return #err("User not Authorized");
+            };
+            case (?_) {
+                let pointsReq = await nftHandler.getPoints(nftId,caller);
+                switch pointsReq {
+                    case (#ok(points)) {
+                        return #ok(points);
+                    };
+                    case(#err(e)) {
+                        return #err(e);
+                    };
+                };
             };
         };
     };

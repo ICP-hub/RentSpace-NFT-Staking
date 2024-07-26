@@ -14,7 +14,7 @@ const RentspaceWorlds = () => {
         <h1 className='Heading'>RentSpace Worlds</h1>
         <div className='RentSpaceWorlds'>
           <div className='worldsImg'>
-            {worldsImg.map((img, ind) => <img key={ind} src={`Worlds&Villas/${img}`} alt={`World ${ind}`} />)}
+            {worldsImg.map((img, ind) => <img key={ind} src={`Assets/Worlds&Villas/${img}`} alt={`World ${ind}`} />)}
           </div>
 
           <div className="timeline-cont">
@@ -45,7 +45,7 @@ const RentspaceWorlds = () => {
           </div>
 
           <div className='villasImg'>
-            {VillasImg.map((img, ind) => <img key={ind} src={`Worlds&Villas/${img}`} alt={`Villa ${ind}`} />)}
+            {VillasImg.map((img, ind) => <img key={ind} src={`Assets/Worlds&Villas/${img}`} alt={`Villa ${ind}`} />)}
           </div>
         </div>
       </div>

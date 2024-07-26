@@ -90,6 +90,12 @@ module {
             ?fromMutableNFT(nft);
         };
 
+        public func getAllStaked() : [Nft] {
+            stakedNftRecords.vals()
+            |> Iter.map(_, fromMutableNFT)
+            |> Iter.toArray(_);
+        };
+
         public func getStaked(id : Text) : ?Nft {
             let ?nft = stakedNftRecords.get(id) else return null;
             ?fromMutableNFT(nft);
@@ -105,6 +111,10 @@ module {
                     return [];
                 };
             };
+        };
+
+        public func addNFT(tokenId : Text, token : MutableNFT) {
+            nftRecords.put(tokenId, token);
         };
 
         public func getAllUserStakedNfts(userId : Principal) : [Text] {
@@ -151,185 +161,219 @@ module {
         }] {
             let nftList = await EXTActor.getTokensByIds(tokens);
 
-            return Array.map<(EXT.TokenIndex, EXT.Metadata), {tid : Text; metadata : Text}>(nftList, func((tid, metadata)) : {tid : Text; metadata : Text} {
-                let nftObj : {tid : Text; metadata: Text} = {
-                    tid = Nat32.toText(tid);
-                    metadata = Functions.serializeMetadata(metadata);
-                };
-                return nftObj;
-            });
-
-    };
-
-    public func importNFTs(tokenData :[{tid : Text; metadata: Text}], userId: Principal) : async Result.Result<Text, Text> {
-        try {
-            await Functions.checkAnonymous(userId);
-            var isImported = false;
-
-            for (token in tokenData.vals()) {
-                let result = userHandler.addNFT(userId, token.tid, token.metadata, EXTCanisterId);
-                
-                switch result {
-                    case (#ok(nft)) {
-                        isImported:=true;
+            return Array.map<(EXT.TokenIndex, EXT.Metadata), { tid : Text; metadata : Text }>(
+                nftList,
+                func((tid, metadata)) : { tid : Text; metadata : Text } {
+                    let nftObj : { tid : Text; metadata : Text } = {
+                        tid = Nat32.toText(tid);
+                        metadata = Functions.serializeMetadata(metadata);
                     };
-                    case (#err(err)) {
-                        isImported:=false;
+                    return nftObj;
+                },
+            );
+
+        };
+
+        public func importNFTs(tokenData : [{ tid : Text; metadata : Text }], userId : Principal) : async Result.Result<Text, Text> {
+            try {
+                await Functions.checkAnonymous(userId);
+                var isImported = false;
+
+                for (token in tokenData.vals()) {
+                    let nftExists = checkIfNFTExist(token.tid);
+                    if (nftExists == true) {
+                        return #err("NFT Already Imported" # token.tid);
+                    };
+
+                    let result = userHandler.addNFT(userId, token.tid, token.metadata, EXTCanisterId);
+
+                    switch result {
+                        case (#ok(nft)) {
+                            addNFT(token.tid, toMutableNFT(nft));
+                            isImported := true;
+                        };
+                        case (#err(err)) {
+                            isImported := false;
+                            return #err("User Not Authorized");
+                        };
+                    };
+                };
+                return #ok("Imported");
+
+            } catch (err) {
+                return #err(Error.message(err));
+            };
+        };
+
+        public func getPoints(nftID : Text, userId : Principal) : async Result.Result<Nat, Text> {
+            let nft = stakedNftRecords.get(nftID);
+            switch nft {
+                case null {
+                    return #err("NFT Does not Exist");
+                };
+                case (?nft) {
+                    if(nft.owner != userId) {
                         return #err("User Not Authorized");
                     };
-                };
-            };
-            return #ok("Imported");
-            
-        } catch (err) {
-            return #err(Error.message(err));
-        };
-    };
-
-    public func stakeNFT(nftID : EXT.TokenIdentifier, userId : Principal) : async Result.Result<Text, TransferError> {
-        let nftIdx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
-        let _nftID : Text = Nat.toText(nftIdx);
-
-        let ?nft = nftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
-        let ?user = userHandler.get(userId) else return #err(#Unauthorized("User does not exist"));
-
-        switch (nft) {
-            case (nft) {
-                if (nft.isStaked == true) {
-                    return #err(#Other("NFT Already Staked"));
-                };
-
-                if (nft.owner != userId) {
-                    return #err(#Unauthorized(Principal.toText(userId)));
-                };
-
-                let CANISTERPRINCIPAL = Principal.fromText(BackendCanisterId);
-
-                let transferResult = await transferNFT(nftID, userId, CANISTERPRINCIPAL);
-                switch (transferResult) {
-                    case (#ok(msg)) {
-                        nft.isStaked := true;
-                        nft.stakedAt := ?Time.now();
-                        stakedNftRecords.put(nft.id, nft);
-                        userHandler.appendStakedNFT(nft.id, userId);
-
-                        return #ok("Staked Successfully");
+                    let stakedAt : ?Nat = switch (nft.stakedAt) {
+                        case null null;
+                        case (?int) Nat.fromText(Int.toText(int));
                     };
-                    case (#err(err)) {
-                        return #err(err);
+
+                    let stakedAtTime : Nat = switch stakedAt {
+                        case null 0;
+                        case (?nat) nat;
                     };
+                    let pointsAccumulated = await Functions.calculateReward(stakedAtTime, nft.rarity);
+                    return #ok(pointsAccumulated);
                 };
             };
         };
-    };
 
-    public func unstakeNFT(nftID : EXT.TokenIdentifier, userId : Principal) : async Result.Result<Text, TransferError> {
-        let nftIdx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
-        let _nftID : Text = Nat.toText(nftIdx);
+        public func stakeNFT(nftID : EXT.TokenIdentifier, userId : Principal) : async Result.Result<Text, TransferError> {
+            let nftIdx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
+            let _nftID : Text = Nat.toText(nftIdx);
 
-        let ?nft = stakedNftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
+            let ?nft = nftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
+            let ?user = userHandler.get(userId) else return #err(#Unauthorized("User does not exist"));
 
-        switch (nft) {
-            case (nft) {
-                // if (nft.isStaked == false) {
-                //     return #err(#Other("NFT Not Staked"));
-                // };
+            switch (nft) {
+                case (nft) {
+                    if (nft.isStaked == true) {
+                        return #err(#Other("NFT Already Staked"));
+                    };
 
-                // if(nft.owner != userId) {
-                //     return #err(#Unauthorized(Principal.toText(userId)));
-                // };
+                    if (nft.owner != userId) {
+                        return #err(#Unauthorized(Principal.toText(userId)));
+                    };
 
-                let CANISTERPRINCIPAL = Principal.fromText(BackendCanisterId);
+                    let CANISTERPRINCIPAL = Principal.fromText(BackendCanisterId);
 
-                let transferResult = await transferNFT(nftID, CANISTERPRINCIPAL, userId);
-                switch (transferResult) {
-                    case (#ok(msg)) {
-                        let stakedAt : ?Nat = switch (nft.stakedAt) {
-                            case null null;
-                            case (?int) Nat.fromText(Int.toText(int));
+                    let transferResult = await transferNFT(nftID, userId, CANISTERPRINCIPAL);
+                    switch (transferResult) {
+                        case (#ok(msg)) {
+                            nft.isStaked := true;
+                            nft.stakedAt := ?Time.now();
+                            stakedNftRecords.put(nft.id, nft);
+                            userHandler.appendStakedNFT(nft.id, userId);
+
+                            return #ok("Staked Successfully");
                         };
-
-                        let stakedAtTime : Nat = switch stakedAt {
-                            case null 0;
-                            case (?nat) nat;
+                        case (#err(err)) {
+                            return #err(err);
                         };
-
-                        let pointsAccumulated = await Functions.calculateReward(stakedAtTime, nft.rarity);
-                        nft.isStaked := false;
-                        nft.stakedAt := null;
-                        let _awardUser = userHandler.awardPoints(userId, pointsAccumulated);
-                        stakedNftRecords.delete(_nftID);
-                        let removeNFT = userHandler.removeStakedNFT(_nftID, userId);
-                        if (removeNFT == false) {
-                            return #err(#Other("Can't remove staked NFT"));
-                        };
-
-                        return #ok("Unstaked Successfully");
-                    };
-                    case (#err(err)) {
-                        return #err(err);
                     };
                 };
             };
         };
-    };
 
-    private func transferNFT(nftID : EXT.TokenIdentifier, from : Principal, to : Principal) : async Result.Result<Text, TransferError> {
+        public func unstakeNFT(nftID : EXT.TokenIdentifier, userId : Principal) : async Result.Result<Text, TransferError> {
+            let nftIdx : Nat = Nat32.toNat(TokenIdentifier.getIndex(nftID));
+            let _nftID : Text = Nat.toText(nftIdx);
 
-        let transferRequest : EXT.TransferRequest = {
-            to = #principal to;
-            token = nftID;
-            notify = false;
-            from = #principal from;
-            memo = "Staking NFT";
-            amount = 1;
-            subaccount = null;
+            let ?nft = stakedNftRecords.get(_nftID) else return #err(#InvalidToken(_nftID));
+
+            switch (nft) {
+                case (nft) {
+                    // if (nft.isStaked == false) {
+                    //     return #err(#Other("NFT Not Staked"));
+                    // };
+
+                    // if(nft.owner != userId) {
+                    //     return #err(#Unauthorized(Principal.toText(userId)));
+                    // };
+
+                    let CANISTERPRINCIPAL = Principal.fromText(BackendCanisterId);
+
+                    let transferResult = await transferNFT(nftID, CANISTERPRINCIPAL, userId);
+                    switch (transferResult) {
+                        case (#ok(msg)) {
+                            let stakedAt : ?Nat = switch (nft.stakedAt) {
+                                case null null;
+                                case (?int) Nat.fromText(Int.toText(int));
+                            };
+
+                            let stakedAtTime : Nat = switch stakedAt {
+                                case null 0;
+                                case (?nat) nat;
+                            };
+
+                            let pointsAccumulated = await Functions.calculateReward(stakedAtTime, nft.rarity);
+                            nft.isStaked := false;
+                            nft.stakedAt := null;
+                            let _awardUser = userHandler.awardPoints(userId, pointsAccumulated);
+                            stakedNftRecords.delete(_nftID);
+                            let removeNFT = userHandler.removeStakedNFT(_nftID, userId);
+                            if (removeNFT == false) {
+                                return #err(#Other("Can't remove staked NFT"));
+                            };
+
+                            return #ok("Unstaked Successfully");
+                        };
+                        case (#err(err)) {
+                            return #err(err);
+                        };
+                    };
+                };
+            };
         };
 
-        let transferResponse = await EXTActor.transfer(transferRequest);
-        switch (transferResponse) {
-            case (#ok(_)) {
-                return #ok("NFT Staked Successfully");
-            };
-            case (#err(err)) {
-                return #err(err);
-            };
-        };
-    };
+        private func transferNFT(nftID : EXT.TokenIdentifier, from : Principal, to : Principal) : async Result.Result<Text, TransferError> {
 
-    private func checkIfNFTExist(nftId : Text) : Bool {
-        switch (nftRecords.get(nftId)) {
-            case (?nft) {
-                return true;
+            let transferRequest : EXT.TransferRequest = {
+                to = #principal to;
+                token = nftID;
+                notify = false;
+                from = #principal from;
+                memo = "Staking NFT";
+                amount = 1;
+                subaccount = null;
             };
-            case (null) {
-                return false;
-            };
-        };
-    };
 
-    private func getNFTFromEXT(aid : Text) : async Result.Result<[EXT.TokenIndex], EXT.CommonError> {
-        let tokenResponse = await EXTActor.tokens(aid);
-        switch (tokenResponse) {
-            case (#ok(tokens)) {
-                return #ok(tokens);
-            };
-            case (#err(err)) {
-                return #err(err);
+            let transferResponse = await EXTActor.transfer(transferRequest);
+            switch (transferResponse) {
+                case (#ok(_)) {
+                    return #ok("NFT Staked Successfully");
+                };
+                case (#err(err)) {
+                    return #err(err);
+                };
             };
         };
-    };
 
-    private func fromMutableNFT(nft : MutableNFT) : Nft {
-        {
-            id = nft.id;
-            owner = nft.owner;
-            isStaked = nft.isStaked;
-            rarity = nft.rarity;
-            canisterID = nft.canisterID;
-            stakedAt = nft.stakedAt;
-            metadata = nft.metadata;
+        private func checkIfNFTExist(nftId : Text) : Bool {
+            switch (nftRecords.get(nftId)) {
+                case (?nft) {
+                    return true;
+                };
+                case (null) {
+                    return false;
+                };
+            };
+        };
+
+        private func getNFTFromEXT(aid : Text) : async Result.Result<[EXT.TokenIndex], EXT.CommonError> {
+            let tokenResponse = await EXTActor.tokens(aid);
+            switch (tokenResponse) {
+                case (#ok(tokens)) {
+                    return #ok(tokens);
+                };
+                case (#err(err)) {
+                    return #err(err);
+                };
+            };
+        };
+
+        private func fromMutableNFT(nft : MutableNFT) : Nft {
+            {
+                id = nft.id;
+                owner = nft.owner;
+                isStaked = nft.isStaked;
+                rarity = nft.rarity;
+                canisterID = nft.canisterID;
+                stakedAt = nft.stakedAt;
+                metadata = nft.metadata;
+            };
         };
     };
-};
 };

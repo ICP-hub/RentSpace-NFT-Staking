@@ -1,3 +1,5 @@
+/* MyWorld component styling*/
+
 .myWorlds-Cont {
   @apply pt-8 overflow-hidden pb-16 w-screen bg-cover bg-no-repeat bg-center;
 }
@@ -15,7 +17,7 @@
 }
 
 .flexWorlds {
-  @apply flex ml-[30%] xl:ml-[27%] 2xl:ml-[36%];
+  @apply flex ml-[10%] md:ml-[15%] lg:ml-[20%] xl:ml-[27%] 2xl:ml-[36%];
   transition: transform 0.5s ease-in-out;
 }
 
@@ -36,8 +38,8 @@
   @apply cursor-pointer;
 }
 
-.carousel-btn h1 {
-  @apply rounded-full border-[3px] p-2 px-10 mx-4;
+.carousel-btn > h1 {
+  @apply rounded-full w-64 text-center border-[3px] p-2 px-10 mx-4;
 
 }
 

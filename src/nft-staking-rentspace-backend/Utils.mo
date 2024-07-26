@@ -10,10 +10,10 @@ import NftModel "./models/NFT";
 
 module {
     public func checkAnonymous(_user : Principal) : async () {
-        if (Principal.isAnonymous(_user)) {
-            let err = Error.reject("Anonymous users cannot interact!");
-            throw err;
-        };
+        // if (Principal.isAnonymous(_user)) {
+        //     let err = Error.reject("Anonymous users cannot interact!");
+        //     throw err;
+        // };
     };
 
     public func calculateReward(_stakeTime : Int, rarity : NftModel.Rarity) : async Nat {

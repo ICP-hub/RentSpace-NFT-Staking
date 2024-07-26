@@ -24,7 +24,7 @@
     @apply text-2xl font-medium;
 }
 .points-cont{
-    @apply flex justify-between shadow-md bg-[#B7E0E3] text-[#014678] px-6 p-2 rounded-full mt-8
+    @apply flex justify-between shadow-md bg-[#B7E0E3] text-[#014678] px-6 p-2 rounded-full mt-8 gap-2
 }
 
 .social-cont{
@@ -56,6 +56,10 @@
 
 .right-cont {
     @apply m-3 ml-0 col-span-3
+}
+
+.right-cont > .nft-Maincont {
+    @apply h-full
 }
 
 

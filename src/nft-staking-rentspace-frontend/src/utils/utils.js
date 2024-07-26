@@ -11,8 +11,6 @@ export const convertPrincipalToAccountIdentifier = async (principal) => {
 export function formatMetadata(str){
     let val=str.split("22").join('')
     val=val.split('\\').join('"')
-    console.log(val)
-    console.log(JSON.parse(val))
     return JSON.parse(val)
 }
 
@@ -37,7 +35,7 @@ function encodeTokenIdentifier(canisterId, tokenIndex) {
 }
 
 export function tokenIndexToTokenIdentifier(tokenIdx) {
-  const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"be2us-64aaa-aaaaa-qaabq-cai"
+  const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
   return encodeTokenIdentifier(canID, tokenIdx);
 }
 

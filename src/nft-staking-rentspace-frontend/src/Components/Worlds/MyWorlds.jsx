@@ -19,7 +19,7 @@ const MyWorlds = () => {
   }
 
   return (
-    <div className='myWorlds-Cont' style={{ backgroundImage: "url('BackgroundIMG.png')" }}>
+    <div className='myWorlds-Cont' style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
       <h1 className='heading-staking'> Staking </h1>
       <div className='carousel-btn'>
         <FaChevronLeft className='favIcon' size={25} onClick={prevWorld} />
@@ -32,7 +32,7 @@ const MyWorlds = () => {
           <div className='flexWorlds' style={{ transform: `translateX(calc(-${currentWorld} * (380px ) )` }}>
             {worldsIMG.map((data, ind) => (
               <div className='worlds' key={ind} style={ind > 0 ? { marginLeft: '90px' } : {}}>
-                <img src={`myWorlds/${data}`} alt={data} />
+                <img src={`Assets/myWorlds/${data}`} alt={data} />
               </div>
             ))}
           </div>
