@@ -59,10 +59,6 @@
     
     @apply p-4 px-14 w-52  text-2xl rounded-full font-medium  shadow-lg text-white
 }
- 
-
-
-
 
 
 
@@ -107,8 +103,8 @@
 
 
 /* YourVillas component styling */
- .yourVillas-cont{
-   @apply p-8 border bg-[#FFFFFF] rounded-3xl
+ .Villas-cont{
+   @apply p-8 px-10 border bg-[#FFFFFF] rounded-3xl
  }
 
  .header{
@@ -123,7 +119,7 @@
 }
 
 .sortBy-cont{
-    @apply border-2 border-[#0285E3] rounded-full p-2 px-4 ml-5
+    @apply border-2 shadow-lg border-[#0285E3] rounded-full p-2 px-4 ml-5 cursor-pointer
 }
 .sortBy-cont select{
    @apply text-lg  font-medium outline-none
@@ -134,9 +130,23 @@
  }
 
  .header-right  button{
-    @apply p-2 px-6 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2]  rounded-full
+    @apply p-2  w-32 cursor-pointer   shadow-lg rounded-full
  }
  
  .header-right button:first-child{
     @apply mr-4
  }
+
+ .villas{
+    @apply flex flex-wrap justify-center gap-8  my-16
+ }
+
+ .villas-card{
+    @apply w-36 h-36 rounded-2xl
+ }
+ .villas-card > img{
+    @apply rounded-xl
+ }
+
+
+

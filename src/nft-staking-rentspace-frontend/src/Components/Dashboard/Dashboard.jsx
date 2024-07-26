@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
   import './Dashboard.css';
-import MyWorlds from './MyWorlds';
 import { Outlet } from 'react-router-dom';
 
   const Dashboard = () => {
 
     return (
-      <div className='Dashboard-MainCont'>
+      <div className='Dashboard-MainCont' style={{ backgroundImage: "url('BackgroundIMG.png')" }}>
         <div className='Heading-staking'>
           <h1>Staking</h1>
         </div>

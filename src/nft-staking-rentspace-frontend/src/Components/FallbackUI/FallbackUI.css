@@ -1,3 +1,5 @@
+/* fallbackUI component styling*/
+
 .fallbackUI-cont{
     @apply bg-white h-full rounded-2xl
 }
@@ -15,4 +17,43 @@
 
 .fallbackUI-innerCont h2{
     @apply font-medium text-lg -mt-10
+}
+
+
+
+/* FallbackUI_404 component */
+
+.fallbackUI_404-cont{
+    @apply bg-white rounded-2xl mt-4 flex justify-center items-center h-screen
+}
+.fallbackUI_404-innerCont{
+    @apply  justify-center items-center -mt-32
+}
+.fallbackUI_404-innerCont > h1{
+    @apply text-9xl font-bold 
+}
+.fallbackUI_404-innerCont > p{
+    @apply text-xl font-bold  text-center
+}
+.fallbackUI_404-innerCont > button{
+    @apply text-lg font-bold mt-10 text-white
+}
+
+
+
+
+/*  FallbackUI_NFTs component styling */
+.FallbackUI_NFTs-cont{
+    @apply bg-white h-full rounded-2xl
+}
+
+.FallbackUI_NFTs-cont > h1{
+    @apply text-2xl font-semibold ml-20 pt-6
+}
+
+.innerCont{
+    @apply flex flex-wrap gap-10 my-6 mx-12
+}
+.Fallback_card{
+    @apply bg-[#bebdc2] w-60 h-80 rounded-2xl shadow-lg
 }

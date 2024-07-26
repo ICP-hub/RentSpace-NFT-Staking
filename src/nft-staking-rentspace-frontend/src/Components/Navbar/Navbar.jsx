@@ -45,11 +45,13 @@ const Navbar = () => {
     <div className='navbar-mainCont'>
     <div className='navbar-cont'>
 
-      <div className='Logo-cont'>
+      <div className='Logo-cont' onClick={()=> navigate('/')}>
       <img className='logo' src='RentSpace_logo_black(transp) 6.png'/>
       </div>
       <ul className='navItems-cont' >
-         {navItems.map((item, ind)=>  <li> {item} </li>   )}
+         <li onClick={()=> navigate('') } >Leaderboard</li>
+         <li onClick={()=> navigate('/faq') } > FAQ </li>
+         <li onClick={()=> navigate('/mySpaces') } > My Spaces </li>
       </ul>
 
       <section className='connectBtn-mainCont'>
