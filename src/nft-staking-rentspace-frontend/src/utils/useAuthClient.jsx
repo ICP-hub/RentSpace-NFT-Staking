@@ -1,161 +1,135 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { AuthClient } from "@dfinity/auth-client";
-import { createActor as createNFTActor } from '../../../declarations/nft-staking-rentspace-backend';
+import { AuthClient } from '@dfinity/auth-client';
+import { idlFactory } from '../../../declarations/nft-staking-rentspace-backend';
+import { createActor } from '../../../declarations/nft-staking-rentspace-backend';
 import { createActor as createEXTActor } from '../../../declarations/EXT';
 import { Principal } from '@dfinity/principal';
 
 const AuthContext = createContext();
 
-const getCanisterID = (network, canisterID) => network === "ic" ? canisterID.ic : canisterID.local;
+const canID = process.env.DFX_NETWORK === "ic" ? "2cwjm-cyaaa-aaaap-ahi3q-cai" : "bd3sg-teaaa-aaaaa-qaaba-cai";
+const EXTCanID = process.env.DFX_NETWORK === "ic" ? "m2nno-7aaaa-aaaah-adzba-cai" : "bkyz2-fmaaa-aaaaa-qaaaq-cai";
 
 export const useAuthClient = () => {
-    const [authClient, setAuthClient] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [identity, setIdentity] = useState(null);
-    const [principal, setPrincipal] = useState(null);
-    const [actors, setActors] = useState(null);
-    const [isPlug, setIsPlug] = useState(false);
+  const [authClient, setAuthClient] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState({ ii: false, plug: false });
+  const [identity, setIdentity] = useState(null);
+  const [principal, setPrincipal] = useState(null);
+  const [actors, setActors] = useState(null);
 
-    const canID = getCanisterID(process.env.DFX_NETWORK, {
-        ic: "2cwjm-cyaaa-aaaap-ahi3q-cai",
-        local: "bd3sg-teaaa-aaaaa-qaaba-cai"
-    });
-    
-    const EXTCanID = getCanisterID(process.env.DFX_NETWORK, {
-        ic: "m2nno-7aaaa-aaaah-adzba-cai",
-        local: "bkyz2-fmaaa-aaaaa-qaaaq-cai"
-    });
+  const initializeClient = async () => {
+    const client = await AuthClient.create();
+    setAuthClient(client);
+  };
 
-    const clientInfo = async (client) => {
-        const isAuthenticated = await client.isAuthenticated();
-        const identity = client.getIdentity();
-        const principal = identity.getPrincipal();
-        
-        console.log(principal.toText());
+  useEffect(() => {
+    initializeClient();
+  }, []);
 
-        setAuthClient(client);
-        setIsAuthenticated(isAuthenticated);
-        setIdentity(identity);
-        setPrincipal(principal);
+  const clientInfo = async (client) => {
+    const isAuthenticated = await client.isAuthenticated();
+    const identity = client.getIdentity();
+    const principal = identity.getPrincipal();
+    console.log(principal.toText())
 
-        if (isAuthenticated && identity && !principal.isAnonymous()) {
-            const userActor = createNFTActor(canID, { agentOptions: { identity } });
-            const EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity } });
-            
-            setActors({ userActor, EXTActor });
-            return userActor;
-        }
-    };
+    setAuthClient(client);
+    setIsAuthenticated(isAuthenticated);
+    setIdentity(identity);
+    setPrincipal(principal);
 
-    useEffect(() => {
-        (async () => {
-            const authClient = await AuthClient.create();
-            await clientInfo(authClient);
-        })();
-    }, []);
+    if (isAuthenticated && identity && principal && principal.isAnonymous() === false) {
+        let userActor = createActor(canID, { agentOptions: { identity: identity } });
+        let EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity: identity } });
+        console.log(EXTActor)
+        setActors({
+            userActor:userActor,
+            EXTActor:EXTActor
+        })
+        return userActor
+    }
+}
 
-    const iiLogin = async () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                if (authClient.isAuthenticated() && !authClient.getIdentity().getPrincipal().isAnonymous()) {
-                    resolve(await clientInfo(authClient));
-                } else {
-                    await authClient.login({
-                        identityProvider: process.env.DFX_NETWORK === "ic"
-                            ? "https://identity.ic0.app/#authorize"
-                            : "http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943/",
-                        onError: reject,
-                        onSuccess: async () => resolve(await clientInfo(authClient)),
-                    });
-                }
-            } catch (error) {
-                reject(error);
-            }
-        });
-    };
+  const handleIIlogin = async () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+          if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
+              resolve(clientInfo(authClient));
+          } else {
+              await authClient.login({
+                  identityProvider :process.env.DFX_NETWORK === "ic"
+                  ? "https://identity.ic0.app/#authorize"
+                  : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943/`,
+                  onError: (error) => reject((error)),
+                  onSuccess: () => resolve(clientInfo(authClient)),
+              });
+          }
+      } catch (error) {
+          reject(error);
+      }
+  });
+  };
 
-    const plugLogin = async () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                if (!window.ic?.plug) {
-                    return reject(new Error("Plug not installed"));
-                }
+  const handlePlugLogin = async () => {
+    if (!window.ic?.plug) throw new Error("Plug not installed");
 
-                const whiteList = [canID, EXTCanID];
-                const isAuthenticated = await window.ic.plug.isConnected();
+    const whitelist = [canID, EXTCanID];
+    const host = process.env.DFX_NETWORK === "ic" ? "https://mainnet.dfinity.network" : "http://127.0.0.1:4943";
+    console.log("Host : ", host)
+    const isConnected = await window.ic.plug.requestConnect({ whitelist,host });
+    console.log("isconnected : ", isConnected)
 
-                if (isAuthenticated && !window.ic.plug.agent) {
-                    await window.ic.plug.createAgent({ whiteList });
-                }
+    if (isConnected) {
+      const principal = await window.ic.plug.agent.getPrincipal();
+      const identity = window.ic.plug.agent;
 
-                const hasAllowed = await window.ic.plug.requestConnect({ whiteList });
+      setIsAuthenticated(prev => ({ ...prev, plug: true }));
+      setIdentity(identity);
+      setPrincipal(principal);
 
-                if (!hasAllowed) {
-                    return reject(new Error("Connection refused"));
-                }
+      const userActor = await window.ic.plug.createActor({
+        canisterId: canID,
+        interfaceFactory: idlFactory
+      });
+      const EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity } });
+      setActors({ userActor, EXTActor });
+      return userActor
+    } else {
+      throw new Error("Plug connection refused");
+    }
+  };
 
-                const principal = await window.ic.plug.agent.getPrincipal();
-                const identity = window.ic.plug.agent;
+  const logout = async () => {
+    await authClient.logout();
+    setIsAuthenticated({ ii: false, plug: false });
+    setIdentity(null);
+    setPrincipal(null);
+    setActors(null);
+  };
 
-                if (isAuthenticated && identity && !principal.isAnonymous()) {
-                    const userActor = await window.ic.plug.createActor({
-                        canisterId: canID,
-                        interfaceFactory: createNFTActor,
-                    });
-                    const EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity } });
-
-                    setActors({ userActor, EXTActor });
-                    setAuthClient(identity);
-                    setIsAuthenticated(isAuthenticated);
-                    setIdentity(identity);
-                    setPrincipal(principal);
-                    setIsPlug(true);
-
-                    resolve(userActor);
-                }
-            } catch (error) {
-                reject(error);
-            }
-        });
-    };
-
-    const login = async (method) => {
-        if (method === 'plug') {
-            return plugLogin();
-        } else {
-            return iiLogin();
-        }
-    };
-
-    const logout = async () => {
-        if (isPlug) {
-            if (window.ic?.plug) {
-                await window.ic.plug.disconnect();
-                console.log("Plug disconnected");
-            }
-        } else {
-            await authClient?.logout();
-            console.log("AuthClient logged out");
-        }
-        setIsAuthenticated(false);
-        setIdentity(null);
-        setPrincipal(null);
-        setActors(null);
-        setAuthClient(null);
-        setIsPlug(false);
-    };
-
-    return { login, logout, authClient, isAuthenticated, identity, principal, canID, actors };
+  return {
+    login: async (method) => {
+      if (method === "ii") {
+        return handleIIlogin();
+      } else if (method === "plug") {
+        return handlePlugLogin();
+      }
+    },
+    logout,
+    isAuthenticated,
+    identity,
+    principal,
+    actors,
+  };
 };
 
 export const AuthProvider = ({ children }) => {
-    const auth = useAuthClient();
+  const auth = useAuthClient();
 
-    return (
-        <AuthContext.Provider value={auth}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={auth}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);
