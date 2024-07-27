@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "./Worlds.css";
+import IMGComp from '../IMGComp';
 
 const MyWorlds = () => {
   const [currentWorld, setCurrent] = useState(0);
@@ -19,7 +20,9 @@ const MyWorlds = () => {
   }
 
   return (
-    <div className='myWorlds-Cont' style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
+    <div className='myWorlds-Cont'>
+     < IMGComp src='Assets/BackgroundIMG.png' hashVal="LcEzJw9Gsqt5.AIVs.agD+xaRjWC" className='myWorld-bg' height='' width='' />
+
       <h1 className='heading-staking'> Staking </h1>
       <div className='carousel-btn'>
         <FaChevronLeft className='favIcon' size={25} onClick={prevWorld} />
@@ -32,7 +35,8 @@ const MyWorlds = () => {
           <div className='flexWorlds' style={{ transform: `translateX(calc(-${currentWorld} * (380px ) )` }}>
             {worldsIMG.map((data, ind) => (
               <div className='worlds' key={ind} style={ind > 0 ? { marginLeft: '90px' } : {}}>
-                <img src={`Assets/myWorlds/${data}`} alt={data} />
+                < IMGComp src={`Assets/myWorlds/${data}`} alt={data} hashVal="LRG]2NENM{WB_NogRiWB.9WBxaj?" className='worlds' height='' width='' />
+                
               </div>
             ))}
           </div>

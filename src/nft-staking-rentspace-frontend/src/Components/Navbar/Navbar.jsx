@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addUserData } from '../../utils/Redux-Config/UserSlice';
 import plugWalletLogo from "../../../public/Assets/plug-wallet.png";
 import ICPlogo from "../../../public/Assets/icp.png";
+import IMGComp from '../IMGComp';
 
 const PointerBox = ({ handleClick }) => {
   return (
@@ -70,7 +71,7 @@ const Navbar = () => {
     <div className='navbar-mainCont'>
       <div className='navbar-cont'>
         <div className='Logo-cont' onClick={() => navigate('/')}>
-          <img className='logo' src='Assets/rentSpaceLogo.png' />
+        < IMGComp src='Assets/rentSpaceLogo.png' hashVal="L5GvL=?G00xu^jxaWUWB00xt~qa}" className='logo' height='' width='' />
         </div>
         <ul className='navItems-cont'>
           <li onClick={() => navigate('')}>Leaderboard</li>

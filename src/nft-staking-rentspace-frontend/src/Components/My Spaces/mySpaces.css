@@ -146,11 +146,11 @@
     @apply flex flex-wrap justify-center gap-8 my-16;
   }
   
+  .villasCard-cont{
+    @apply rounded-2xl
+  }
   .villas-card {
-    @apply w-36 h-36 rounded-2xl;
+    @apply w-36 h-36 rounded-xl;
   }
   
-  .villas-card > img {
-    @apply rounded-xl;
-  }
   
