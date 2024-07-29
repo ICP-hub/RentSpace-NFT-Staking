@@ -14,7 +14,7 @@ const FAQ_Question = ({Question, Answer}) => {
            <FiMinus className='fi_Icon' size={30} onClick={()=>setClicked(false)}/>
            }
         </div>
-        { isClicked && <p className='FAQ-answer'> {Answer} </p> }
+        <p className={`FAQ-answer ${isClicked ? 'visible' : ''}`}>{Answer}</p>
     </div>
   )
 }

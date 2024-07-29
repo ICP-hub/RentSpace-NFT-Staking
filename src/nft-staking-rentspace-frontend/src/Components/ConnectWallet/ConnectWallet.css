@@ -51,6 +51,12 @@
   @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer
 }
 
+.btn2:hover{
+  background: black;
+  @apply transition-all ease-in-out duration-500;
+}
+
+
 .btn2 {
   @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2 text-center absolute cursor-pointer min-w-[50%]
 }

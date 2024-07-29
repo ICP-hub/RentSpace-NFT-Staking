@@ -55,7 +55,7 @@
     @apply bg-[#FFFFFF] text-4xl text-center font-medium rounded-b-xl pb-6 pl-10 border-b-2 border-x-2
 }
 
-.stakeInfo-mainCont > button{
+.stakeInfo-mainCont  button{
     
     @apply p-4  w-56  text-2xl rounded-full font-medium  shadow-lg text-white
 }

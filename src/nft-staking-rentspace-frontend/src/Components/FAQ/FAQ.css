@@ -1,29 +1,35 @@
 /* FAQ component styling */
 
 .FAQ-mainCont{
- @apply  mt-28 bg-gradient-to-b from-[#FFFFFF] to-[#E0E0E0] h-screen overflow-y-auto
-}
-
-.FAQ-heading{
-    @apply text-center text-4xl font-medium
-}
-
-.FAQs-cont{
-    @apply mx-[24%] mt-8
-}
-
-/* FAQ_Question component styling */
-.line{
-@apply border border-[#373737]
-}
-
-.Question-cont{
-    @apply flex justify-between mx-8 text-xl font-medium py-4 transition-all duration-300
-}
-.fi_Icon{
-    @apply  cursor-pointer
-}
-
-.FAQ-answer{
-    @apply mx-[10%] pb-4
-}
+    @apply  mt-28 bg-gradient-to-b from-[#FFFFFF] to-[#E0E0E0] h-screen overflow-y-auto
+   }
+   
+   .FAQ-heading{
+       @apply text-center text-4xl font-medium
+   }
+   
+   .FAQs-cont{
+       @apply mx-[24%] mt-8
+   }
+   
+   /* FAQ_Question component styling */
+   
+   .line{
+   @apply border border-[#373737]
+   }
+   
+   .Question-cont{
+       @apply flex justify-between mx-8 text-xl font-medium py-4 
+   }
+   .fi_Icon{
+       @apply  cursor-pointer
+   }
+   
+   .FAQ-answer{
+       @apply mx-[10%] pb-4 max-h-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out
+   }
+   
+   /* FAQ-answer visible state */
+   .FAQ-answer.visible {
+    @apply  max-h-[1000px] opacity-100 overflow-hidden transition-all duration-300 ease-in;
+   }
