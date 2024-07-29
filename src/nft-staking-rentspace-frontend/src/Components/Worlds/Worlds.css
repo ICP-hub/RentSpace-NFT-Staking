@@ -1,11 +1,14 @@
 /* MyWorld component styling*/
 
 .myWorlds-Cont {
-  @apply pt-8 overflow-hidden pb-16 w-screen bg-cover bg-no-repeat bg-center;
+  @apply overflow-hidden w-screen bg-cover h-full
+}
+.myWorld-bg{
+  @apply absolute -z-10 w-screen h-full bg-cover bg-no-repeat bg-center; 
 }
 
 .myWorlds-Cont > .heading-staking {
-  @apply text-[38px] flex justify-center mt-20 mb-10 text-white font-medium;
+  @apply text-[38px] flex justify-center mt-28 mb-10 text-white font-medium;
 }
 
 .myWorlds-wrapper {
@@ -22,11 +25,11 @@
 }
 
 .worlds {
-  @apply  w-72 flex justify-center mx-2;
+  @apply  w-72 h-72 flex justify-center mx-2;
 }
 
-.worlds img {
-  @apply w-[380px];
+.worlds > img{
+  @apply w-[380px] 
   
 }
 
@@ -44,7 +47,7 @@
 }
 
 .explore-btn {
-  @apply flex mb-16 justify-center transition-all duration-100 ease-in-out;
+  @apply flex mb-32 justify-center transition-all duration-100 ease-in-out;
 }
 
 .explore-btn > button {
@@ -64,6 +67,7 @@
 .right-blur {
   @apply right-0;
 }
+
 
 
 

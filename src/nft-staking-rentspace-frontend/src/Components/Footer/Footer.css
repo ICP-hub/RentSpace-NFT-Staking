@@ -1,5 +1,5 @@
 .Footer-mainCont{
-    @apply bg-[#2A2A2A] text-white flex items-center p-10
+    @apply bg-[#2A2A2A] text-white flex items-center p-10 
 }
 
 .Footer-mainCont h1{
@@ -9,6 +9,6 @@
     @apply flex w-full justify-center
 }
 
-.logos img {
-    @apply  w-10
+.logos .logo {
+    @apply  w-10 h-10
 }

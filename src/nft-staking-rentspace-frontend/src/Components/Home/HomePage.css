@@ -5,6 +5,12 @@
   @apply w-screen bg-cover h-screen
 }
 
+.Hero-MainCont  .heroImg{
+  @apply absolute -z-10 w-screen h-screen;
+  
+
+}
+
 .Hero-innerCont {
   @apply flex justify-center items-center pt-[14%] text-white;
 }
@@ -81,15 +87,15 @@
   @apply flex justify-between flex-wrap gap-4;
 }
 
-.worldsImg img {
-  @apply max-h-[200px] 2xl:max-h-[268px] max-w-[200px] 2xl:max-w-[268px] object-contain;
+.worldsImg .world {
+  @apply h-[200px] 2xl:h-[268px] w-[200px] 2xl:w-[268px] object-contain;
 }
 
 .villasImg {
   @apply flex justify-between flex-wrap gap-4 mx-8;
 }
 
-.villasImg img {
+.villasImg .villa {
   @apply h-[120px] 2xl:h-[150px]  w-[120px]  2xl:w-[150px] object-contain;
 }
 

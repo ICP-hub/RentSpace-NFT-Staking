@@ -1,4 +1,5 @@
 import React from 'react';
+import IMGComp from '../IMGComp';
 
 const RentspaceWorlds = () => {
   const worldsImg = ['minimilistic.png', 'modernistic.png', 'futuristic.png', 'moon.png', 'mars.png'];
@@ -14,7 +15,7 @@ const RentspaceWorlds = () => {
         <h1 className='Heading'>RentSpace Worlds</h1>
         <div className='RentSpaceWorlds'>
           <div className='worldsImg'>
-            {worldsImg.map((img, ind) => <img key={ind} src={`Assets/Worlds&Villas/${img}`} alt={`World ${ind}`} />)}
+          {worldsImg.map((img, ind) => < IMGComp src={`Assets/Worlds&Villas/${img}`} hashVal="L6A-3E%w0001%yxuICM{00IE%e_K" className='world' height='' width='' /> )}
           </div>
 
           <div className="timeline-cont">
@@ -45,7 +46,7 @@ const RentspaceWorlds = () => {
           </div>
 
           <div className='villasImg'>
-            {VillasImg.map((img, ind) => <img key={ind} src={`Assets/Worlds&Villas/${img}`} alt={`Villa ${ind}`} />)}
+          {VillasImg.map((img, ind) => < IMGComp src={`Assets/Worlds&Villas/${img}`} hashVal="L6B|QlEA00v|_4xu9FRj00$w~Ckr" className='villa' height='' width='' /> )}
           </div>
         </div>
       </div>

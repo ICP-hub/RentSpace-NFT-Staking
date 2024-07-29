@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NFTsData } from '../../Constants/useNFTsData';
+import IMGComp from '../IMGComp';
 
 const YourVillas = () => {
   const { NFTs } = NFTsData();
@@ -68,14 +69,14 @@ const YourVillas = () => {
         {filteredNFTs.map((data, ind) => (
           <div
             key={ind}
-            className='villas-card'
+            className='villasCard-cont'
             onClick={() => setSelectedVilla(data.id)}
             style={{
               border: data.id === selectedVilla ? '5px solid #0284E2' : 'none',
               cursor: 'pointer'
             }}
           >
-            <img src={data.metadata.url} alt={`Villa ${ind}`} />
+            < IMGComp src={data.metadata.url} hashVal="LRG]2NENM{WB_NogRiWB.9WBxaj?" alt={`Villa ${ind}`} className='villas-card' height='' width='' />
           </div>
         ))}
       </section>
