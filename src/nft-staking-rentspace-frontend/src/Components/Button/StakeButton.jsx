@@ -9,7 +9,7 @@ import { Oval } from 'react-loader-spinner';
 
 const StakeButton = ({ id }) => {
   const [showDialog, setShowDialog] = useState(false);
-  const [dialogInfo, setDialogInfo] = useState({ status: "", message: "", isExecuting:false });
+  const [dialogInfo, setDialogInfo] = useState({ status: "", message: "", isExecuting: false });
   const { actors } = useAuth()
   const dispatch = useDispatch()
   const importedNFTs = useSelector((state) => state.Nfts.importedNFTs);
@@ -25,7 +25,7 @@ const StakeButton = ({ id }) => {
 
   const handleStaking = async () => {
     try {
-      setDialogInfo((prev)=>({...prev, isExecuting:true}))
+      setDialogInfo((prev) => ({ ...prev, isExecuting: true }))
       const tokenIdentifier = tokenIndexToTokenIdentifier(id)
       console.log("Token Identifier : ", tokenIdentifier)
 
@@ -46,10 +46,10 @@ const StakeButton = ({ id }) => {
         const stakedNFT = importedNFTs.filter(nft => nft.id === id);
         dispatch(appendStakedNFTs(stakedNFT))
         dispatch(modifyImportedNFTs(id))
-        setDialogInfo({ status: 'success', message: 'NFTs staked successfully', isExecuting:false });
+        setDialogInfo({ status: 'success', message: 'NFTs staked successfully', isExecuting: false });
         displayDialog();
       } else {
-        setDialogInfo({ status: 'error', message: 'Error staking NFTs', isExecuting:false });
+        setDialogInfo({ status: 'error', message: 'Error staking NFTs', isExecuting: false });
         displayDialog();
       }
     } catch (err) {
@@ -58,10 +58,11 @@ const StakeButton = ({ id }) => {
   }
   return (
     <>
-      <button className='btn' onClick={handleStaking}>
-        {dialogInfo.isExecuting===false?<p>Stake</p> : 
-        <Oval visible={dialogInfo.isExecuting} color='#fff'strokeWidth={3} width={25} height={25} ariaLabel="oval-loading" wrapperStyle={{}}/>
+      <button className='btn' onClick={handleStaking} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {dialogInfo.isExecuting === false ? <p>Stake</p> :
+          <Oval visible={dialogInfo.isExecuting} color='#fff' strokeWidth={3} width={25} height={25} ariaLabel="oval-loading" wrapperStyle={{}} />
         }</button>
+
       {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} />}
     </>
   )
