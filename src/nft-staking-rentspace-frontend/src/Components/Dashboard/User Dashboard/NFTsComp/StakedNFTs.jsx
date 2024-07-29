@@ -8,11 +8,12 @@ import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStakedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
+import { Hourglass } from 'react-loader-spinner';
 
 const StakedNFTs = () => {
+  const { actors, principal } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { actors, principal } = useAuth();
   const dispatch = useDispatch();
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
   const [cardElements, setCardElements] = useState(<></>);
@@ -43,7 +44,7 @@ const StakedNFTs = () => {
     }
   }, [principal, actors]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const renderCardElements = () => {
       const elements = stakedNFTs.map((NFT, ind) => (
         <div key={ind}>
@@ -64,7 +65,7 @@ const StakedNFTs = () => {
     }
 
     renderCardElements()
-  },[stakedNFTs])
+  }, [stakedNFTs])
 
   console.log("Elements : ", cardElements);
 
@@ -75,7 +76,7 @@ const StakedNFTs = () => {
   return (
     <>
       {isLoading ? (
-        <FallbackUI_NFTs purpose='Loading' /> // Render this during loading
+        <Hourglass visible={isLoading} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} /> // Render this during loading
       ) : error ? (
         <FallbackUI purpose='Error' message={error} /> // Render this on error
       ) : stakedNFTs.length > 0 ? (

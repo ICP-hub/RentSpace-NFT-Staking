@@ -8,6 +8,7 @@ import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
 import { addImportedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
 import Card from '../../../Card/Card';
 import './NFTsComp.css';
+import { Hourglass } from 'react-loader-spinner';
 
 const ImportedNFTs = () => {
   const [isLoading, setIsLoading] = useState(true); // Loading state
@@ -44,7 +45,7 @@ const ImportedNFTs = () => {
   return (
     <>
       {isLoading ? (
-        <FallbackUI_NFTs /> // Render this during loading
+        <Hourglass visible={isLoading} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} />// Render this during loading
       ) : importedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Imported NFT</h1>

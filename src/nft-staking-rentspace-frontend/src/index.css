@@ -11,13 +11,15 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 
 
-html{
+html {
     @apply relative overflow-x-hidden font-[Poppins]
 }
 
@@ -25,11 +27,17 @@ html{
 
 
 
- button {
-    @apply  bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] transition-all duration-1000
- }
+button {
+    @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] transition-all duration-1000
+}
 
 button:hover {
-    background: black ;
+    background: black;
     @apply transition-all ease-in-out duration-500;
- }
+}
+
+/* //////////////////// */
+/* Loader Style in index.css temporarily */
+.loader {
+    @apply absolute left-1/2 top-1/4
+}

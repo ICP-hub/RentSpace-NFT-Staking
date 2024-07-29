@@ -5,61 +5,61 @@
 
 /* StakedNFTs component*/
 
-.nft-Maincont{
-   @apply   bg-white rounded-2xl w-full px-14 py-6
+.nft-Maincont {
+   @apply bg-white rounded-2xl w-full px-14 py-6
 }
 
-.nft-Maincont > h1{
+.nft-Maincont>h1 {
    @apply text-2xl font-medium mb-5
 }
-.nftOuter-Cont{
-   @apply w-full flex flex-wrap  gap-10
+
+.nftOuter-Cont {
+   @apply w-full flex flex-wrap gap-10
 }
 
-.nftOuter-Cont > div{
-    
-}
-.nftCont{
-  @apply w-72 mx-10 border shadow-lg border-[#2F60DC] bg-white my-6 rounded-2xl cursor-pointer
+.nftOuter-Cont>div {}
+
+.nftCont {
+   @apply w-72 mx-10 border shadow-lg border-[#2F60DC] bg-white my-6 rounded-2xl cursor-pointer
 }
 
 
-.nftLogo-cont{
-   @apply flex w-full  justify-between
-}
-.nftLogo-cont > img{
-  @apply w-10 h-10 mt-2 mx-2
-}
-.nftImg-cont{
-   @apply flex  justify-center -mt-7
+.nftLogo-cont {
+   @apply flex w-full justify-between
 }
 
-.nftImg-cont > img{
-@apply w-full bg-cover rounded-lg
+.nftLogo-cont>img {
+   @apply w-10 h-10 mt-2 mx-2
 }
 
-.VillasData-cont{
+.nftImg-cont {
+   @apply flex justify-center -mt-7
+}
+
+.nftImg-cont>img {
+   @apply w-full bg-cover rounded-lg
+}
+
+.VillasData-cont {
    @apply mx-4
 }
 
-.VillasData-cont h1{
+.VillasData-cont h1 {
    @apply mt-5 text-2xl text-black font-medium
 }
-.VillasData-cont h2{
-   @apply  text-sm text-black my-1
 
+.VillasData-cont h2 {
+   @apply text-sm text-black my-1
 }
+
 .btnCont {
-  @apply my-4 mb-6;
+   @apply my-4 mb-6;
 }
 
-.btnCont > button {
-  @apply bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-6 rounded-full w-full shadow-lg border font-medium border-white transition-all ease-in duration-500;
+.btnCont>button {
+   @apply bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-6 rounded-full w-full shadow-lg border font-medium border-white transition-all ease-in duration-500;
 }
 
-.btnCont > button:hover {
-  background: black;
+.btnCont>button:hover {
+   background: black;
 }
-
-
-

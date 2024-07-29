@@ -33,40 +33,40 @@ export const useAuthClient = () => {
     console.log(principal.toText())
 
     setAuthClient(client);
-    setIsAuthenticated(isAuthenticated);
+    setIsAuthenticated(prev => ({ ...prev, ii: true }));
     setIdentity(identity);
     setPrincipal(principal);
 
     if (isAuthenticated && identity && principal && principal.isAnonymous() === false) {
-        let userActor = createActor(canID, { agentOptions: { identity: identity } });
-        let EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity: identity } });
-        console.log(EXTActor)
-        setActors({
-            userActor:userActor,
-            EXTActor:EXTActor
-        })
-        return userActor
+      let userActor = createActor(canID, { agentOptions: { identity: identity } });
+      let EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity: identity } });
+      console.log(EXTActor)
+      setActors({
+        userActor: userActor,
+        EXTActor: EXTActor
+      })
+      return userActor
     }
-}
+  }
 
   const handleIIlogin = async () => {
     return new Promise(async (resolve, reject) => {
       try {
-          if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
-              resolve(clientInfo(authClient));
-          } else {
-              await authClient.login({
-                  identityProvider :process.env.DFX_NETWORK === "ic"
-                  ? "https://identity.ic0.app/#authorize"
-                  : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943/`,
-                  onError: (error) => reject((error)),
-                  onSuccess: () => resolve(clientInfo(authClient)),
-              });
-          }
+        if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
+          resolve(clientInfo(authClient));
+        } else {
+          await authClient.login({
+            identityProvider: process.env.DFX_NETWORK === "ic"
+              ? "https://identity.ic0.app/#authorize"
+              : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943/`,
+            onError: (error) => reject((error)),
+            onSuccess: () => resolve(clientInfo(authClient)),
+          });
+        }
       } catch (error) {
-          reject(error);
+        reject(error);
       }
-  });
+    });
   };
 
   const handlePlugLogin = async () => {
@@ -75,7 +75,7 @@ export const useAuthClient = () => {
     const whitelist = [canID, EXTCanID];
     const host = process.env.DFX_NETWORK === "ic" ? "https://mainnet.dfinity.network" : "http://127.0.0.1:4943";
     console.log("Host : ", host)
-    const isConnected = await window.ic.plug.requestConnect({ whitelist,host });
+    const isConnected = await window.ic.plug.requestConnect({ whitelist, host });
     console.log("isconnected : ", isConnected)
 
     if (isConnected) {

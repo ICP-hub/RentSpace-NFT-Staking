@@ -1,19 +1,21 @@
-import React, {useState, useMemo, useEffect} from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./Worlds.css";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
-import {nft_staking_rentspace_backend as actors} from "../../../../declarations/nft-staking-rentspace-backend/index.js";
+import { nft_staking_rentspace_backend as actors } from "../../../../declarations/nft-staking-rentspace-backend/index.js";
 import { NFTsData } from "../../Constants/useNFTsData";
 import Card from "../Card/Card";
-import {formatMetadata} from "../../utils/utils";
+import { formatMetadata } from "../../utils/utils";
 import { FaAngleLeft } from "react-icons/fa6";
+import { Hourglass } from "react-loader-spinner";
 
 const World = () => {
   const { world } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
   console.log(actors)
 
-  const [NFTs,setNFTs] = useState([])
+  const [NFTs, setNFTs] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     const getNFTs = async () => {
       let NFTs = await actors.getAllStaked();
       // Map over the array and use function formatMetadat on metadata field of each element
@@ -23,12 +25,13 @@ const World = () => {
       });
       console.log("NFTs : ", NFTs);
       setNFTs(NFTs);
+      setIsLoading(false)
     };
     getNFTs();
-  },[actors])
+  }, [actors])
 
   const worldName = world.split("-").join(" ");
-  const filteredWorlds = useMemo(()=>{
+  const filteredWorlds = useMemo(() => {
     return NFTs.filter((data) =>
       data.metadata.name
         .toLocaleLowerCase()
@@ -37,12 +40,12 @@ const World = () => {
   }, [NFTs, worldName])
   const navigate = useNavigate();
   return (
-    <div className="min-world-MainCont"  style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
+    <div className="min-world-MainCont" style={{ backgroundImage: "url('Assets/BackgroundIMG.png')" }}>
       <div className="min-world-InnerCont">
         <div className="worlds-navCont">
           <div className="world-innerCont">
             <div className="staking">
-              <FaAngleLeft size={18}  className="backIcon" onClick={() => navigate('/myWorlds')} />
+              <FaAngleLeft size={18} className="backIcon" onClick={() => navigate('/myWorlds')} />
               <div className="staking-header">Staking</div>
             </div>
 
@@ -72,17 +75,15 @@ const World = () => {
           <div className="cards-box">
             <h2 className="world-name">{world.split("-").join(" ")}</h2>
             <div className="cards-grid">
-              {filteredWorlds.length > 0 ? (
-                filteredWorlds.map((NFT) => (
-                  <Card
-                    name={NFT.metadata.name}
-                    imgURL={NFT.metadata.thumb}
-                    desc={NFT.metadata.description}
-                  />
-                ))
-              ) : (
-                <p>Sorry, No data found</p>
-              )}
+              {isLoading && <Hourglass visible={isLoading} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} />}
+              {filteredWorlds.length > 0 ? filteredWorlds.map((NFT) => (
+                <Card
+                  name={NFT.metadata.name}
+                  imgURL={NFT.metadata.thumb}
+                  desc={NFT.metadata.description}
+                />
+              )) : <p>{!isLoading ? 'Sorry, no data found' : ''}</p>
+              }
             </div>
           </div>
         </div>
