@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { NFTsData } from '../../Constants/useNFTsData';
 import IMGComp from '../IMGComp';
 
@@ -7,17 +7,10 @@ const YourVillas = () => {
   const [selectedVilla, setSelectedVilla] = useState(null);
   const [filteredNFTs, setFilteredNFTs] = useState([]);
 
+
   useEffect(() => {
     setFilteredNFTs(NFTs);
   }, [NFTs]);
-
-  const handleStake = () => {
-    alert(`Staking ${selectedVilla}`);
-  };
-
-  const handleUnstake = () => {
-    alert(`Unstaking ${selectedVilla}`);
-  };
 
   const handleFilterNFTs = (rarity) => {
     console.log(rarity)
@@ -29,8 +22,26 @@ const YourVillas = () => {
     }
   };
 
+  // Memoize stake and unstake handlers
+  const handleStake = useCallback(() => {
+    if (selectedVilla) {
+      alert(`Staking ${selectedVilla}`);
+    }
+  }, [selectedVilla]);
+
+  const handleUnstake = useCallback(() => {
+    if (selectedVilla) {
+      alert(`Unstaking ${selectedVilla}`);
+    }
+  }, [selectedVilla]);
+
+  // Memoize the select villa handler
+  const handleSelectVilla = useCallback((id) => {
+    setSelectedVilla(prev => prev === id ? null : id);
+  }, []);
+
   return (
-    <div className='Villas-cont'>
+    <div className='Villas-cont' id='Villas'>
       <header className='header'>
         <div className='header-left'>
           <h1>Your Villas</h1>
@@ -48,6 +59,7 @@ const YourVillas = () => {
             </select>
           </div>
         </div>
+        {console.log(selectedVilla)}
         <div className='header-right'>
           <button
             onClick={handleStake}
@@ -70,13 +82,20 @@ const YourVillas = () => {
           <div
             key={ind}
             className='villasCard-cont'
-            onClick={() => setSelectedVilla(data.id)}
+            onClick={() => handleSelectVilla(data.id)}
             style={{
               border: data.id === selectedVilla ? '5px solid #0284E2' : 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
           >
-            < IMGComp src={data.metadata.url} hashVal="LRG]2NENM{WB_NogRiWB.9WBxaj?" alt={`Villa ${ind}`} className='villas-card' height='' width='' />
+            <IMGComp
+              src={data.metadata.url}
+              hashVal='LRG]2NENM{WB_NogRiWB.9WBxaj?'
+              alt={`Villa ${ind}`}
+              className='villas-card'
+              height=''
+              width=''
+            />
           </div>
         ))}
       </section>

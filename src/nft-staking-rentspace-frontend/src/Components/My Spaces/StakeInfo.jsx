@@ -1,9 +1,10 @@
 import React from 'react'
+import { HashLink as Link } from 'react-router-hash-link'
 
 const StakeInfo = () => {
   
   return (
-    <div  className='stakeInfo-mainCont'>
+    <div  className='stakeInfo-mainCont '>
        <h1 className='stakeInfo-heading'>Stake your Villas for Rewards</h1> 
        <div className='stakeInfo-cont'>
         <div className='   stakeInfo-div1'> 
@@ -32,7 +33,7 @@ const StakeInfo = () => {
         </div>
        </div> 
 
-       <button> Go stake </button>
+       <Link to={'#Villas'}> <button> Go stake </button> </Link> 
     </div>
   )
 }

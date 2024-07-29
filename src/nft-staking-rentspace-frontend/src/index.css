@@ -20,7 +20,8 @@
 
 
 html {
-    @apply relative overflow-x-hidden font-[Poppins]
+    scroll-behavior: smooth;
+    @apply relative overflow-x-hidden font-[Poppins];
 }
 
 

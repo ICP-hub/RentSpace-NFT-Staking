@@ -436,7 +436,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "18",
+        id: "19",
         metadata: {
           name: 'Minimalistic Villas#151',
           mimeType: 'image',
@@ -461,7 +461,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "18",
+        id: "20",
         metadata: {
           name: 'Minimalistic Villas#150',
           mimeType: 'image',
@@ -486,7 +486,7 @@ const [NFTs,setNFTs] =useState( [
         stakedAt: null
     },
     {
-        id: "11",
+        id: "21",
         metadata: {
           name: 'Modernistic Villas#150',
           mimeType: 'image',
