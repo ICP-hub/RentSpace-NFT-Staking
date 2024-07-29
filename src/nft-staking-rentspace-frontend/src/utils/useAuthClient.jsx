@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthClient } from '@dfinity/auth-client';
 import { idlFactory } from '../../../declarations/nft-staking-rentspace-backend';
+import { idlFactory as EXTIdlFactory } from '../../../declarations/EXT';
 import { createActor } from '../../../declarations/nft-staking-rentspace-backend';
 import { createActor as createEXTActor } from '../../../declarations/EXT';
 import { Principal } from '@dfinity/principal';
@@ -11,11 +12,12 @@ const canID = process.env.DFX_NETWORK === "ic" ? "2cwjm-cyaaa-aaaap-ahi3q-cai" :
 const EXTCanID = process.env.DFX_NETWORK === "ic" ? "m2nno-7aaaa-aaaah-adzba-cai" : "bkyz2-fmaaa-aaaaa-qaaaq-cai";
 
 export const useAuthClient = () => {
+
   const [authClient, setAuthClient] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState({ ii: false, plug: false });
   const [identity, setIdentity] = useState(null);
   const [principal, setPrincipal] = useState(null);
-  const [actors, setActors] = useState(null);
+  const [actors, setActors] = useState({userActor:null, EXTActor:null});
 
   const initializeClient = async () => {
     const client = await AuthClient.create();
@@ -90,7 +92,10 @@ export const useAuthClient = () => {
         canisterId: canID,
         interfaceFactory: idlFactory
       });
-      const EXTActor = createEXTActor(EXTCanID, { agentOptions: { identity } });
+      const EXTActor = await window.ic.plug.createActor({
+        canisterId: EXTCanID,
+        interfaceFactory: EXTIdlFactory
+      })
       setActors({ userActor, EXTActor });
       return userActor
     } else {
@@ -99,6 +104,7 @@ export const useAuthClient = () => {
   };
 
   const logout = async () => {
+    console.log("Logout...")
     await authClient.logout();
     setIsAuthenticated({ ii: false, plug: false });
     setIdentity(null);
