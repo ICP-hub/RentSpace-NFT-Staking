@@ -64,13 +64,13 @@ export const LoginBox = ({ setShowLoginBox }) => {
 
 const ConnectWallet = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   return (
     <section className='connectBtn-mainCont'>
       <div className='connectBtn-cont'>
         <div className='btn1'>{(isAuthenticated.ii || isAuthenticated.plug) ? 'Connected' : ''}</div>
         <div className='btn2' style={(isAuthenticated.ii || isAuthenticated.plug) ? { right: 0 } : {}}>
-          {(isAuthenticated.ii || isAuthenticated.plug) ? <span>Logout</span> : <span onClick={() => setShowLoginBox(true)}>Connect Wallet</span>}
+          {(isAuthenticated.ii || isAuthenticated.plug) ? <span onClick={logout}>Logout</span> : <span onClick={() => setShowLoginBox(true)}>Connect Wallet</span>}
         </div>
       </div>
       {showLoginBox && <LoginBox setShowLoginBox={setShowLoginBox} />}
