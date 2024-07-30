@@ -9,40 +9,40 @@ import { updatePoints } from "../../utils/Redux-Config/UserSlice";
 
 
 
-export const Info = ({message})=> {
+export const Info = ({ message }) => {
   return (
     <div>
-    <div className="info-box">
-      <IoInformationCircleOutline />
-      <p>{message}</p>
-    </div>
+      <div className="info-box">
+        <IoInformationCircleOutline />
+        <p>{message}</p>
+      </div>
     </div>
   )
 }
 
 const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
-  const {actors} = useAuth()
+  const { actors } = useAuth()
   const MIN_REQ_POINTS = 10;
   const [redeemAmount, setRedeemAmount] = useState(0);
   const dispatch = useDispatch()
 
-  const handleClick = async(e)=> {
+  const handleClick = async (e) => {
     e.preventDefault()
-    if(points < MIN_REQ_POINTS){
+    if (points < MIN_REQ_POINTS) {
       alert('Minimum 10 points required for redemption.')
       return
     }
-    try{
+    try {
       const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
-      if(transfer?.ok) {
+      if (transfer?.ok) {
         alert("Transfered Success!")
-        dispatch(updatePoints(parseInt(rewardPoints)-parseInt(redeemAmount)))
+        dispatch(updatePoints(parseInt(rewardPoints) - parseInt(redeemAmount)))
       }
       else {
         throw new Error(transfer?.err)
       }
     }
-    catch(e) {
+    catch (e) {
       alert(e);
     }
   }
@@ -67,7 +67,7 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   };
   return (
     <div className="rewards-modal">
-    <div className="redeem-closeBtn" onClick={()=> setIsModalOpen(!isModalOpen)}>X</div>
+      <div className="redeem-closeBtn" onClick={() => setIsModalOpen(!isModalOpen)}>X</div>
       <h3 className="redeem-header">Redeem Rewards!</h3>
       <div className="reward-points-Cont">
         <div className="reward-points">
@@ -89,7 +89,7 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
             value={redeemAmount}
             onChange={handleChange}
             className="widthfull amount-slider"
-            
+
           />
           <span className="redeem-amount">{redeemAmount}</span>
         </div>
@@ -105,17 +105,17 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
               {entries.map(([key, value]) => (
                 <tr className="widthfull" key={key.toString()}>
                   <td className="rarity-table-left">{key}</td>
-                  <td className="rarity-table-right">{value}</td>  
+                  <td className="rarity-table-right">{value}</td>
                 </tr>
               ))}
-                  <img
-                    src={coinAnimation}
-                    className="coin-animation"
-                    alt="coin-animation"
-                  />    
+              <img
+                src={coinAnimation}
+                className="coin-animation"
+                alt="coin-animation"
+              />
             </tbody>
           </table>
-          <Info message={"Minimum 10 Points required for Redemption"}/>
+          <Info message={"Minimum 10 Points required for Redemption"} />
         </div>
         <div>
         </div>

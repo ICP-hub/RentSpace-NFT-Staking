@@ -6,16 +6,19 @@
 .left-cont {
     @apply bg-white m-3 col-span-1 border rounded-2xl flex flex-col items-center;
 }
-.userInfo-cont{
+
+.userInfo-cont {
     @apply mx-10
 }
-.profile-cont{
+
+.profile-cont {
     @apply flex justify-center mt-16
-   }
-   
+}
+
 .profile-cont img {
-       @apply rounded-full h-32 w-32 
-}   
+    @apply rounded-full h-32 w-32
+}
+
 .userInfo {
     @apply my-6 text-center;
 }
@@ -23,42 +26,49 @@
 .userInfo h1 {
     @apply text-2xl font-medium;
 }
-.points-cont{
+
+.points-cont {
     @apply flex justify-between shadow-md bg-[#B7E0E3] text-[#014678] px-6 p-2 rounded-full mt-8 gap-2
 }
 
-.social-cont{
-   @apply flex  justify-between my-5
+.social-cont {
+    @apply flex justify-between my-5
 }
-.social-cont img{
+
+.social-cont img {
     @apply bg-[#0284E2] p-[10px] rounded-full w-10 shadow-md
- }
- 
-.NFTsCount-cont{
+}
+
+.NFTsCount-cont {
     @apply my-16
 }
-.NFTsCount-cont div{
-    @apply  flex justify-between font-medium my-5 
+
+.NFTsCount-cont div {
+    @apply flex justify-between font-medium my-5
 }
-.Nav-Nfts{
+
+.Nav-Nfts {
     @apply hover:bg-black hover:text-white transition-all ease-in-out duration-200 p-2 px-4 cursor-pointer
 }
-.NFTsCount-cont div h1{
-    @apply  text-xl text-center  p-1
+
+.NFTsCount-cont div h1 {
+    @apply text-xl text-center p-1
 }
-.NFT_Reward-cont{
-   @apply mt-28 mb-10
+
+.NFT_Reward-cont {
+    @apply mt-28 mb-10
 }
-.NFT_Reward-cont .btn{
-    @apply p-2 px-10 cursor-pointer bg-black text-white text-center my-6 rounded-full shadow-lg hover:bg-gradient-to-tr hover:from-[#01ABFE] transition-all duration-500 hover:via-[#0285E3] hover:to-[#3E9EE2] 
- }
+
+.NFT_Reward-cont .btn {
+    @apply p-2 px-10 cursor-pointer bg-black text-white text-center my-6 rounded-full shadow-lg hover:bg-gradient-to-tr hover:from-[#01ABFE] transition-all duration-500 hover:via-[#0285E3] hover:to-[#3E9EE2]
+}
 
 
 .right-cont {
     @apply m-3 ml-0 col-span-3
 }
 
-.right-cont > .nft-Maincont {
+.right-cont>.nft-Maincont {
     @apply h-full
 }
 
@@ -68,36 +78,42 @@
 /* ImportingNFTs component styling */
 
 .importNfts-mainCont {
-    @apply absolute w-[55%]   bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2  rounded-xl ;
-    
-  }
-  .importNfts-OuterCont {
-    @apply flex h-[500px] overflow-y-scroll 
-  }
-  .importNfts-InnerCont {
-    @apply flex  flex-wrap justify-center
-  }
-  .importNfts-InnerCont > .nft-cont{
-    @apply my-4 mx-5
-  }
- .header-cont{
-  @apply mt-7 mb-5 flex mx-10
- }
- .header-cont > div{
-    @apply flex w-full  justify-center
- }
- .header-cont  h1{
- @apply text-3xl font-semibold
-  }
-  
-.ImportBtn{
-    @apply flex justify-center mt-14 mb-10 
-}
-.ImportBtn > button {
-    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-8 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
- }
+    @apply absolute w-[55%] bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2 rounded-xl transition-opacity duration-500;
 
- .ImportBtn > button:hover {
+}
+
+.importNfts-OuterCont {
+    @apply flex h-[500px] overflow-y-scroll
+}
+
+.importNfts-InnerCont {
+    @apply flex flex-wrap justify-center
+}
+
+.importNfts-InnerCont>.nft-cont {
+    @apply my-4 mx-5
+}
+
+.header-cont {
+    @apply mt-7 mb-5 flex mx-10
+}
+
+.header-cont>div {
+    @apply flex w-full justify-center
+}
+
+.header-cont h1 {
+    @apply text-3xl font-semibold
+}
+
+.ImportBtn {
+    @apply flex justify-center mt-14 mb-10
+}
+
+.ImportBtn>button {
+    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-8 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
+}
+
+.ImportBtn>button:hover {
     background: black;
- }
- 
+}

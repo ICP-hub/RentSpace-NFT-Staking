@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { addUserData } from '../../utils/Redux-Config/UserSlice';
 import { useAuth } from '../../utils/useAuthClient';
 import './ConnectWallet.css'
+import { Oval } from 'react-loader-spinner';
 
-export const LoginBox = ({ setShowLoginBox }) => {
+export const LoginBox = ({ setShowLoginBox, setIsLoading }) => {
   const { login, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,10 +34,14 @@ export const LoginBox = ({ setShowLoginBox }) => {
   const handleClick = async (method) => {
     console.log("authenticated", isAuthenticated)
     if (isAuthenticated.ii || isAuthenticated.plug) {
+      setIsLoading(true);
       await logout();
+      setIsLoading(false);
       setShowLoginBox(false)
     } else {
+      setIsLoading(true);
       await connectWallet(method);
+      setIsLoading(false)
       setShowLoginBox(false);
     }
   };
@@ -64,16 +69,17 @@ export const LoginBox = ({ setShowLoginBox }) => {
 
 const ConnectWallet = () => {
   const [showLoginBox, setShowLoginBox] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   return (
     <section className='connectBtn-mainCont'>
       <div className='connectBtn-cont'>
         <div className='btn1'>{(isAuthenticated.ii || isAuthenticated.plug) ? 'Connected' : ''}</div>
         <div className='btn2' style={(isAuthenticated.ii || isAuthenticated.plug) ? { right: 0 } : {}}>
-          {(isAuthenticated.ii || isAuthenticated.plug) ? <span onClick={logout}>Logout</span> : <span onClick={() => setShowLoginBox(true)}>Connect Wallet</span>}
+          {(isAuthenticated.ii || isAuthenticated.plug) ? <span onClick={logout}>Logout</span> : <span onClick={() => setShowLoginBox(true)}>{isLoading ? <Oval height={20} /> : 'Connect Wallet'}</span>}
         </div>
       </div>
-      {showLoginBox && <LoginBox setShowLoginBox={setShowLoginBox} />}
+      {showLoginBox && <LoginBox setShowLoginBox={setShowLoginBox} setIsLoading={setIsLoading} />}
     </section>
   )
 }

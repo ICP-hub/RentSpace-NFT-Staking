@@ -7,26 +7,27 @@ import RedeemModal from '../../Modals/RedeemModal';
 import FallbackUI_404 from '../../FallbackUI/FallbackUI_404';
 import { useAuth } from '../../../utils/useAuthClient';
 import { addUserData } from '../../../utils/Redux-Config/UserSlice';
+import { motion } from 'framer-motion';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isImportModule, setImportModule] = useState(false);
-  const {isAuthenticated, actors} = useAuth();
+  const { isAuthenticated, actors } = useAuth();
   const dispatch = useDispatch()
-  const user= useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
 
   const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
 
   const handleImportModule = () => setImportModule(true);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchUser = async () => {
-      if(isAuthenticated && user === undefined) {
+      if (isAuthenticated && user === undefined) {
         const backendActor = actors.userActor;
         const userReq = await backendActor.getUser();
-        if(userReq.ok) {
+        if (userReq.ok) {
           dispatch(addUserData(userReq.ok))
         }
       }
