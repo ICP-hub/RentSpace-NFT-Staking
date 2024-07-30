@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NFTsData } from '../../Constants/useNFTsData';
 import IMGComp from '../IMGComp';
 
@@ -7,13 +7,11 @@ const YourVillas = () => {
   const [selectedVilla, setSelectedVilla] = useState(null);
   const [filteredNFTs, setFilteredNFTs] = useState([]);
 
-
   useEffect(() => {
     setFilteredNFTs(NFTs);
   }, [NFTs]);
 
   const handleFilterNFTs = (rarity) => {
-    console.log(rarity)
     if (rarity === '') {
       setFilteredNFTs(NFTs);
     } else {
@@ -22,7 +20,6 @@ const YourVillas = () => {
     }
   };
 
-  // Memoize stake and unstake handlers
   const handleStake = useCallback(() => {
     if (selectedVilla) {
       alert(`Staking ${selectedVilla}`);
@@ -35,10 +32,22 @@ const YourVillas = () => {
     }
   }, [selectedVilla]);
 
-  // Memoize the select villa handler
   const handleSelectVilla = useCallback((id) => {
     setSelectedVilla(prev => prev === id ? null : id);
   }, []);
+
+  const handleClickOutside = useCallback((event) => {
+    if (!event.target.closest('.villasCard-cont')) {
+      setSelectedVilla(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
   return (
     <div className='Villas-cont' id='Villas'>
@@ -59,7 +68,6 @@ const YourVillas = () => {
             </select>
           </div>
         </div>
-        {console.log(selectedVilla)}
         <div className='header-right'>
           <button
             onClick={handleStake}
@@ -82,7 +90,10 @@ const YourVillas = () => {
           <div
             key={ind}
             className='villasCard-cont'
-            onClick={() => handleSelectVilla(data.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectVilla(data.id);
+            }}
             style={{
               border: data.id === selectedVilla ? '5px solid #0284E2' : 'none',
               cursor: 'pointer',
