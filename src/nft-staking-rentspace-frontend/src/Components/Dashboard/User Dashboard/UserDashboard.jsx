@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './UserDashboard.css';
 import ImportingNFTs from './ImportingNFTs';
@@ -18,7 +18,7 @@ const UserDashboard = () => {
   const user = useSelector((state) => state.user);
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
 
-  const socialHandles = ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'];
+  const socialHandles = useMemo(() => ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'], []);
 
   const handleImportModule = () => setImportModule(true);
 
@@ -31,13 +31,19 @@ const UserDashboard = () => {
           dispatch(addUserData(userReq.ok))
         }
       }
-    }
-    fetchUser()
-  }, [actors, isAuthenticated, user])
+    };
+    fetchUser();
+  }, [actors, isAuthenticated, user, dispatch]);
+
+
+  const handleNavigate = (type, path) => {
+    setSelectedNFTType(type);
+    navigate(path);
+  };
 
   return (
     <>
-      {!user.name ? (
+      {!user?.name ? (
         <FallbackUI_404 />
       ) : (
         <div
@@ -51,7 +57,7 @@ const UserDashboard = () => {
           <div className='left-cont'>
             <div className='userInfo-cont'>
               <div className='profile-cont'>
-                <img className='profile-img' src={'Assets/profileImg.jpg'} alt='Profile' />
+                <img className='profile-img' src='Assets/profileImg.jpg' alt='Profile' />
               </div>
               <div className='userInfo'>
                 <h1>{user.name}</h1>
@@ -59,7 +65,7 @@ const UserDashboard = () => {
               </div>
               <div className='points-cont'>
                 <h1>Total Points </h1>
-                <h1>{user.rewardPoints.toString()}</h1>
+                <h1>{user.rewardPoints}</h1>
               </div>
               <div className='social-cont'>
                 {socialHandles.map((imgLink, ind) => (
@@ -67,28 +73,24 @@ const UserDashboard = () => {
                 ))}
               </div>
               <div className='NFTsCount-cont'>
-                <div>
-                  <h2
-                    className='Nav-Nfts'
-                    onClick={() => navigate('/Dashboard/importedNFTs')}
-                  >
-                    Imported NFTs
-                  </h2>
+                <div
+                  className={`Nav-Nfts ${selectedNFTType === 'imported' ? 'active' : ''}`}
+                  onClick={() => handleNavigate('imported', '/Dashboard')}
+                >
+                  <h2>Imported NFTs</h2>
                   <h1>{user.importedNFTs.length}</h1>
                 </div>
-                <div>
-                  <h2
-                    className='Nav-Nfts'
-                    onClick={() => navigate('/Dashboard')}
-                  >
-                    Staked NFTs
-                  </h2>
+                <div
+                  className={`Nav-Nfts ${selectedNFTType === 'staked' ? 'active' : ''}`}
+                  onClick={() => handleNavigate('staked', '/Dashboard/stakedNFTs')}
+                >
+                  <h2>Staked NFTs</h2>
                   <h1>{stakedNFTs.length}</h1>
                 </div>
               </div>
             </div>
             <div className='NFT_Reward-cont'>
-              <div className='btn' onClick={handleImportModule}>
+              <div className='btn' onClick={() => setIsImportModule(true)}>
                 Import NFT
               </div>
               <div className='btn' onClick={() => setIsModalOpen(true)}>
@@ -104,16 +106,19 @@ const UserDashboard = () => {
       )}
 
       {/* Importing NFTs Module */}
-      {isImportModule && (
-        <ImportingNFTs setImportModule={setImportModule} />
-      )}
+      {isImportModule && <ImportingNFTs setImportModule={setIsImportModule} />}
 
       {/* Redeem Rewards Modal */}
       {isModalOpen && (
-        <RedeemModal isModalOpen={true} setIsModalOpen={setIsModalOpen} userID={user.id} rewardPoints={user.rewardPoints} />
+        <RedeemModal
+          isModalOpen={true}
+          setIsModalOpen={setIsModalOpen}
+          userID={user.id}
+          rewardPoints={user.rewardPoints}
+        />
       )}
     </>
   );
-}
+};
 
 export default UserDashboard;

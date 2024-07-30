@@ -48,7 +48,15 @@
 }
 
 .Nav-Nfts {
-    @apply hover:bg-black hover:text-white transition-all ease-in-out duration-200 p-2 px-4 cursor-pointer
+    @apply hover:bg-black rounded-full flex items-center visited:bg-black active:bg-black active:text-white shadow-lg hover:text-white transition-all ease-in-out duration-200 p-1 px-5 cursor-pointer
+}
+
+.Nav-Nfts.active {
+    @apply bg-black text-white;
+}
+
+.Nav-Nfts>h2 {
+    @apply w-36
 }
 
 .NFTsCount-cont div h1 {
@@ -78,7 +86,7 @@
 /* ImportingNFTs component styling */
 
 .importNfts-mainCont {
-    @apply absolute w-[55%] bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2 rounded-xl transition-opacity duration-500;
+    @apply absolute w-[55%] mt-5 bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2 rounded-xl;
 
 }
 

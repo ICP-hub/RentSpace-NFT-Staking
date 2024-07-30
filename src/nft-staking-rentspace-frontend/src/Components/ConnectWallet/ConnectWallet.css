@@ -1,3 +1,14 @@
+@keyframes translate {
+  0% {
+    transform: translateY(-20px) scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 /* ///////////////////////// */
 /* Login container styles */
 /* //////////////////////// */
@@ -7,6 +18,7 @@
   /* Adjust mt value to position it correctly */
   top: calc(100% + 10px);
   /* Position below the "Connect Wallet" button */
+  animation: translate 0.3s ease-in-out;
 }
 
 .pointer {
@@ -19,48 +31,47 @@
 }
 
 .icp-img {
-  @apply h-5 w-5
+  @apply h-5 w-5;
 }
 
 .plug-wallet-img {
-  @apply h-5 w-5
+  @apply h-5 w-5;
 }
 
 .internet-identity-cont, .plug-wallet-cont {
-  @apply rounded-xl hover:bg-gray-200 transition-all duration-300 px-4 py-2
+  @apply rounded-xl hover:bg-gray-200 transition-all duration-300 px-4 py-2;
 }
 
 .internet-identity, .plug-wallet {
-  @apply flex items-center gap-4 justify-start hover:cursor-pointer
+  @apply flex items-center gap-4 justify-start hover:cursor-pointer;
 }
 
 /* Connect Wallet Styles */
 .connectBtn-mainCont {
-  @apply col-span-4 flex justify-end mr-10 py-4
+  @apply col-span-4 flex justify-end mr-10 py-4;
 }
 
 .connectBtn-cont {
-  @apply outline outline-blue-600 flex rounded-full w-[300px] relative h-10 transition-all duration-500 font-medium
+  @apply outline outline-blue-600 flex rounded-full w-[300px] relative h-10 transition-all duration-500 font-medium;
 }
 
 .btn1 {
-  @apply m-2 ml-6 w-[43%]
+  @apply m-2 ml-6 w-[43%];
 }
 
 .btn2 {
-  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer
+  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer;
 }
 
-.btn2:hover{
+.btn2:hover {
   background: black;
   @apply transition-all ease-in-out duration-500;
 }
 
-
 .btn2 {
-  @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full p-2 text-center absolute cursor-pointer min-w-[50%]
+  @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full text-center absolute cursor-pointer min-w-[50%];
 }
 
 .btn2 button {
-  @apply p-0 border-0 h-full rounded-full hover:bg-[#0284E2]
+  @apply p-2 border-0 h-full rounded-full;
 }
