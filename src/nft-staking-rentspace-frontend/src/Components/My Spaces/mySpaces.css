@@ -147,7 +147,7 @@
   }
   
   .villasCard-cont{
-    @apply  rounded-2xl transition-all ease-in duration-200
+    @apply  rounded-2xl transition-all  ease-in duration-200
   }
   .villas-card {
     @apply w-36 h-36 rounded-xl;

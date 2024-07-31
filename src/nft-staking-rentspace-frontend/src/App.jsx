@@ -51,11 +51,11 @@ function App() {
               children:[
                 {
                   path:'/Dashboard/',
-                  element:<StakedNFTs/>
+                  element:<ImportedNFTs/>
                 },
                 {
-                  path:'/Dashboard/importedNFTs',
-                  element:<ImportedNFTs/>
+                  path:'/Dashboard/stakedNFTs',
+                  element:<StakedNFTs/>
                 }
               ]
             },

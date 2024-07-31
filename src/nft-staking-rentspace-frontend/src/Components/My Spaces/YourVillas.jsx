@@ -96,11 +96,23 @@ const YourVillas = () => {
     }
   }, [selectedVilla]);
 
-  // Memoize the select villa handler
   const handleSelectVilla = useCallback((id) => {
     console.log(id)
     setSelectedVilla(prev => prev === id ? null : id);
   }, []);
+
+  const handleClickOutside = useCallback((event) => {
+    if (!event.target.closest('.villasCard-cont')) {
+      setSelectedVilla(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
   return (
     <div className='Villas-cont' id='Villas'>
@@ -143,7 +155,10 @@ const YourVillas = () => {
           <div
             key={data[0].id}
             className='villasCard-cont'
-            onClick={() => handleSelectVilla(data[0].id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectVilla(data[0].id);
+            }}
             style={{
               border: data[0]?.id === selectedVilla ? '5px solid #0284E2' : 'none',
               cursor: 'pointer',

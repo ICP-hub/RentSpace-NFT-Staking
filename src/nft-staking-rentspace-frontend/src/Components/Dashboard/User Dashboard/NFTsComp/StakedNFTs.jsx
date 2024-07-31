@@ -12,7 +12,7 @@ import { Hourglass } from 'react-loader-spinner';
 
 const StakedNFTs = () => {
   const { actors, principal } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
@@ -20,6 +20,7 @@ const StakedNFTs = () => {
   const navigate = useNavigate();
 
   const filterStakedNFTs = async () => {
+    setIsLoading(true)
     try {
       const backendActor = actors?.userActor;
       const stakedNFTDetails = await backendActor.getUserStakedNFTs();
@@ -27,13 +28,13 @@ const StakedNFTs = () => {
 
       if (stakedNFTDetails.ok) {
         dispatch(addStakedNFTs(stakedNFTDetails.ok));
-        setIsLoading(false);
       } else {
         throw new Error("No staked NFTs found.");
       }
     } catch (err) {
       console.error("Error fetching staked NFTs: ", err);
       setError(err.message || "Failed to fetch staked NFTs.");
+    } finally {
       setIsLoading(false);
     }
   };
