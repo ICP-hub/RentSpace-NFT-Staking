@@ -75,6 +75,6 @@
   @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full text-center absolute cursor-pointer min-w-[50%];
 }
 
-.btn2 button {
-  @apply p-2 border-0 h-full rounded-full;
+.btn2 span {
+  @apply p-2 border-0 h-full w-full rounded-full;
 }

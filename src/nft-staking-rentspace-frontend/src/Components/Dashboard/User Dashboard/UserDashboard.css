@@ -1,5 +1,5 @@
-/* userDashboard component styling */
-@keyframes translate {
+/* Animation */
+@keyframes   fadeIn{
     0% {
         transform: translateY(-20px) scale(0.3);
         opacity: 0;
@@ -10,6 +10,21 @@
     }
 }
 
+@keyframes  fadeOut{
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+       
+        transform: translateY(-20px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+
+
+/* userDashboard component styling */
 .userDashboard-cont {
     @apply bg-[#F0F0F0] mx-5 mt-6 rounded-3xl grid grid-cols-4;
 }
@@ -102,12 +117,16 @@
 } */
 
 .importNfts-mainCont {
-    @apply fixed inset-0 w-[50%] h-[95%] rounded-xl left-1/4 z-50 flex flex-col items-center justify-center bg-[#F0F0F0];
-    animation: translate 0.3s ease-in-out;
+    @apply fixed inset-0 top-5 w-[50%] h-[95%] rounded-xl left-1/4 z-50 flex flex-col items-center justify-center bg-[#F0F0F0];
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.importNfts-mainCont.fade-out {
+    animation: fadeOut 0.3s ease-in-out;
 }
 
 .importNfts-OuterCont {
-    @apply flex h-[500px] overflow-y-scroll
+    @apply flex h-full overflow-y-scroll
 }
 
 .importNfts-InnerCont {
@@ -119,10 +138,14 @@
 }
 
 .header-cont {
-    @apply mt-7 mb-5 flex mx-20 place-self-start items-center
+    @apply mt-7 mb-5  w-full flex place-self-start items-center px-16
 }
 
-.header-cont>div {
+.favIcon{
+    @apply text-gray-500
+}
+
+.header-cont > div {
     @apply flex w-full justify-center px-4
 }
 
@@ -135,7 +158,7 @@
 }
 
 .ImportBtn>button {
-    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-8 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
+    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-3 text-white px-6 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
 }
 
 .ImportBtn>button:hover {
