@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../utils/useAuthClient'
 import { addUserData } from '../../utils/Redux-Config/UserSlice'
@@ -36,14 +36,14 @@ const RegisterUser = () => {
     })
   }
 
-  const validateEmail = (email) => {
+  const validateEmail = useCallback((email) => {
     if (!emailRegex.test(email)) {
       return 'Invalid email address'
     }
     return ''
-  }
+  }, [])
 
-  const validateUsername = (username) => {
+  const validateUsername = useCallback((username) => {
     if (username.length > 50) {
       return 'Username must be 50 characters or less'
     } else if (!usernameRegex.test(username)) {
@@ -54,7 +54,7 @@ const RegisterUser = () => {
       return 'Username cannot be an email address'
     }
     return ''
-  }
+  }, [])
 
   const handleBlur = (e) => {
     const { name, value } = e.target
