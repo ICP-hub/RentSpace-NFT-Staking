@@ -1,4 +1,15 @@
 /* userDashboard component styling */
+@keyframes translate {
+    0% {
+        transform: translateY(-20px) scale(0.3);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 .userDashboard-cont {
     @apply bg-[#F0F0F0] mx-5 mt-6 rounded-3xl grid grid-cols-4;
 }
@@ -85,9 +96,14 @@
 
 /* ImportingNFTs component styling */
 
-.importNfts-mainCont {
+/* .importNfts-mainCont {
     @apply absolute w-[55%] mt-5 bg-[#F0F0F0] top-[6.5%] left-1/2 transform -translate-x-1/2 rounded-xl;
 
+} */
+
+.importNfts-mainCont {
+    @apply fixed inset-0 w-[50%] h-[95%] rounded-xl left-1/4 z-50 flex flex-col items-center justify-center bg-[#F0F0F0];
+    animation: translate 0.3s ease-in-out;
 }
 
 .importNfts-OuterCont {
@@ -103,11 +119,11 @@
 }
 
 .header-cont {
-    @apply mt-7 mb-5 flex mx-10
+    @apply mt-7 mb-5 flex mx-20 place-self-start items-center
 }
 
 .header-cont>div {
-    @apply flex w-full justify-center
+    @apply flex w-full justify-center px-4
 }
 
 .header-cont h1 {

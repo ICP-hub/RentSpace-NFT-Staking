@@ -7,28 +7,27 @@ import RedeemModal from '../../Modals/RedeemModal';
 import FallbackUI_404 from '../../FallbackUI/FallbackUI_404';
 import { useAuth } from '../../../utils/useAuthClient';
 import { addUserData } from '../../../utils/Redux-Config/UserSlice';
-import { motion } from 'framer-motion';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isImportModule, setImportModule] = useState(false);
+  const [isImportModule, setIsImportModule] = useState(false);
+  const [selectedNFTType, setSelectedNFTType] = useState('imported');
+
   const { isAuthenticated, actors } = useAuth();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
 
   const socialHandles = useMemo(() => ['X.svg', 'Vector.svg', 'discord.svg', 'web.svg'], []);
 
-  const handleImportModule = () => setImportModule(true);
-
   useEffect(() => {
     const fetchUser = async () => {
-      if (isAuthenticated && user === undefined) {
+      if (isAuthenticated && !user) {
         const backendActor = actors.userActor;
         const userReq = await backendActor.getUser();
         if (userReq.ok) {
-          dispatch(addUserData(userReq.ok))
+          dispatch(addUserData(userReq.ok));
         }
       }
     };
@@ -106,7 +105,7 @@ const UserDashboard = () => {
       )}
 
       {/* Importing NFTs Module */}
-      {isImportModule && <ImportingNFTs setImportModule={setIsImportModule} />}
+      {isImportModule && <ImportingNFTs isImportModule={isImportModule} setImportModule={setIsImportModule} />}
 
       {/* Redeem Rewards Modal */}
       {isModalOpen && (

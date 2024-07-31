@@ -3,6 +3,7 @@
     transform: translateY(-20px) scale(0.3);
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -38,11 +39,13 @@
   @apply h-5 w-5;
 }
 
-.internet-identity-cont, .plug-wallet-cont {
+.internet-identity-cont,
+.plug-wallet-cont {
   @apply rounded-xl hover:bg-gray-200 transition-all duration-300 px-4 py-2;
 }
 
-.internet-identity, .plug-wallet {
+.internet-identity,
+.plug-wallet {
   @apply flex items-center gap-4 justify-start hover:cursor-pointer;
 }
 
@@ -60,7 +63,7 @@
 }
 
 .btn2 {
-  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer;
+  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer flex items-center justify-center;
 }
 
 .btn2:hover {

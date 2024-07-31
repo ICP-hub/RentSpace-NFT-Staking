@@ -3,8 +3,8 @@ import CheckCard from '../../Card/CheckBoxCard';
 import Modal from "../../Modals/Modal"
 import { FaChevronLeft } from 'react-icons/fa';
 import { useAuth } from '../../../utils/useAuthClient';
-import { AnimatePresence, motion } from 'framer-motion'
 import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../../utils/utils';
+import { createPortal } from 'react-dom';
 
 const ImportingNFTs = ({ setImportModule }) => {
   const { actors, principal } = useAuth();
@@ -75,13 +75,8 @@ const ImportingNFTs = ({ setImportModule }) => {
     }
   };
 
-  return (
-
-    <motion.div className='importNfts-mainCont'
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ ease: "easeInOut", duration: 0.5 }}
-    >
+  return createPortal(
+    <div className='importNfts-mainCont'>
       {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} setImportModule={setImportModule} />}
       <div className='header-cont'>
         <FaChevronLeft className='favIcon' size={25} onClick={() => setImportModule(false)} />
@@ -105,8 +100,9 @@ const ImportingNFTs = ({ setImportModule }) => {
       <div className='ImportBtn'>
         <button onClick={handleImport}>Import NFTs</button>
       </div>
-    </motion.div>
-  );
+    </div>
+    , document.getElementById('root')
+  )
 };
 
 export default ImportingNFTs;
