@@ -35,7 +35,7 @@ function encodeTokenIdentifier(canisterId, tokenIndex) {
 }
 
 export function tokenIndexToTokenIdentifier(tokenIdx) {
-  const canID=process.env.DFX_NETWORK === "ic"?"2cwjm-cyaaa-aaaap-ahi3q-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
+  const canID=process.env.DFX_NETWORK === "ic"?"m2nno-7aaaa-aaaah-adzba-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
   return encodeTokenIdentifier(canID, tokenIdx);
 }
 

@@ -36,7 +36,7 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
       const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
       if(transfer?.ok) {
         alert("Transfered Success!")
-        dispatch(updatePoints(parseInt(rewardPoints)-parseInt(redeemAmount)))
+        dispatch(updatePoints(parseInt(rewardPoints)-parseInt(redeemAmount*100)))
       }
       else {
         throw new Error(transfer?.err)
