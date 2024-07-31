@@ -138,10 +138,14 @@
 }
 
 .header-cont {
-    @apply mt-7 mb-5 flex mx-20 place-self-start items-center
+    @apply mt-7 mb-5  w-full flex place-self-start items-center px-16
 }
 
-.header-cont>div {
+.favIcon{
+    @apply text-gray-500
+}
+
+.header-cont > div {
     @apply flex w-full justify-center px-4
 }
 
@@ -154,7 +158,7 @@
 }
 
 .ImportBtn>button {
-    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-2 text-white px-8 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
+    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-3 text-white px-6 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
 }
 
 .ImportBtn>button:hover {
