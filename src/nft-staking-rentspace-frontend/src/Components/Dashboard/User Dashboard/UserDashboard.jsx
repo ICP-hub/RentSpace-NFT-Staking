@@ -105,7 +105,7 @@ const UserDashboard = () => {
       )}
 
       {/* Importing NFTs Module */}
-      {isImportModule && <ImportingNFTs isImportModule={isImportModule} setImportModule={setIsImportModule} />}
+      {isImportModule && <ImportingNFTs isImportModule={isImportModule} setImportModule={setIsImportModule}  />}
 
       {/* Redeem Rewards Modal */}
       {isModalOpen && (

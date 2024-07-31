@@ -1,96 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import CheckCard from '../../Card/CheckBoxCard';
-import Modal from "../../Modals/Modal"
+import Modal from "../../Modals/Modal";
 import { FaChevronLeft } from 'react-icons/fa';
 import { useAuth } from '../../../utils/useAuthClient';
 import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../../utils/utils';
 import { createPortal } from 'react-dom';
 
-const ImportingNFTs = ({ setImportModule }) => {
+const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   const { actors, principal } = useAuth();
   const [NFTList, setNFTList] = useState([]);
   const [checkedCards, setCheckedCards] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [dialogInfo, setDialogInfo] = useState({ status: "", message: "" });
+  const [isVisible, setIsVisible] = useState(true);
   const backendActor = actors.userActor;
 
   useEffect(() => {
-
     const getAllUserTokens = async () => {
-      const userAccountId = await convertPrincipalToAccountIdentifier(principal);
-      const userTokens = await backendActor.getAllUserTokens(userAccountId);
+      try {
+        const userAccountId = await convertPrincipalToAccountIdentifier(principal);
+        const userTokens = await backendActor.getAllUserTokens(userAccountId);
 
-      if (userTokens.ok) {
-        console.log("User Tokens : ", userTokens.ok);
-        setNFTList(userTokens.ok.map((token) => ({
-          tid: token.tid,
-          metadata: token.metadata,
-        })));
-        console.log("NFT List : ", NFTList);
-      } else {
-        console.log("Error in fetching user tokens : ", userTokens.err);
+        if (userTokens.ok) {
+          setNFTList(userTokens.ok.map(({ tid, metadata }) => ({
+            tid,
+            metadata: formatMetadata(metadata),
+          })));
+        } else {
+          console.error("Error in fetching user tokens:", userTokens.err);
+          setNFTList([]);
+        }
+      } catch (error) {
+        console.error("Error fetching user tokens:", error);
         setNFTList([]);
       }
     };
 
     getAllUserTokens();
+  }, [principal, backendActor]);
+
+  const displayDialog = useCallback(() => {
+    setShowDialog(true);
+    const timer = setTimeout(() => {
+      setShowDialog(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const displayDialog = () => {
-    setShowDialog(true);
-    setTimeout(() => {
-      setShowDialog(false);
-    }, 5000)
-  }
-
   const handleCheckChange = (isChecked, id) => {
-    if (isChecked) {
-      setCheckedCards((prev) => [...prev, id]);
-    } else {
-      setCheckedCards((prev) => prev.filter((cardId) => cardId !== id));
-    }
+    setCheckedCards((prev) => isChecked
+      ? [...prev, id]
+      : prev.filter((cardId) => cardId !== id)
+    );
   };
 
   const handleImport = async () => {
     const selectedCards = NFTList.filter((NFT) => checkedCards.includes(NFT.tid));
-    // Processing selected cards to convert metadata from JSON to String
 
-    console.log("Selected : ", selectedCards)
+    try {
+      const importNFTReq = await backendActor.importNFTs(selectedCards);
 
-    const importNFTReq = await backendActor.importNFTs(selectedCards);
-
-    if (importNFTReq.ok) {
-      // Show Success Dialog
-      console.log(importNFTReq)
-      // alert('NFTs imported successfully');
-      setDialogInfo({ status: 'success', message: 'NFTs imported successfully' });
+      setDialogInfo({
+        status: importNFTReq.ok ? 'success' : 'error',
+        message: importNFTReq.ok ? 'NFTs imported successfully' : 'Error importing NFTs'
+      });
       displayDialog();
-    }
-    else {
-      // Show Error Dialog
-      // alert('Error in importing NFTs');
-      console.log(importNFTReq)
+    } catch (error) {
+      console.error("Error importing NFTs:", error);
       setDialogInfo({ status: 'error', message: 'Error importing NFTs' });
       displayDialog();
     }
   };
 
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      setImportModule(false);
+    }, 250); 
+  };
+
   return createPortal(
-    <div className='importNfts-mainCont'>
-      {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} setImportModule={setImportModule} />}
+    <div className={`importNfts-mainCont ${!isVisible ? 'fade-out' : ''}`}>
+      {showDialog && (
+        <Modal
+          status={dialogInfo.status}
+          message={dialogInfo.message}
+          closeModal={() => setShowDialog(false)}
+          setImportModule={setImportModule}
+        />
+      )}
       <div className='header-cont'>
-        <FaChevronLeft className='favIcon' size={25} onClick={() => setImportModule(false)} />
+        <FaChevronLeft className='favIcon' size={25} onClick={handleClose} />
         <div><h1>Your NFTs</h1></div>
       </div>
       <div className='importNfts-OuterCont no-scrollbar'>
         <div className='importNfts-InnerCont'>
-          {NFTList.map((NFT) => (
-            <div className='nft-cont' key={NFT.tid}>
+          {NFTList.map(({ tid, metadata }) => (
+            <div className='nft-cont' key={tid}>
               <CheckCard
-                id={NFT.tid}
-                name={formatMetadata(NFT.metadata).name}
-                imgURL={formatMetadata(NFT.metadata).url}
-                desc={formatMetadata(NFT.metadata).description}
+                id={tid}
+                name={metadata.name}
+                imgURL={metadata.url}
+                desc={metadata.description}
                 handleChange={handleCheckChange}
               />
             </div>
@@ -100,9 +112,9 @@ const ImportingNFTs = ({ setImportModule }) => {
       <div className='ImportBtn'>
         <button onClick={handleImport}>Import NFTs</button>
       </div>
-    </div>
-    , document.getElementById('root')
-  )
+    </div>,
+    document.getElementById('root')
+  );
 };
 
 export default ImportingNFTs;
