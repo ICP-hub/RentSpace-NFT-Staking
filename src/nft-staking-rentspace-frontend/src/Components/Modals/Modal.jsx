@@ -2,7 +2,6 @@ import React from 'react'
 import "./Modal.css"
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import { motion } from 'framer-motion'
 
 const Modal = ({ status, message, closeModal, setImportModule }) => {
   const error = status.toLowerCase() === 'error' ? true : false
@@ -13,7 +12,7 @@ const Modal = ({ status, message, closeModal, setImportModule }) => {
   }
 
   return (
-    <motion.dialog className='modal'
+    <dialog className='modal'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ ease: "easeInOut", duration: 0.3 }}
@@ -24,7 +23,7 @@ const Modal = ({ status, message, closeModal, setImportModule }) => {
       </div>
       <p className='message'>{message}</p>
       <button className='modal-btn' onClick={handleClose}>Go Back</button>
-    </motion.dialog>
+    </dialog>
   )
 }
 

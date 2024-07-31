@@ -7,7 +7,6 @@ import { Hourglass } from 'react-loader-spinner';
 import { addPoints } from '../../utils/Redux-Config/UserSlice';
 import { removeStakedNFTs, modifyStakedNFTs } from '../../utils/Redux-Config/NftsSlice'
 import { useDispatch } from 'react-redux';
-import { motion } from 'framer-motion';
 
 const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
   const [showDialog, setShowDialog] = useState(false);
@@ -66,7 +65,7 @@ const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
   return (
     <>
       {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} />}
-      <motion.div className='unstake-cont' style={showDialog ? { display: 'none' } : {}}
+      <div className='unstake-cont' style={showDialog ? { display: 'none' } : {}}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
@@ -81,7 +80,7 @@ const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
           <button onClick={() => setShow(false)} className='btn cancel-btn'>Cancel</button>
           <button onClick={handleUnStake} className='unstake-btn btn'>Unstake</button>
         </div>
-      </motion.div>
+      </div>
     </>
   )
 }
