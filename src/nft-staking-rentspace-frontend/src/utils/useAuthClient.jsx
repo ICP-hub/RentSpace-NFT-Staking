@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import {nft_staking_rentspace_backend} from '../../../declarations/nft-staking-rentspace-backend';
+import {EXT_backend} from '../../../declarations/EXT';
 import { AuthClient } from '@dfinity/auth-client';
 import { idlFactory } from '../../../declarations/nft-staking-rentspace-backend';
 import { idlFactory as EXTIdlFactory } from '../../../declarations/EXT';
@@ -17,7 +19,7 @@ export const useAuthClient = () => {
   const [isAuthenticated, setIsAuthenticated] = useState({ ii: false, plug: false });
   const [identity, setIdentity] = useState(null);
   const [principal, setPrincipal] = useState(null);
-  const [actors, setActors] = useState({userActor:null, EXTActor:null});
+  const [actors, setActors] = useState({userActor:nft_staking_rentspace_backend, EXTActor:EXT_backend});
 
   const initializeClient = async () => {
     const client = await AuthClient.create();

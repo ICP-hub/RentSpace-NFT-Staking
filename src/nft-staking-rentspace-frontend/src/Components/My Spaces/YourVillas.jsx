@@ -1,42 +1,104 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { NFTsData } from '../../Constants/useNFTsData';
+import { useAuth } from '../../utils/useAuthClient';
 import IMGComp from '../IMGComp';
+import { formatMetadata, tokenIndexToTokenIdentifier } from '../../utils/utils';
+import { Principal } from '@dfinity/principal';
 
 const YourVillas = () => {
-  const { NFTs } = NFTsData();
+  const { actors } = useAuth()
+  const [NFTs, setNFTs] = useState([]);
   const [selectedVilla, setSelectedVilla] = useState(null);
   const [filteredNFTs, setFilteredNFTs] = useState([]);
 
-
   useEffect(() => {
-    setFilteredNFTs(NFTs);
-  }, [NFTs]);
+    const backendActor = actors.userActor;
+    const getNFTS = async () => {
+      const getAllUserNFTs = await backendActor.getUserNFTs();
+      if (getAllUserNFTs?.ok) {
+        const NFTs = getAllUserNFTs.ok;
+        console.log('NFTs', getAllUserNFTs.ok)
+        setNFTs(NFTs);
+        setFilteredNFTs(NFTs)
+      }
+    }
+    if (backendActor !== null) {
+      getNFTS()
+    }
+  }, []);
 
   const handleFilterNFTs = (rarity) => {
-    console.log(rarity)
     if (rarity === '') {
       setFilteredNFTs(NFTs);
     } else {
-      const filtered = NFTs.filter((NFT) => Object.keys(NFT.rarity) == rarity);
+      const filtered = NFTs.filter((NFT) => {
+        return Object.keys(NFT[0].rarity)[0] === rarity
+      });
       setFilteredNFTs(filtered);
     }
   };
 
   // Memoize stake and unstake handlers
-  const handleStake = useCallback(() => {
+  const handleStake = useCallback(async () => {
     if (selectedVilla) {
-      alert(`Staking ${selectedVilla}`);
+      try {
+        const tokenIdentifier = tokenIndexToTokenIdentifier(selectedVilla)
+        console.log("Token Identifier : ", tokenIdentifier)
+
+        const backendCanister = Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai")
+
+        const _approveTransferReq = await actors.EXTActor.approve({
+          token: tokenIdentifier,
+          spender: backendCanister,
+          allowance: 1,
+          subaccount: []
+        })
+
+        console.log("Approve Transfer Req : ", _approveTransferReq)
+
+        const stakeNFTReq = await actors.userActor.stakeNFT(tokenIdentifier);
+
+        if (stakeNFTReq.ok) {
+          // const stakedNFT = importedNFTs.filter(nft => nft.id === id);
+          // dispatch(appendStakedNFTs(stakedNFT))
+          // dispatch(modifyImportedNFTs(id))
+          // setDialogInfo({ status: 'success', message: 'NFTs staked successfully', isExecuting: false });
+          // displayDialog();
+          alert('NFTs staked successfully')
+        } else {
+          // setDialogInfo({ status: 'error', message: 'Error staking NFTs', isExecuting: false });
+          // displayDialog();
+          alert('Error staking NFTs')
+        }
+      } catch (err) {
+        console.log(err)
+      }
     }
   }, [selectedVilla]);
 
-  const handleUnstake = useCallback(() => {
+  const handleUnstake = useCallback(async () => {
     if (selectedVilla) {
-      alert(`Unstaking ${selectedVilla}`);
+      const tokenIdentifier = tokenIndexToTokenIdentifier(selectedVilla)
+      //Transfer NFT from owner to platform
+      const unStakeNFTReq = await actors.userActor.unstakeNFT(tokenIdentifier);
+      if (unStakeNFTReq.ok) {
+        // dispatch(addPoints(points))
+        // dispatch(removeStakedNFTs(id))
+        // dispatch(modifyStakedNFTs(id))
+        // setDialogInfo({ status: 'success', message: 'NFT Unstaked successfully' });
+        // displayDialog();
+        alert('NFT Unstaked successfully')
+      }
+      else {
+        // setDialogInfo({ status: 'error', message: 'Error while Unstaking NFT' });
+        // displayDialog();
+        alert('Error while Unstaking NFT')
+      }
     }
   }, [selectedVilla]);
 
   // Memoize the select villa handler
   const handleSelectVilla = useCallback((id) => {
+    console.log(id)
     setSelectedVilla(prev => prev === id ? null : id);
   }, []);
 
@@ -59,7 +121,6 @@ const YourVillas = () => {
             </select>
           </div>
         </div>
-        {console.log(selectedVilla)}
         <div className='header-right'>
           <button
             onClick={handleStake}
@@ -78,18 +139,18 @@ const YourVillas = () => {
         </div>
       </header>
       <section className='villas'>
-        {filteredNFTs.map((data, ind) => (
+        {filteredNFTs.length > 0 && filteredNFTs.map((data, ind) => (
           <div
-            key={ind}
+            key={data[0].id}
             className='villasCard-cont'
-            onClick={() => handleSelectVilla(data.id)}
+            onClick={() => handleSelectVilla(data[0].id)}
             style={{
-              border: data.id === selectedVilla ? '5px solid #0284E2' : 'none',
+              border: data[0]?.id === selectedVilla ? '5px solid #0284E2' : 'none',
               cursor: 'pointer',
             }}
           >
             <IMGComp
-              src={data.metadata.url}
+              src={formatMetadata(data[0].metadata).url}
               hashVal='LRG]2NENM{WB_NogRiWB.9WBxaj?'
               alt={`Villa ${ind}`}
               className='villas-card'
