@@ -63,7 +63,7 @@
 }
 
 .btn2 {
-  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer flex items-center justify-center;
+  @apply h-full bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] w-[57%] rounded-full text-center absolute cursor-pointer min-w-[50%] flex items-center justify-center;
 }
 
 .btn2:hover {
@@ -71,10 +71,10 @@
   @apply transition-all ease-in-out duration-500;
 }
 
-.btn2 {
-  @apply bg-gradient-to-r from-[#00C3FD] via-[#0194FE] to-[#0284E2] rounded-full text-center absolute cursor-pointer min-w-[50%];
-}
-
 .btn2 span {
   @apply p-2 border-0 h-full w-full rounded-full;
+}
+
+.btn2 span>div {
+  @apply flex justify-center
 }
