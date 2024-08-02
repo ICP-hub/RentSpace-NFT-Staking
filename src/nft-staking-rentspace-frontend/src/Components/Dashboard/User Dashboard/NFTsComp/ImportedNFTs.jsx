@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
-import FallbackUI from '../../../FallbackUI/DataNotFound_UI';
+import DataNotFound_UI from '../../../FallbackUI/DataNotFound_UI';
 import { addImportedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
 import Card from '../../../Card/Card';
 import './NFTsComp.css';
@@ -69,7 +69,7 @@ const ImportedNFTs = () => {
           </div>
         </div>
       ) : (
-        <FallbackUI purpose='Imported' />
+        <DataNotFound_UI purpose='Imported' />
       )}
     </>
   );

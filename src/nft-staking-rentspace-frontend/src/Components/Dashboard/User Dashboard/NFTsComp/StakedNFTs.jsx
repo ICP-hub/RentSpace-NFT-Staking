@@ -2,7 +2,7 @@ import React, { useEffect, useState, useTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NFTsComp.css';
 import Card from '../../../Card/Card';
-import FallbackUI from '../../../FallbackUI/DataNotFound_UI';
+import DataNotFound_UI from '../../../FallbackUI/DataNotFound_UI';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -101,7 +101,7 @@ const StakedNFTs = () => {
           </div>
         </div>
       ) : (
-        <FallbackUI purpose='Staked' />
+        <DataNotFound_UI purpose='Staked' />
       )}
     </>
   );
