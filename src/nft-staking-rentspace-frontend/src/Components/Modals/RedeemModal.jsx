@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import "./RedeemModal.css";
 import coinAnimation from "/Assets/coins.gif?url";
 import { convertPointstoICP } from "../../utils/utils";
@@ -6,8 +6,6 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { useAuth } from "../../utils/useAuthClient";
 import { useDispatch } from "react-redux";
 import { updatePoints } from "../../utils/Redux-Config/UserSlice";
-
-
 
 export const Info = ({ message }) => {
   return (
@@ -24,11 +22,12 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   const { actors } = useAuth()
   const MIN_REQ_POINTS = 10;
   const [redeemAmount, setRedeemAmount] = useState(0);
+  const deferredRedeemAmount = useDeferredValue(redeemAmount)
   const dispatch = useDispatch()
 
   const handleClick = async (e) => {
     e.preventDefault()
-    if (points < MIN_REQ_POINTS) {
+    if (deferredRedeemAmount < MIN_REQ_POINTS) {
       alert('Minimum 10 points required for redemption.')
       return
     }
@@ -36,7 +35,8 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
       const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
       if (transfer?.ok) {
         alert("Transfered Success!")
-        dispatch(updatePoints(parseInt(rewardPoints)-parseInt(redeemAmount*100)))
+        setRedeemAmount(0)
+        dispatch(updatePoints(parseInt(rewardPoints) - parseInt(deferredRedeemAmount * 100)))
       }
       else {
         throw new Error(transfer?.err)
@@ -65,6 +65,12 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   const handleChange = (event) => {
     setRedeemAmount(event.target.value);
   };
+
+  useEffect(() => {
+    console.log(redeemAmount);
+    console.log(deferredRedeemAmount)
+    console.log('----Render End----')
+  }, [redeemAmount, deferredRedeemAmount])
   return (
     <div className="rewards-modal">
       <div className="redeem-closeBtn" onClick={() => setIsModalOpen(!isModalOpen)}>X</div>
@@ -86,12 +92,12 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
             type="range"
             min={0}
             max={convertPointstoICP(rewardPoints)}
-            value={redeemAmount}
+            value={deferredRedeemAmount}
             onChange={handleChange}
             className="widthfull amount-slider"
 
           />
-          <span className="redeem-amount">{redeemAmount}</span>
+          <span className="redeem-amount">{deferredRedeemAmount}</span>
         </div>
         <div className="widthfull table-Cont">
           <table className="widthfull table">
