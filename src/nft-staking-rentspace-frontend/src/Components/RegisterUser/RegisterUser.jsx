@@ -17,7 +17,7 @@ const RegisterUser = () => {
 
   //Regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const usernameRegex = /^[a-zA-Z0-9]+$/;
+  const usernameRegex = /^[a-zA-Z0-9 ]+$/;
 
   const isURL = (str) => {
     try {
