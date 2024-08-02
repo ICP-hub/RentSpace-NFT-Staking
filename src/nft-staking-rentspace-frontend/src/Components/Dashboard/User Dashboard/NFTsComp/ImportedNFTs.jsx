@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
-import FallbackUI from '../../../FallbackUI/FallbackUI';
-import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
+import FallbackUI from '../../../FallbackUI/DataNotFound_UI';
 import { addImportedNFTs } from '../../../../utils/Redux-Config/NftsSlice';
 import Card from '../../../Card/Card';
 import './NFTsComp.css';
 import { Hourglass } from 'react-loader-spinner';
 
 const ImportedNFTs = () => {
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isPending, startTransition] = useTransition();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { actors, principal } = useAuth();
@@ -19,34 +18,39 @@ const ImportedNFTs = () => {
 
   // Function to filter imported NFTs
   const filterImportedNFTs = async () => {
-    const backendActor = actors.userActor;
-    const importedNFTDetails = await backendActor.getUserImportedNFTs();
-    console.log("Req : ", importedNFTDetails.ok);
-    if (importedNFTDetails.ok) {
-      dispatch(addImportedNFTs(importedNFTDetails.ok));
-      setIsLoading(false);
+    try {
+      const backendActor = actors.userActor;
+      const importedNFTDetails = await backendActor.getUserImportedNFTs();
+      console.log('Req: ', importedNFTDetails.ok);
+      if (importedNFTDetails.ok) {
+        dispatch(addImportedNFTs(importedNFTDetails.ok));
+      }
+    } catch (error) {
+      console.error('Failed to fetch imported NFTs:', error);
     }
   };
 
   // Effect hook to filter imported NFTs
   useEffect(() => {
     if (principal) {
-      filterImportedNFTs();
+      startTransition(() => {
+        filterImportedNFTs();
+      });
     }
-  }, [principal]);
+  }, [principal, actors.userActor]);
 
-  // Event handler for viewing NFT details
-  const nftDetailsHandle = (id, name, img) => {
-    navigate('/StakNftDetails', { state: { id, name, img } });
-  };
+   // Event handler for viewing NFT details
+  // const nftDetailsHandle = (id, name, img) => {
+  //   navigate('/ImpNftDetails', { state: { id, name, img } });
+  // };
 
   console.log(importedNFTs);
 
   return (
     <>
-      {isLoading ? (
-        <Hourglass visible={isLoading} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} />// Render this during loading
-      ) : importedNFTs.length > 0 ? (
+      {isPending ? (
+        <Hourglass visible={isPending} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} />
+      ) : importedNFTs && importedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Imported NFT</h1>
           <div className='nftOuter-Cont'>
