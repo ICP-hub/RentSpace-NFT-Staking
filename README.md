@@ -113,3 +113,96 @@ To set up the RentSpace NFT Staking Platform locally, follow these steps:
 ### Setting Up Local ICP Ledger
 
 Refer to the [ICP Ledger Local Setup documentation](https://internetcomputer.org/docs/current/developer-docs/defi/icp-tokens/ledger-local-setup) for details.
+
+### Backend functions
+
+#Function to create a new user.
+1. createUser(name,email)  -> {user,error}
+  Usecase : a) First checks if user calling the functin is anonymous.
+            b) Takes inputs of type userInput that has a name and an email.
+            c) Returns an object of type User or an error.
+  #End of createUser function
+
+
+#Function to get all NFTs that are already staked by the user.
+2. getAllStaked() -> [NFT]
+  Usecase : Takes no parameters, Returns an array of type NFT.
+  #End of getAllStaked function
+
+
+#Function to get user details
+3. getUser() {} -> {user,error}
+  UseCase : Takes no parameters, returns an object of type user, or an error.
+  #End of getUser function.
+
+#Function to update user profile
+4. updateUserProfile(newUserDetails) -> {Text, error}
+  UseCase : a)Checks if caller is anonymous.
+            b)Takes an object as parameter with the new email and new name.
+            c)Returns a text if user updation is successful, or an error if failed.
+
+  #End of updateUserProfile function
+
+#Function to get all the user's points that are accumulated yet
+5. getPointsAccumulated(nftId) -> {Number, error}
+  Usecase : a)Takes a parameter nftId of type text.
+            b)Returns the number of accumulated points if successful, or an error.
+
+  #End of getPointsAccumulated function.
+
+
+#Function to import user's all NFTs.
+6. importNFTs([tokenData]) -> {Text, Text}
+  Usecase:  a)Checks if caller is anonymous
+            b) Takes tokenData as parameter, that is an array which has an object that has tid and metadata, both of type Text.
+            c)Returns a successful or an error message.
+
+  #End of importNFTs function.
+
+#Function to get all the tokens that a user owns.
+7.  getAllUserTokens(aid) -> {[tid, metadata], error}
+  Usecase:  a)Takes aid as parameter, that is a text.
+            b)Returns an array allTokenDetails, which contains an object tid and metadata both of type text.
+
+  #End of getAllUserTokens function.
+
+#Function go get all NFTs that a user owns.
+8.  getUserNFTs() -> {[NFT.NFT], error}
+  Usecase:  Takes no arguments and returns an array of type NFT or an error text.
+  #End of getUserNFTs function.
+
+
+#Function to get all the NFTs that have been imported by the user
+9. getUserImportedNFTs() -> {[NFT.NFT], error}
+  Usecase:  Takes no arguments and returns an array of type NFT or an error text.
+  #End of getUserImportedNFTs function.
+
+
+#Function to get all the NFTs that have been staked by the user
+10. getUserStakedNFTs() -> {[NFT.NFT], error}
+  Usecase:  Takes no arguments and returns an array of type NFT or an error text.
+  #End of getUserStakedNFTs function
+
+#Function to claim all Points that a user gets after UNSTAKING an NFT that was already STAKED.
+11. claimPoints(points) -> {Text}
+  Usecase:  a)Takes points as the only parameter, which is a number.
+            b)Returns a text, both after successful operation, or if an error occurs.
+  #End of claimPoints function.
+
+#Function to stake a NFT.
+12. stakeNFT(nftId) -> {Text}
+  Usecase:  a)Checks if caller is anonymous.
+            b)Takes nftId as parameter, which is of type Token Identifier.
+            c)Returns an object containing a text, both in successful operation, or if an error occurs.
+  #End of stakeNFT function
+
+#Function to unstake a staked NFT.
+13. unstakeNFT(nftId) -> {Text}
+  Usecase:  a)Checks if user is anonymous.
+            b)Takes nftId as parameter, which is of type Token Identifier.
+            c)Returns an object containing a text, both in successful operation, or if an error occurs.
+  #End of unstakeNFT function
+    
+
+
+
