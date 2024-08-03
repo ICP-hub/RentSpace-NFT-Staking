@@ -108,7 +108,7 @@ To set up the RentSpace NFT Staking Platform locally, follow these steps:
 ### Setting up Local EXT Canister
 
 8. Clone this repo: [NFT_STANDARD](https://github.com/ArjunQBTech/NFT_STANDARD)
-9. Open this project in WSL and run: `dfx deploy --specified-id bkyz2-fmaaa-aaaaa-qaaaq-cai`
+9. Open this project in WSL and run: `dfx deploy --specified-id bkyz2-fmaaa-aaaaa-qaaaq-cai EXT_backend`
 
 ### Setting Up Local ICP Ledger
 
