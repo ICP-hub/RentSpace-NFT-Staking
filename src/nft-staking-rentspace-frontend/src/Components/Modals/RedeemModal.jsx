@@ -6,6 +6,8 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { useAuth } from "../../utils/useAuthClient";
 import { useDispatch } from "react-redux";
 import { updatePoints } from "../../utils/Redux-Config/UserSlice";
+import Modal from "./Modal";
+import { FaXmark } from "react-icons/fa6";
 
 export const Info = ({ message }) => {
   return (
@@ -22,28 +24,44 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   const { actors } = useAuth()
   const MIN_REQ_POINTS = 10;
   const [redeemAmount, setRedeemAmount] = useState(0);
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogInfo, setDialogInfo] = useState({ status: "", message: "" });
   const deferredRedeemAmount = useDeferredValue(redeemAmount)
   const dispatch = useDispatch()
+
+  const displayDialog = () => {
+    setShowDialog(true);
+    setTimeout(() => {
+      setShowDialog(false);
+
+    }, 5000)
+  }
 
   const handleClick = async (e) => {
     e.preventDefault()
     if (deferredRedeemAmount < MIN_REQ_POINTS) {
-      alert('Minimum 10 points required for redemption.')
+      // alert('Minimum 10 points required for redemption.')
+      setDialogInfo({ status: 'error', message: 'Minimum 10 points required for redemption.' })
+      displayDialog();
       return
     }
     try {
       const transfer = await actors.userActor.claimPoints(parseInt(rewardPoints))
       if (transfer?.ok) {
-        alert("Transfered Success!")
+        // alert("Transfered Success!")
         setRedeemAmount(0)
         dispatch(updatePoints(parseInt(rewardPoints) - parseInt(deferredRedeemAmount * 100)))
+        setDialogInfo({ status: 'success', message: 'Redeem Successful' });
+        displayDialog();
       }
       else {
         throw new Error(transfer?.err)
       }
     }
     catch (e) {
-      alert(e);
+      // alert(e);
+      setDialogInfo({ status: 'error', message: 'Redeem Failed' });
+      displayDialog();
     }
   }
 
@@ -73,7 +91,8 @@ const RedeemModal = ({ userID, rewardPoints, isModalOpen, setIsModalOpen }) => {
   }, [redeemAmount, deferredRedeemAmount])
   return (
     <div className="rewards-modal">
-      <div className="redeem-closeBtn" onClick={() => setIsModalOpen(!isModalOpen)}>X</div>
+      {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} />}
+      <div className="redeem-closeBtn" onClick={() => setIsModalOpen(!isModalOpen)}><FaXmark size={25} /></div>
       <h3 className="redeem-header">Redeem Rewards!</h3>
       <div className="reward-points-Cont">
         <div className="reward-points">

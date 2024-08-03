@@ -1,5 +1,5 @@
 .modal {
-  @apply bg-[#162e5d] text-white flex flex-col justify-center items-center py-4 px-8 rounded-xl border-white border-2 gap-4 w-[40%] -translate-x-1/2 absolute top-1/3 z-10 left-1/2
+  @apply bg-[#162e5d] text-white flex flex-col justify-center items-center py-4 px-8 rounded-xl border-white border-2 gap-4 w-fit -translate-x-1/2 absolute top-1/3 z-40 left-1/2
 }
 
 .symbol {
@@ -19,5 +19,5 @@
 }
 
 .modal-btn {
-  @apply w-1/3 bg-[#061d2d] rounded-3xl
+  @apply w-fit bg-[#061d2d] rounded-3xl
 }

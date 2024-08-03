@@ -2,9 +2,13 @@
 export const content = ["./src/nft-staking-rentspace-frontend/src/**/*.{html,js,jsx,tsx}"];
 export const theme = {
   fontFamily: {
-    'Poppins': ['Poppins'],
-    'Manrope': ['Manrope']
+    'Poppins': ['Poppins', 'sans-serif'],
+    'Manrope': ['Manrope', 'sans-serif'],
   },
-  extend: {},
+  extend: {
+    fontFamily: {
+      'Fontspring': ['Fontspring', 'sans-serif']
+    }
+  },
 };
 export const plugins = []; 

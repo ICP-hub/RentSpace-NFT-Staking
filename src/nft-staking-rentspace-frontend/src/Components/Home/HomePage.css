@@ -1,61 +1,62 @@
-
 /* HeroPage component styling */
-
 .Hero-MainCont {
   @apply w-screen bg-cover h-screen
 }
 
-.Hero-MainCont  .heroImg{
+.Hero-MainCont .heroImg {
   @apply absolute -z-10 w-screen h-screen;
-  
-
 }
 
 .Hero-innerCont {
   @apply flex justify-center items-center pt-[14%] text-white;
 }
 
-.Hero-cont {
-}
+.Hero-cont {}
+
+
 
 .heading1 {
   position: relative;
   clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-  @apply px-32 pb-8 pt-2
+  @apply pe-24 py-6 flex justify-center items-center
 }
 
 .heading1::before {
   content: '';
-  @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65  my-2 rounded-3xl -z-10  ;
-  
+  @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10;
+
+}
+
+.heading1 .logo {
+  @apply h-28 w-full
 }
 
 .heading1 h1 {
-  @apply text-center font-bold text-8xl ;
+  @apply text-center font-bold text-8xl font-Fontspring;
 }
 
 .heading2::before {
   content: '';
-  @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10 ;
+  @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10;
 }
 
 .heading2 {
   position: relative;
   clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-  @apply px-32 py-5  
+  @apply px-32 py-5
 }
 
 .heading2 h1 {
-  @apply text-center font-bold text-3xl ;
+  @apply text-center font-bold text-3xl;
 }
 
-.Explore-btn{
-  @apply  flex justify-center  mt-20 2xl:mt-24
+.Explore-btn {
+  @apply flex justify-center mt-20 2xl:mt-24
 }
 
-.Explore-btn > button{
+.Explore-btn>button {
 
-  @apply p-3 w-56 px-8 text-[23px]  rounded-xl font-medium  shadow-lg 
+  @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg
 }
 
 
@@ -88,7 +89,7 @@
 }
 
 .worldsImg .world {
-  @apply h-[200px] w-[200px] 2xl:h-[260px]  2xl:w-[260px] object-contain;
+  @apply h-[200px] w-[200px] 2xl:h-[260px] 2xl:w-[260px] object-contain;
 }
 
 .villasImg {
@@ -96,7 +97,7 @@
 }
 
 .villasImg .villa {
-  @apply h-[120px] 2xl:h-[150px]  w-[120px]  2xl:w-[150px] object-contain;
+  @apply h-[120px] 2xl:h-[150px] w-[120px] 2xl:w-[150px] object-contain;
 }
 
 /* Custom styles for the timeline */
@@ -129,14 +130,14 @@
 
 /*  JourneyStart component styling */
 
-.JourneyStart-cont{
-@apply flex flex-col items-center bg-[#f2f2f2] h-screen
+.JourneyStart-cont {
+  @apply flex flex-col items-center bg-[#f2f2f2] h-screen
 }
 
-.JourneyStart-cont p{
-@apply mx-[28%] text-[29px] font-medium text-center mt-28
+.JourneyStart-cont p {
+  @apply mx-[28%] text-[29px] font-medium text-center mt-28
 }
 
-.JourneyStart-cont > button{
-@apply  p-4 w-[32%] px-16  text-2xl rounded-2xl font-medium text-white my-16 shadow-lg
+.JourneyStart-cont>button {
+  @apply p-4 w-[32%] px-16 text-2xl rounded-2xl font-medium text-white my-16 shadow-lg
 }

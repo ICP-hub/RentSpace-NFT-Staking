@@ -16,7 +16,10 @@ const HeroPage = () => {
       />
       <div className='Hero-innerCont'>
         <div className=' Hero-cont'>
-          <div className='heading1'> <h1 className=''> RentSpace </h1>  </div>
+          <div className='heading1'>
+            < IMGComp src='Assets/rentSpaceLogo.png' hashVal="L5GvL=?G00xu^jxaWUWB00xt~qa}" className='logo' height='' width='' />
+            {/* <h1>RentSpace</h1> */}
+          </div>
           <div className='heading2'> <h1 > Where Your NFTs Work For You. </h1> </div>
           <div className='Explore-btn'>
             <button onClick={() => navigate('/myWorlds')} > Explore World </button>

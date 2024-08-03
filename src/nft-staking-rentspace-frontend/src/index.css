@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@font-face {
+    font-family: 'Fontspring';
+    src: url('/Assets/fonts/Fontspring-DEMO-criteriacf-medium.otf');
+    font-weight: normal;
+    font-style: normal
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
