@@ -1,21 +1,21 @@
 /* fallbackUI component styling*/
 
-.fallbackUI-cont{
+.DataNotFound_UI-cont{
     @apply bg-white h-full rounded-2xl
 }
-.fallbackUI-cont > .heading{
+.DataNotFound_UI-cont > .heading{
     @apply text-2xl font-semibold ml-20 pt-6
 }
 
-.fallbackUI-innerCont{
+.DataNotFound_UI-cont > .innerCont{
     @apply flex h-screen justify-center items-center
 }
 
-.fallbackUI-innerCont > div{
+.DataNotFound_UI-cont > .innerCont > div{
     @apply flex -mt-[20%] flex-col justify-center items-center 
 }
 
-.fallbackUI-innerCont h2{
+.DataNotFound_UI-cont > .innerCont h2{
     @apply font-medium text-lg -mt-10
 }
 

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NFTsComp.css';
 import Card from '../../../Card/Card';
-import FallbackUI from '../../../FallbackUI/FallbackUI';
-import FallbackUI_NFTs from '../../../FallbackUI/FallbackUI_NFTs';
+import DataNotFound_UI from '../../../FallbackUI/DataNotFound_UI';
 import { useAuth } from '../../../../utils/useAuthClient';
 import { formatMetadata } from '../../../../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +11,7 @@ import { Hourglass } from 'react-loader-spinner';
 
 const StakedNFTs = () => {
   const { actors, principal } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const stakedNFTs = useSelector((state) => state.Nfts.stakedNFTs);
@@ -20,11 +19,10 @@ const StakedNFTs = () => {
   const navigate = useNavigate();
 
   const filterStakedNFTs = async () => {
-    setIsLoading(true)
     try {
       const backendActor = actors?.userActor;
       const stakedNFTDetails = await backendActor.getUserStakedNFTs();
-      console.log("Req : ", stakedNFTDetails.ok);
+      console.log("Req: ", stakedNFTDetails.ok);
 
       if (stakedNFTDetails.ok) {
         dispatch(addStakedNFTs(stakedNFTDetails.ok));
@@ -33,15 +31,14 @@ const StakedNFTs = () => {
       }
     } catch (err) {
       console.error("Error fetching staked NFTs: ", err);
-      setError(err.message || "Failed to fetch staked NFTs.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (principal) {
-      filterStakedNFTs();
+      startTransition(() => {
+        filterStakedNFTs();
+      });
     }
   }, [principal, actors]);
 
@@ -53,7 +50,7 @@ const StakedNFTs = () => {
             <Card
               id={NFT[0].id}
               name={formatMetadata(NFT[0].metadata).name}
-              imgURL={formatMetadata(NFT[0].metadata).thumb} // Adjusted key for image URL
+              imgURL={formatMetadata(NFT[0].metadata).thumb}
               desc={formatMetadata(NFT[0].metadata).description}
               isStaked={NFT[0].isStaked}
               isImported={!NFT[0].isStaked}
@@ -61,14 +58,14 @@ const StakedNFTs = () => {
             />
           )}
         </div>
-      ))
-      setCardElements(elements)
-    }
+      ));
+      setCardElements(elements);
+    };
 
-    renderCardElements()
-  }, [stakedNFTs])
+    renderCardElements();
+  }, [stakedNFTs]);
 
-  console.log("Elements : ", cardElements);
+  console.log("Elements: ", cardElements);
 
   const nftDetailsHandle = (id, name, img) => {
     navigate('/StakNftDetails', { state: { id, name, img } });
@@ -76,15 +73,14 @@ const StakedNFTs = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Hourglass visible={isLoading} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} /> // Render this during loading
-      ) : error ? (
-        <FallbackUI purpose='Error' message={error} /> // Render this on error
-      ) : stakedNFTs.length > 0 ? (
+      {isPending ? (
+        <Hourglass visible={isPending} ariaLabel='hourglass-loading' height={80} width={80} wrapperClass='loader' colors={['#0288e9', '#00b1fd']} />
+      ) : stakedNFTs && stakedNFTs.length > 0 ? (
         <div className='nft-Maincont'>
           <h1>Staked NFT</h1>
           <div className='nftOuter-Cont'>
-            {/* {stakedNFTs.map((NFT, ind) => (
+
+                {/* {stakedNFTs.map((NFT, ind) => (
               <div key={ind}>
                 {NFT[0]?.id && (
                   <Card
@@ -99,11 +95,13 @@ const StakedNFTs = () => {
                 )}
               </div>
             ))} */}
+
             {cardElements}
+
           </div>
         </div>
       ) : (
-        <FallbackUI purpose='Staked' /> // Render this when no NFTs are found
+        <DataNotFound_UI purpose='Staked' />
       )}
     </>
   );
