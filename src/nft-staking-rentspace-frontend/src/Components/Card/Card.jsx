@@ -8,9 +8,10 @@ import { Principal } from '@dfinity/principal';
 import Modal from '../Modals/Modal';
 import UnStakeButton from '../Button/UnStakeButton';
 import StakeButton from '../Button/StakeButton';
+import IMGComp from '../IMGComp';
 
 
-const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
+const Card = ({id, name, imgURL, desc, isStaked}) => {
   const [showDialog, setShowDialog] = useState(false);
   const [dialogInfo, setDialogInfo] = useState({status: "", message: ""});
 
@@ -89,13 +90,9 @@ const Card = ({id, name, imgURL, desc, isStaked, purpose }) => {
     
     {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog}/>}
     <div className="card">
-      {
-        purpose === 'import' ? 
-         <input onClick={handle_CheckNfts} type='checkbox' className='checkbox' />
-        :
-        ''
-      }
-      <img src={imgURL} className='card-image' alt="villa image" width={418}/>
+
+      {/* <img src={imgURL} className='card-image' alt="villa image" width={418}/> */}
+      < IMGComp src={imgURL}  hashVal='LRG]2NENM{WB_NogRiWB.9WBxaj?' alt="villa image" className='card-image' height='' width='' />
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
         <p className="card-content">{desc}</p>

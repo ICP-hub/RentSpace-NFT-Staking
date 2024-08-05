@@ -2,6 +2,7 @@ import React from 'react'
 import "./Modal.css"
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import { createPortal } from 'react-dom';
 
 const Modal = ({ status, message, closeModal, setImportModule }) => {
   const error = status.toLowerCase() === 'error' ? true : false
@@ -11,7 +12,7 @@ const Modal = ({ status, message, closeModal, setImportModule }) => {
     setImportModule(false)
   }
 
-  return (
+  return createPortal (
     <dialog className='modal'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -23,7 +24,8 @@ const Modal = ({ status, message, closeModal, setImportModule }) => {
       </div>
       <p className='message'>{message}</p>
       <button className='modal-btn' onClick={handleClose}>Go Back</button>
-    </dialog>
+    </dialog>,
+    document.getElementById('root')
   )
 }
 

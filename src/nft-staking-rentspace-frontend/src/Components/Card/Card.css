@@ -7,7 +7,7 @@
 }
 
 .card-image {
-  @apply object-contain
+  @apply object-contain min-w-60 min-h-60
 }
 
 .card-body {

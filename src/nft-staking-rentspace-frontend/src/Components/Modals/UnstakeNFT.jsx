@@ -7,6 +7,7 @@ import { Hourglass } from 'react-loader-spinner';
 import { addPoints } from '../../utils/Redux-Config/UserSlice';
 import { removeStakedNFTs, modifyStakedNFTs } from '../../utils/Redux-Config/NftsSlice'
 import { useDispatch } from 'react-redux';
+import { createPortal } from 'react-dom';
 
 const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
   const [showDialog, setShowDialog] = useState(false);
@@ -62,7 +63,7 @@ const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
     }
 
   }
-  return (
+  return createPortal(
     <>
       {showDialog && <Modal status={dialogInfo.status} message={dialogInfo.message} closeModal={setShowDialog} />}
       <div className='unstake-cont' style={showDialog ? { display: 'none' } : {}}
@@ -81,7 +82,8 @@ const UnstakeNFT = ({ redeemPoints = 0, id, setShow }) => {
           <button onClick={handleUnStake} className='unstake-btn btn'>Unstake</button>
         </div>
       </div>
-    </>
+    </>,
+    document.getElementById('root')
   )
 }
 

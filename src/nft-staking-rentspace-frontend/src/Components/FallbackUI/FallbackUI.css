@@ -24,7 +24,7 @@
 /* FallbackUI_404 component */
 
 .fallbackUI_404-cont{
-    @apply bg-white rounded-2xl mt-4 flex justify-center items-center h-screen
+    @apply bg-white relative rounded-2xl mt-4 flex justify-center items-center h-screen
 }
 .fallbackUI_404-innerCont{
     @apply  justify-center items-center -mt-32

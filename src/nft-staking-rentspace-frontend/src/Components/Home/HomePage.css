@@ -1,10 +1,11 @@
 /* HeroPage component styling */
+
 .Hero-MainCont {
   @apply w-screen bg-cover h-screen;
 }
 
 .Hero-MainCont .heroImg {
-  @apply absolute -z-10 w-screen h-screen;
+  @apply absolute -z-10 w-screen h-screen animate-heroIMG;
 }
 
 .Hero-innerCont {
@@ -25,11 +26,7 @@
 }
 
 .heading1 .logo {
-  @apply h-28 w-full;
-}
-
-.heading1 h1 {
-  @apply text-center font-bold text-8xl font-Fontspring;
+  @apply h-28 w-full animate-heading1-inner;
 }
 
 .heading2 {
@@ -44,18 +41,29 @@
 }
 
 .heading2 h1 {
-  @apply text-center font-bold text-3xl;
+  @apply text-center font-bold text-3xl animate-heading2-inner;
 }
 
 .Explore-btn {
-  @apply flex justify-center mt-20 2xl:mt-24;
+  @apply flex justify-center mt-16 2xl:mt-24 animate-Explore-btn ;
 }
 
 .Explore-btn > button {
   @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg;
 }
 
+
 /* Keyframes for animations */
+
+@keyframes heroIMG-scaling {
+  0% {
+    transform: scale(1.15); 
+  }
+  100% {
+    transform: scale(1); 
+  }
+}
+
 @keyframes slideInFromLeft {
   0% {
     transform: translateX(-100%);
@@ -78,14 +86,39 @@
   }
 }
 
+@keyframes btn-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 /* Applying the animations */
+.animate-heroIMG {
+  animation: heroIMG-scaling 1.1s ease-in-out;
+}
 .animate-heading1 {
-  animation: slideInFromLeft 1s ease-in-out;
+  animation: slideInFromLeft 1.1s ease-in-out;
+}
+.animate-heading1-inner {
+  animation: slideInFromLeft 1.2s ease-in-out;
 }
 
 .animate-heading2 {
-  animation: slideInFromRight 1s ease-in-out;
+  animation: slideInFromRight 1.1s ease-in-out;
 }
+.animate-heading2-inner {
+  animation: slideInFromRight 1.2s ease-in-out;
+}
+
+.animate-Explore-btn{
+  animation: btn-opacity 1.1s ease-in-out;
+}
+
+
 
 
 
