@@ -107,7 +107,7 @@
 
 /* YourVillas component styling */
 .Villas-cont {
-    @apply p-8 px-10 border bg-[#FFFFFF] rounded-3xl;
+    @apply p-8 px-10 border bg-[#FFFFFF] rounded-3xl min-h-[500px];
   }
   
   .header {

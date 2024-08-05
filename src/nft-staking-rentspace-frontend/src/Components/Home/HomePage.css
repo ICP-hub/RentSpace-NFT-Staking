@@ -1,6 +1,6 @@
 /* HeroPage component styling */
 .Hero-MainCont {
-  @apply w-screen bg-cover h-screen
+  @apply w-screen bg-cover h-screen;
 }
 
 .Hero-MainCont .heroImg {
@@ -13,26 +13,29 @@
 
 .Hero-cont {}
 
-
-
 .heading1 {
   position: relative;
   clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-  @apply pe-24 py-6 flex justify-center items-center
+  @apply pe-24 py-6 flex justify-center items-center animate-heading1;
 }
 
 .heading1::before {
   content: '';
   @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10;
-
 }
 
 .heading1 .logo {
-  @apply h-28 w-full
+  @apply h-28 w-full;
 }
 
 .heading1 h1 {
   @apply text-center font-bold text-8xl font-Fontspring;
+}
+
+.heading2 {
+  position: relative;
+  clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+  @apply px-32 py-5 animate-heading2;
 }
 
 .heading2::before {
@@ -40,23 +43,48 @@
   @apply absolute inset-0 bg-gradient-to-r from-[#FFFFFF] to-[#7E7E7E] opacity-65 my-2 rounded-3xl -z-10;
 }
 
-.heading2 {
-  position: relative;
-  clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-  @apply px-32 py-5
-}
-
 .heading2 h1 {
   @apply text-center font-bold text-3xl;
 }
 
 .Explore-btn {
-  @apply flex justify-center mt-20 2xl:mt-24
+  @apply flex justify-center mt-20 2xl:mt-24;
 }
 
-.Explore-btn>button {
+.Explore-btn > button {
+  @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg;
+}
 
-  @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg
+/* Keyframes for animations */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Applying the animations */
+.animate-heading1 {
+  animation: slideInFromLeft 1s ease-in-out;
+}
+
+.animate-heading2 {
+  animation: slideInFromRight 1s ease-in-out;
 }
 
 

@@ -141,7 +141,7 @@
     @apply mt-7 mb-5  w-full flex place-self-start items-center px-16
 }
 
-.favIcon{
+.header-cont > .favIcon{
     @apply text-gray-500
 }
 
