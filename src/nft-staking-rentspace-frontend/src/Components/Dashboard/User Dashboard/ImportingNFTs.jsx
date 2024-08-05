@@ -56,8 +56,10 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   };
 
   const handleImport = async () => {
-    const selectedCards = NFTList.filter((NFT) => checkedCards.includes(NFT.tid));
-
+    const selectedCards = NFTList.filter((NFT) => checkedCards.includes(NFT.tid)).map((nft) => {
+      return { ...nft, metadata: JSON.stringify(nft.metadata) }
+    });
+    console.log(selectedCards)
     try {
       const importNFTReq = await backendActor.importNFTs(selectedCards);
 
@@ -77,7 +79,7 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
     setIsVisible(false);
     setTimeout(() => {
       setImportModule(false);
-    }, 250); 
+    }, 250);
   };
 
   return createPortal(
