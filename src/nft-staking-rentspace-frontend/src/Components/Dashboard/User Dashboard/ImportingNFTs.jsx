@@ -5,6 +5,7 @@ import { FaChevronLeft } from 'react-icons/fa';
 import { useAuth } from '../../../utils/useAuthClient';
 import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../../utils/utils';
 import { createPortal } from 'react-dom';
+import { Oval } from 'react-loader-spinner';
 
 const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   const { actors, principal } = useAuth();
@@ -13,10 +14,12 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   const [showDialog, setShowDialog] = useState(false);
   const [dialogInfo, setDialogInfo] = useState({ status: "", message: "" });
   const [isVisible, setIsVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const backendActor = actors.userActor;
 
   useEffect(() => {
     const getAllUserTokens = async () => {
+      setIsLoading(true);
       try {
         const userAccountId = await convertPrincipalToAccountIdentifier(principal);
         const userTokens = await backendActor.getAllUserTokens(userAccountId);
@@ -33,6 +36,8 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
       } catch (error) {
         console.error("Error fetching user tokens:", error);
         setNFTList([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -98,6 +103,7 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
       </div>
       <div className='importNfts-OuterCont no-scrollbar'>
         <div className='importNfts-InnerCont'>
+          {isLoading && <Oval visible={dialogInfo.isExecuting} color='#0285e3' secondaryColor='#fff' strokeWidth={5} width={75} height={75} ariaLabel="oval-loading" wrapperStyle={{}} />}
           {NFTList.map(({ tid, metadata }) => (
             <div className='nft-cont' key={tid}>
               <CheckCard
