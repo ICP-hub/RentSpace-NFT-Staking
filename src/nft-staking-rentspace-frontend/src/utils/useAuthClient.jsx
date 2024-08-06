@@ -1,17 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {nft_staking_rentspace_backend} from '../../../declarations/nft-staking-rentspace-backend';
-import {EXT_backend} from '../../../declarations/EXT';
+import { nft_staking_rentspace_backend } from '../../../declarations/nft-staking-rentspace-backend';
+import { EXT_backend } from '../../../declarations/EXT';
 import { AuthClient } from '@dfinity/auth-client';
 import { idlFactory } from '../../../declarations/nft-staking-rentspace-backend';
 import { idlFactory as EXTIdlFactory } from '../../../declarations/EXT';
 import { createActor } from '../../../declarations/nft-staking-rentspace-backend';
 import { createActor as createEXTActor } from '../../../declarations/EXT';
 import { Principal } from '@dfinity/principal';
+import { canisterID } from '../../../canisterId';
 
 const AuthContext = createContext();
 
-const canID = process.env.DFX_NETWORK === "ic" ? "2cwjm-cyaaa-aaaap-ahi3q-cai" : "bd3sg-teaaa-aaaaa-qaaba-cai";
-const EXTCanID = process.env.DFX_NETWORK === "ic" ? "m2nno-7aaaa-aaaah-adzba-cai" : "bkyz2-fmaaa-aaaaa-qaaaq-cai";
+const canID = canisterID.NFT_BACKEND;
+const EXTCanID = canisterID.EXT;
 
 export const useAuthClient = () => {
 
@@ -19,7 +20,7 @@ export const useAuthClient = () => {
   const [isAuthenticated, setIsAuthenticated] = useState({ ii: false, plug: false });
   const [identity, setIdentity] = useState(null);
   const [principal, setPrincipal] = useState(null);
-  const [actors, setActors] = useState({userActor:nft_staking_rentspace_backend, EXTActor:EXT_backend});
+  const [actors, setActors] = useState({ userActor: nft_staking_rentspace_backend, EXTActor: EXT_backend });
 
   const initializeClient = async () => {
     const client = await AuthClient.create();

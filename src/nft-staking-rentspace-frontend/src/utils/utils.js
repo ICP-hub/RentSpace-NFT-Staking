@@ -1,6 +1,7 @@
-import {principalToAccountIdentifier} from '@dfinity/ledger-icp'
+import { principalToAccountIdentifier } from '@dfinity/ledger-icp'
 import { Principal } from '@dfinity/principal';
-import {Buffer} from 'buffer'
+import { Buffer } from 'buffer'
+import { canisterID } from '../../../canisterId';
 
 export const convertPrincipalToAccountIdentifier = async (principal) => {
   const accountIdentifier = await principalToAccountIdentifier(principal)
@@ -8,10 +9,10 @@ export const convertPrincipalToAccountIdentifier = async (principal) => {
 }
 
 
-export function formatMetadata(str){
-    let val=str.split("22").join('')
-    val=val.split('\\').join('"')
-    return JSON.parse(val)
+export function formatMetadata(str) {
+  let val = str.split("22").join('')
+  val = val.split('\\').join('"')
+  return JSON.parse(val)
 }
 
 function encodeTokenIdentifier(canisterId, tokenIndex) {
@@ -29,13 +30,13 @@ function encodeTokenIdentifier(canisterId, tokenIndex) {
 
   // Convert the resulting byte array back to a principal
   const tokenIdentifierPrincipal = Principal.fromUint8Array(combinedBuffer);
-  
+
   // Convert the principal to text
   return tokenIdentifierPrincipal.toText();
 }
 
 export function tokenIndexToTokenIdentifier(tokenIdx) {
-  const canID=process.env.DFX_NETWORK === "ic"?"m2nno-7aaaa-aaaah-adzba-cai":"bkyz2-fmaaa-aaaaa-qaaaq-cai"
+  const canID = canisterID.EXT
   return encodeTokenIdentifier(canID, tokenIdx);
 }
 

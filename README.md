@@ -96,19 +96,29 @@ To set up the RentSpace NFT Staking Platform locally, follow these steps:
 1. Fork this repo.
 2. Open the project in WSL and run: `dfx start --background`
 3. Install dependencies: `npm i --force`
-4. Deploy the backend: `dfx deploy --specified-id bd3sg-teaaa-aaaaa-qaaba-cai nft-staking-rentspace-backend`
-5. Pull and deploy dependencies:
+4. Pull and deploy dependencies:
    ```bash
    dfx deps pull
    dfx deps deploy
    ```
-6. Deploy the project: `dfx deploy`
-7. Start the application: `npm start`
+5. Deploy the project: `dfx deploy`
+6. Start the application: `npm start`
 
 ### Setting up Local EXT Canister
 
 8. Clone this repo: [NFT_STANDARD](https://github.com/ArjunQBTech/NFT_STANDARD)
-9. Open this project in WSL and run: `dfx deploy --specified-id bkyz2-fmaaa-aaaaa-qaaaq-cai EXT_backend`
+9. Open this project in WSL and run: `dfx deploy`
+
+### Changing Canister IDs
+1. Open this file: `src/nft-staking-rentspace-backend/controllers/nftHandler.mo`
+2. In line #51, change the `BackendCanisterId` to newly deployed backend canister ID.
+
+`let BackendCanisterId = "<Newly deployed Canister ID>";`
+
+3. Next, open the `src/Tests/canisterID.js` file, in line #6 & #7, in the case when production is false, change the canister ID to newly deployed canister ID. 
+
+`EXT: production ? "m2nno-7aaaa-aaaah-adzba-cai" : "<Newly deployed Canister ID>",`
+`NFT_BACKEND: production ? "yr432-oqaaa-aaaao-a3phq-cai" : "<Newly deployed Canister ID>"`
 
 ### Setting Up Local ICP Ledger
 

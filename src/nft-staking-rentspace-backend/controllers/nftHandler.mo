@@ -212,7 +212,7 @@ module {
                     return #err("NFT Does not Exist");
                 };
                 case (?nft) {
-                    if(nft.owner != userId) {
+                    if (nft.owner != userId) {
                         return #err("User Not Authorized");
                     };
                     let stakedAt : ?Nat = switch (nft.stakedAt) {
