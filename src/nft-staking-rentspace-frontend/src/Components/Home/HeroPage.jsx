@@ -21,8 +21,8 @@ const HeroPage = () => {
             {/* <h1>RentSpace</h1> */}
           </div>
           <div className='heading2'> <h1 > Where Your NFTs Work For You. </h1> </div>
-          <div className='Explore-btn'>
-            <button onClick={() => navigate('/myWorlds')} > Explore World </button>
+          <div className='Explore-btn' >
+            <button onClick={() => navigate('/myWorlds')}  > Explore World </button>
           </div>
         </div>
       </div>
