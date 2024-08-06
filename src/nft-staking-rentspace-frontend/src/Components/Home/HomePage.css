@@ -45,11 +45,14 @@
 }
 
 .Explore-btn {
-  @apply flex justify-center mt-16 2xl:mt-24 animate-Explore-btn ;
+  @apply flex justify-center mt-16 2xl:mt-24 animate-Explore-btn;
 }
 
 .Explore-btn > button {
-  @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg;
+  @apply p-3 w-56 px-8 text-[23px] rounded-xl font-medium shadow-lg  ;
+  background: linear-gradient(135deg, #0284E2, #0284E2, #00C3FD, #0284E2,#0284E2 );
+  background-size: 200% 200%;
+  animation: diagonalColorChange 1.5s ease-in-out infinite;
 }
 
 
@@ -57,10 +60,10 @@
 
 @keyframes heroIMG-scaling {
   0% {
-    transform: scale(1.15); 
+    transform: scale(1.15);
   }
   100% {
-    transform: scale(1); 
+    transform: scale(1);
   }
 }
 
@@ -95,6 +98,15 @@
   }
 }
 
+@keyframes diagonalColorChange {
+  0% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 0% 0%;
+  }
+}
 
 /* Applying the animations */
 .animate-heroIMG {
@@ -104,19 +116,21 @@
   animation: slideInFromLeft 1.1s ease-in-out;
 }
 .animate-heading1-inner {
-  animation: slideInFromLeft 1.2s ease-in-out;
+  animation: slideInFromLeft 1.15s ease-in-out;
 }
-
 .animate-heading2 {
   animation: slideInFromRight 1.1s ease-in-out;
 }
 .animate-heading2-inner {
-  animation: slideInFromRight 1.2s ease-in-out;
+  animation: slideInFromRight 1.15s ease-in-out;
 }
-
-.animate-Explore-btn{
+.animate-Explore-btn {
   animation: btn-opacity 1.1s ease-in-out;
 }
+
+
+
+
 
 
 
