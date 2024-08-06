@@ -15,7 +15,7 @@
 }
 
 .card-title {
-  @apply text-xl font-semibold  mb-1 
+  @apply text-xl font-semibold mb-1
 }
 
 .card-content {
@@ -23,9 +23,24 @@
 }
 
 .card-btn {
-  @apply from-[#01ABFE] via-[#0285E3] to-[#3E9EE2]  w-full text-white py-1 rounded-3xl hover:bg-black transition-colors duration-300 
+  @apply from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] w-full text-white py-1 rounded-3xl hover:bg-black transition-colors duration-300
 }
 
-.card > .checkbox{
-  @apply absolute ml-3 mt-4 w-[18px] h-[18px]
+.check-label {
+  @apply absolute ml-1 mt-2
+}
+
+.check-label>.checkbox {
+  @apply absolute w-8 h-8 appearance-none border-[1px] border-[#0285e3] bg-[#f0f0f0] rounded-full checked:bg-[#0285e3] focus:border-none transition-all duration-300
+}
+
+.check-label>.checkbox:checked+.checkmark {
+  @apply opacity-100;
+  /* Make the checkmark visible when checked */
+}
+
+.checkmark {
+  @apply absolute w-8 h-8 inline-flex items-center justify-center z-10 opacity-0;
+  color: #fff;
+
 }
