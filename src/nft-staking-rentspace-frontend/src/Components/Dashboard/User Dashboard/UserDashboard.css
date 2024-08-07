@@ -157,10 +157,14 @@
     @apply flex justify-center mt-14 mb-10
 }
 
-.ImportBtn>button {
-    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-3 text-white px-6 rounded-full shadow-lg font-medium transition-all ease-in duration-500;
+.ImportBtn>.import-btn {
+    @apply w-40 bg-gradient-to-r from-[#01ABFE] via-[#0285E3] to-[#3E9EE2] p-3 text-white px-6 rounded-full shadow-lg font-medium transition-all ease-in duration-500 flex items-center justify-center;
 }
 
-.ImportBtn>button:hover {
+.ImportBtn>.import-btn:hover {
     background: black;
+}
+
+.import-btn.disabled {
+    @apply grayscale hover:bg-gray-500 hover:transition-none cursor-not-allowed
 }

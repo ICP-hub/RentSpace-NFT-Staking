@@ -42,5 +42,8 @@
 .checkmark {
   @apply absolute w-8 h-8 inline-flex items-center justify-center z-10 opacity-0;
   color: #fff;
+}
 
+.imported {
+  @apply grayscale
 }

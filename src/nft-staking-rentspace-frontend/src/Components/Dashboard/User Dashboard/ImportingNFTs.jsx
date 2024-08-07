@@ -6,6 +6,7 @@ import { useAuth } from '../../../utils/useAuthClient';
 import { convertPrincipalToAccountIdentifier, formatMetadata } from '../../../utils/utils';
 import { createPortal } from 'react-dom';
 import { Oval } from 'react-loader-spinner';
+import { useSelector } from 'react-redux';
 
 const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   const { actors, principal } = useAuth();
@@ -15,7 +16,9 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   const [dialogInfo, setDialogInfo] = useState({ status: "", message: "" });
   const [isVisible, setIsVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isImporting, setIsImporting] = useState(false)
   const backendActor = actors.userActor;
+  const userImportedNFTs = useSelector((state) => state.user.importedNFTs)
 
   useEffect(() => {
     const getAllUserTokens = async () => {
@@ -61,6 +64,7 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
   };
 
   const handleImport = async () => {
+    setIsImporting(true);
     const selectedCards = NFTList.filter((NFT) => checkedCards.includes(NFT.tid)).map((nft) => {
       return { ...nft, metadata: JSON.stringify(nft.metadata) }
     });
@@ -73,10 +77,14 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
         message: importNFTReq.ok ? 'NFTs imported successfully' : 'Error importing NFTs'
       });
       displayDialog();
+      setCheckedCards([])
     } catch (error) {
       console.error("Error importing NFTs:", error);
       setDialogInfo({ status: 'error', message: 'Error importing NFTs' });
       displayDialog();
+    } finally {
+      setIsImporting(false);
+      // setImportModule(false)
     }
   };
 
@@ -86,6 +94,8 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
       setImportModule(false);
     }, 250);
   };
+
+  const isBtnDisabled = !(checkedCards.length > 0);
 
   return createPortal(
     <div className={`importNfts-mainCont ${!isVisible ? 'fade-out' : ''}`}>
@@ -112,13 +122,14 @@ const ImportingNFTs = ({ isImportModule, setImportModule }) => {
                 imgURL={metadata.url}
                 desc={metadata.description}
                 handleChange={handleCheckChange}
+                isImported={userImportedNFTs.includes(tid)}
               />
             </div>
           ))}
         </div>
       </div>
       <div className='ImportBtn'>
-        <button onClick={handleImport}>Import NFTs</button>
+        <button className={`import-btn ${isBtnDisabled ? 'disabled' : ''}`} disabled={isBtnDisabled} onClick={isBtnDisabled ? null : handleImport}>{isImporting ? <Oval visible={isImporting} strokeWidth={3} height={20} width={20} color='#fff' secondaryColor='#0285e3' ariaLabel="oval-loading" /> : 'Import NFTs'}</button>
       </div>
     </div>,
     document.getElementById('root')
