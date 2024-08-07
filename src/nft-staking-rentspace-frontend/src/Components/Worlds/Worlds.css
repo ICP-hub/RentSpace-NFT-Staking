@@ -65,7 +65,7 @@
 }
 
 .right-blur {
-  @apply right-0;
+  @apply right-0 z-50;
 }
 
 

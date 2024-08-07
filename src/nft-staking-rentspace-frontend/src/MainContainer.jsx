@@ -15,7 +15,9 @@ const MainContainer = () => {
 
       <div className='' >
         <Navbar/>
-       <Outlet/>
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
+          <Outlet />
+        {/* </Suspense> */}
        <Footer/>
       </div>
    
